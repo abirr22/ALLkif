@@ -1,0 +1,15 @@
+package Service;
+
+import Entities.User;
+import java.util.List;
+import java.sql.SQLException;
+/**
+ *
+ * @author abdelazizmezri
+ */
+public interface Iservice <T>{
+  public void ajouter(T user) throws SQLException;
+   public void supprimer(int id) throws SQLException;
+   public void modifier(String s,String s2,String s3,String s4,int id) throws SQLException;
+   public User afficher(int id) throws SQLException;
+}
