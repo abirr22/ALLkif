@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/utils/DataSource.java</file>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/entities/Evenement.java</file>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/services/ServiceEvenement.java</file>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/entities/Participant.java</file>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/gui/GestionEvenementFXMLController.java</file>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/services/IService.java</file>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/tests/MainClass.java</file>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/services/ServiceParticipant.java</file>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/gui/gestionEvenementFXML.fxml</file>
+            <file>file:/C:/Users/siwar/Desktop/ALLKIF/src/edu/esprit/tests/FXMain.java</file>
+        </group>
+    </open-files>
+</project-private>
