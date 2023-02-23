@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.Avatar?>
+<?import com.gluonhq.charm.glisten.control.Icon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="720" prefWidth="1280" style="-fx-background-color: #031B03;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InterfacePubController">
+    <children>
+      <AnchorPane prefHeight="720.0" prefWidth="180.0" style="-fx-background-color: #202020;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="-7.0" prefHeight="92.0" prefWidth="216.0" style="-fx-background-color: #303030;" AnchorPane.leftAnchor="-7.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Avatar layoutX="24.0" layoutY="33.0" />
+                  <Label layoutX="73.0" layoutY="32.0" prefHeight="21.0" prefWidth="97.0" text="Si flen" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="73.0" layoutY="50.0" prefHeight="21.0" prefWidth="97.0" text="Artiste" textFill="RED">
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+            <Button layoutX="1.0" layoutY="168.0" mnemonicParsing="false" onAction="#btn_boutique" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text=" Boutique" textFill="#f0f0f0" wrapText="true">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="ALBUM" />
+               </graphic>
+            </Button>
+            <Button layoutX="2.0" layoutY="205.0" mnemonicParsing="false" onAction="#btn_panier" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Panier" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="SHOPPING_CART" />
+               </graphic>
+            </Button>
+            <Button layoutX="1.0" layoutY="240.0" mnemonicParsing="false" onAction="#btn_evenement" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Evenement" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="NATURE" />
+               </graphic>
+            </Button>
+            <Button layoutX="2.0" layoutY="277.0" mnemonicParsing="false" onAction="#btn_blog" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Blog" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="NEAR_ME" />
+               </graphic>
+            </Button>
+            <Button layoutY="672.0" mnemonicParsing="false" onAction="#btn_deconnecter" prefHeight="49.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Se Déconnecter" textFill="WHITE" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="LOCK" />
+               </graphic>
+            </Button>
+            <Label layoutX="11.0" layoutY="139.0" prefHeight="21.0" prefWidth="97.0" text="Navigation" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="319.0" prefHeight="21.0" prefWidth="97.0" text="Options" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI Bold" size="17.0" />
+               </font>
+            </Label>
+            <Button layoutX="2.0" layoutY="350.0" mnemonicParsing="false" onAction="#btn_mesproduits" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes produits" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="LIST" />
+               </graphic>
+            </Button>
+            <Button layoutX="2.0" layoutY="386.0" mnemonicParsing="false" onAction="#btn_ajouterporduits" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Ajouter produit" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="ADD" />
+               </graphic>
+            </Button>
+            <Button layoutY="422.0" mnemonicParsing="false" onAction="#btn_mesevenements" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes evenements" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="LIST" />
+               </graphic>
+            </Button>
+            <Button layoutX="1.0" layoutY="459.0" mnemonicParsing="false" onAction="#btn_ajouterevenements" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Ajouter evenements" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="ADD" />
+               </graphic>
+            </Button>
+            <Button layoutX="3.0" layoutY="491.0" mnemonicParsing="false" onAction="#btn_mesblog" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes blog" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="LIST" />
+               </graphic>
+            </Button>
+            <Button layoutX="2.0" layoutY="524.0" mnemonicParsing="false" onAction="#btn_ajouterblog" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Ajouter blog" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="ADD" />
+               </graphic>
+            </Button>
+            <Button layoutX="4.0" layoutY="643.0" mnemonicParsing="false" onAction="#btn_compte" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="mon compte" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="SETTINGS" />
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="209.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+         <children>
+            <Pane fx:id="pn_boutique" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Boutique" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="pn_panier" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Panier" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="pn_evenements" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Evenements" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="pn_ajouterproduits" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Ajouter produits" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="pn_mesevenements" layoutX="1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Mes evenement" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="pn_compte" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Gerer mon profil" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="pn_mesproduits" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Mes produits" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="pn_ajouterevenement" layoutX="-1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="68.0" prefWidth="292.0" text="Ajouter evenement" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="pn_ajouterblog" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="68.0" prefWidth="280.0" text="Ajouter blog" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="47.0" layoutY="165.0" prefHeight="68.0" prefWidth="280.0" text="Titre Publication" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="47.0" layoutY="241.0" prefHeight="68.0" prefWidth="280.0" text="Description Publication" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="47.0" layoutY="326.0" prefHeight="68.0" prefWidth="280.0" text="Photo Publication" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_TitrePub" layoutX="334.0" layoutY="181.0" prefHeight="36.0" prefWidth="292.0" promptText="Titre du publication..." style="-fx-background-color: white;" />
+                  <TextArea fx:id="ta_DescPub" layoutX="327.0" layoutY="225.0" prefHeight="100.0" prefWidth="362.0" promptText="Description..." />
+                  <TextField fx:id="tf_PhotoPub" layoutX="334.0" layoutY="342.0" prefHeight="36.0" prefWidth="292.0" promptText="Lien..." style="-fx-background-color: white;" />
+                  <Button layoutX="435.0" layoutY="434.0" mnemonicParsing="false" onAction="#btn_AjoutPub" prefHeight="49.0" prefWidth="90.0" text="Ajouter" />
+               </children>
+            </Pane>
+            <Pane fx:id="pn_mesblog" layoutX="1.0" layoutY="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="68.0" prefWidth="280.0" text="Mes blog" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="display_blog" layoutX="123.0" layoutY="104.0" prefHeight="512.0" prefWidth="825.0" style="-fx-background-color: #031B03;">
+                    <columns>
+                      <TableColumn fx:id="datte_pub" prefWidth="145.0" text="Date" />
+                        <TableColumn fx:id="titre_pub" prefWidth="145.0" text="Titre" />
+                        <TableColumn fx:id="desc_pub" prefWidth="145.0" text="Description" />
+                        <TableColumn fx:id="photo_pub" prefWidth="225.0" text="Photo" />
+                        <TableColumn fx:id="option_pub" prefWidth="163.0" text="Option" />
+                    </columns>
+                  </TableView>
+               </children></Pane>
+            <Pane fx:id="pn_modifierblog" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="68.0" prefWidth="280.0" text="Modifier blog" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="47.0" layoutY="165.0" prefHeight="68.0" prefWidth="280.0" text="Titre Publication" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="47.0" layoutY="241.0" prefHeight="68.0" prefWidth="280.0" text="Description Publication" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="47.0" layoutY="326.0" prefHeight="68.0" prefWidth="280.0" text="Photo Publication" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_TitrePub1" layoutX="334.0" layoutY="181.0" prefHeight="36.0" prefWidth="292.0" promptText="Titre du publication..." style="-fx-background-color: white;" />
+                  <TextArea fx:id="ta_DescPub1" layoutX="327.0" layoutY="225.0" prefHeight="100.0" prefWidth="362.0" promptText="Description..." />
+                  <TextField fx:id="tf_PhotoPub1" layoutX="334.0" layoutY="342.0" prefHeight="36.0" prefWidth="292.0" promptText="Lien..." style="-fx-background-color: white;" />
+                  <Button layoutX="435.0" layoutY="434.0" mnemonicParsing="false" onAction="#btn_ModifPub" prefHeight="49.0" prefWidth="90.0" text="Modifier" />
+               </children>
+            </Pane>
+            <Pane fx:id="pn_blog" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Blog" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+         </children>
+      </AnchorPane>
+   </children>
+    
+</AnchorPane>
