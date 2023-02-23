@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="720" prefWidth="1280" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="edu.esprit.gui.EvenementFXMLController">
@@ -155,14 +156,6 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_evenements" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
-               <children>
-                  <Label prefHeight="68.0" prefWidth="280.0" text="Evenements" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="30.0" />
-                     </font>
-                  </Label>
-               </children></Pane>
             <Pane fx:id="pn_blog" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Blog" textFill="#f0f0f0">
@@ -238,6 +231,15 @@
                   <TextArea fx:id="tfDescriptionE" layoutX="242.0" layoutY="238.0" prefHeight="161.0" prefWidth="402.0" />
                   <Button layoutX="669.0" layoutY="592.0" mnemonicParsing="false" onAction="#ajouterEvenement" prefHeight="49.0" prefWidth="155.0" text="Ajouter " />
                   <Label fx:id="myLabel" layoutX="628.0" layoutY="473.0" prefHeight="49.0" prefWidth="168.0" text="Label" />
+               </children></Pane>
+            <Pane fx:id="pn_evenements" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Evenements" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TilePane fx:id="tilePane" layoutX="-2.0" layoutY="80.0" prefHeight="642.0" prefTileHeight="300.0" prefTileWidth="200.0" prefWidth="1073.0" />
                </children></Pane>
          </children>
       </AnchorPane>
