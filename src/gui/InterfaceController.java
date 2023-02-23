@@ -8,6 +8,7 @@ package gui;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.produits;
+import entities.sale;
 import services.ProductService;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
@@ -72,8 +73,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
+import services.SaleService;
 
 
 /**
@@ -85,6 +89,7 @@ public class InterfaceController implements Initializable {
     
     
     ProductService sp = new ProductService();
+    SaleService ss = new SaleService();
     produits  tmpp = new produits();
     private Image image;
     private MyListener myListener;
@@ -333,7 +338,43 @@ public class InterfaceController implements Initializable {
                         });
                         deditIcon.setOnMouseClicked((event) -> {
                             tmpp = display.getSelectionModel().getSelectedItem();
-
+                            ObservableList<sale>  l3 = FXCollections.observableArrayList();
+                            ResultSet resultSet3 =ss.SelectionnerSingle(tmpp.getId_product());
+                            try {
+                                while (resultSet3.next()){
+                                    l3.add(new  sale(
+                                            resultSet3.getInt("id_solde"),
+                                            resultSet3.getInt("taux"),
+                                            resultSet3.getInt("id_produit")));  
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            String taux="pas de solde";
+                            if(l3.size()>0){
+                                sale tmpss = l3.get(0);
+                                int tauxint = tmpss.getTaux();
+                                taux=String.valueOf(tauxint);
+                            }
+                            TextInputDialog td = new TextInputDialog("");
+                            td.setTitle("Ajouter promotion");
+                            td.setContentText("Entrez le taux de promotion");
+                            td.setHeaderText("promotion actuel: "+taux);
+                            Optional<String> result = td.showAndWait();
+                            result.ifPresent(reponse -> {
+                                if(l3.size()==0){
+                                        sale tmpsale = new sale(Integer.parseInt(reponse),tmpp.getId_product());
+                                        ss.Ajouter(tmpsale);
+                                        System.out.println(reponse);
+                                }else{
+                                    if(Integer.parseInt(reponse)!=0){
+                                        ss.Modifier(Integer.parseInt(reponse),tmpp.getId_product());
+                                        System.out.println(reponse);
+                                    }else{
+                                        ss.Supprimer(tmpp.getId_product());
+                                    }
+                                }
+                            });
                         });
                         
                         HBox managebtn = new HBox(deditIcon,deleteIcon,editIcon);

@@ -39,7 +39,6 @@ public class ProductService implements IPService <produits>  {
 
     @Override
     public void Supprimer(int id) {
-        System.out.println(id);
         try {
             String req = "DELETE FROM `produits` WHERE `id_product` ="+id+"";
             PreparedStatement st = cn.prepareStatement(req);
