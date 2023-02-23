@@ -22,11 +22,11 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/auth/Afficher.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/auth/AfficheBackOff.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Gestion des personnes");
+        primaryStage.setTitle("Gestion des users");
         primaryStage.show();
         
     }

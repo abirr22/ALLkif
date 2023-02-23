@@ -21,7 +21,7 @@
       </AnchorPane>
       <ImageView fitHeight="746.0" fitWidth="406.0" layoutX="874.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="../Image/wp7945957.jpg" />
+            <Image url="@../../../../../../Pictures/implementation_banner_1920x2879.jpg" />
          </image>
       </ImageView>
       <Button fx:id="btn_signup" layoutX="292.0" layoutY="471.0" mnemonicParsing="false" onMouseClicked="#handleSignupButtonClick" prefHeight="65.0" prefWidth="229.0" style="-fx-background-radius: 70px; -fx-background-color: #F4D32C;" text="Create your account">
@@ -29,14 +29,11 @@
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <AnchorPane layoutX="1121.0" layoutY="18.0" prefHeight="78.0" prefWidth="138.0">
-         <children>
-            <ImageView fitHeight="65.0" fitWidth="138.0" layoutX="10.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Downloads/324837369_583011013359420_5315765166976291657_n.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
+      <AnchorPane layoutX="1121.0" layoutY="18.0" prefHeight="78.0" prefWidth="138.0" />
+      <ImageView fitHeight="65.0" fitWidth="138.0" layoutX="1139.0" layoutY="628.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Downloads/324837369_583011013359420_5315765166976291657_n.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

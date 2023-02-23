@@ -37,6 +37,12 @@ public class AfficherController implements Initializable {
     private TextField llname;
     @FXML
     private TextField lemail;
+     @FXML
+    private TextField lphone_number;
+      @FXML
+    private TextField lgender;
+       @FXML
+    private TextField lrole;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,6 +52,10 @@ public class AfficherController implements Initializable {
             lfname.setText(u.getFirst_Name());
             llname.setText(u.getLast_Name());
             lemail.setText(u.getEmail());
+            //int phone_number_int = Integer.parseInt(phone_number);
+            //lphone_number.set(u.getPhone_number());
+            lgender.setText(u.getGender());
+            lrole.setText(u.getRole());
         } catch (SQLException ex) {
             Logger.getLogger(AfficherController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -57,7 +67,11 @@ public class AfficherController implements Initializable {
         String lfname2 = lfname.getText();
         String llname2 = llname.getText();
         String lemail2 = lemail.getText();
-        su.modifier(lusername2, lfname2, llname2, lemail2, 6);
+        String tmp = lphone_number.getText();
+        int lphone_number2 = Integer.parseInt(tmp);
+        String lgender2 = lgender.getText();
+        String lrole2 = lrole.getText();
+        su.modifier(lusername2, lfname2, llname2, lemail2, lphone_number2,lgender2, lrole2, 6);
 
 
     }
