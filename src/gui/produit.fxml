@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="214.0" style="-fx-background-color: black;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.ProduitController">
+   <children>
+      <Label fx:id="singleid" layoutX="74.0" layoutY="104.0" text="Label" />
+      <Label fx:id="tritremusic" layoutX="14.0" layoutY="199.0" prefHeight="17.0" prefWidth="126.0" text="Label" textFill="#bfb7b7">
+         <font>
+            <Font name="Segoe UI Bold Italic" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="221.0" text="Artist name" textFill="#727070" />
+      <ImageView fx:id="photo" fitHeight="168.0" fitWidth="214.0" layoutX="2.0" layoutY="2.0" onMouseClicked="#singleprod" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="prixlabel" layoutX="14.0" layoutY="178.0" text="a" textFill="#2c5eda">
+         <font>
+            <Font name="Segoe UI Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

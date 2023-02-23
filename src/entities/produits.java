@@ -29,10 +29,21 @@ public class produits {
     public produits() {
     }
 
+    public void setId_product(int id_product) {
+        this.id_product = id_product;
+    }
+
     public produits(int id_product, String product_name, String product_description, String product_photo, float product_price) {
         this.id_product = id_product;
         this.product_name = product_name;
         this.product_description = product_description;
+        this.product_photo = product_photo;
+        this.product_price = product_price;
+    }
+
+    public produits(int id_product, String product_name, String product_photo, float product_price) {
+        this.id_product = id_product;
+        this.product_name = product_name;
         this.product_photo = product_photo;
         this.product_price = product_price;
     }

@@ -11,6 +11,7 @@ import entities.produits;
 import services.ProductService;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -30,6 +32,49 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import javafx.geometry.Insets;
+import javafx.scene.control.ScrollPane;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.input.MouseEvent;
+import gui.ProduitController;
+import services.MyListener;
+import test.main;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.scene.control.TextArea;
+
 
 /**
  * FXML Controller class
@@ -41,6 +86,8 @@ public class InterfaceController implements Initializable {
     
     ProductService sp = new ProductService();
     produits  tmpp = new produits();
+    private Image image;
+    private MyListener myListener;
     @FXML
     private Pane pn_boutique;
     @FXML
@@ -93,15 +140,31 @@ public class InterfaceController implements Initializable {
     private TextField tfdescription1;
     @FXML
     private TextField tfprix1;
+    @FXML
+    private GridPane grid;
+    @FXML
+    public Pane pn_singleprod;
+    @FXML
+    private ImageView imgsingle;
+    @FXML
+    private Label titresingle;
+    @FXML
+    private TextArea descriptionsingle;
+    @FXML
+    private Label prixsingle;
+    @FXML
+    private Label titresingle1;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {   
-        display ();
-}
+                display ();
+                display2();
+    }
 
     @FXML
     private void btn_boutique(javafx.event.ActionEvent event) {
+        display2();
         pn_boutique.toFront();
     }
 
@@ -177,10 +240,6 @@ public class InterfaceController implements Initializable {
         display();
     }
 
-    @FXML
-    private void btnrefresh(javafx.event.ActionEvent event) {
-        display ();
-    }
     private void display () {
         display.getItems().clear();
         ObservableList<produits>  l = FXCollections.observableArrayList();
@@ -311,4 +370,86 @@ public class InterfaceController implements Initializable {
         pn_mesproduits.toFront();
         display();
     }
+    private Node getNodeFromGridPane(GridPane gridPane) {
+    for (Node node : gridPane.getChildren()) {
+        System.out.println(GridPane.getColumnIndex(node));
+        System.out.println(GridPane.getRowIndex(node));
+        /*
+        if (GridPane.getColumnIndex(node) ==  && GridPane.getRowIndex(node) == row) {
+            return node;
+        }
+        */
+        return node;
+    }
+    return null;
+    }
+    
+    private void setChosenprod(produits produit) {
+        titresingle.setText(produit.getProduct_name());
+        String newprix=String.valueOf(produit.getProduct_price());    
+        newprix += " TND";
+        prixsingle.setText(newprix);
+        descriptionsingle.setText(produit.getProduct_description());
+        Image imageee = new Image(getClass().getResourceAsStream(produit.getProduct_photo()));
+        imgsingle.setImage(imageee);   
+        pn_singleprod.toFront();
+    }
+    
+    private void display2(){
+        ///////////////////////////////////////////////////////////////
+        ObservableList<produits>  l2 = FXCollections.observableArrayList();
+                ResultSet resultSet2 = sp.Selectionner(1);
+                l2.clear(); 
+                produits pppp = new produits("","","/img/Capture.PNG",1);
+                l2.add(pppp);
+                int column =0;
+                int row =2;
+                if (l2.size() > 0) {
+                setChosenprod(l2.get(0));
+                myListener = new MyListener() {
+                    @Override
+                    public void onClickListener(produits produit) {
+                        setChosenprod(produit);
+                    }
+                };
+                }
+                try {
+                    while (resultSet2.next()){
+                        FXMLLoader fxmlLoader = new FXMLLoader();
+                        fxmlLoader.setLocation(getClass().getResource("/gui/produit.fxml"));
+                        try {
+                            AnchorPane anchorPane = fxmlLoader.load();
+                            ProduitController itemController = fxmlLoader.getController();
+                            String titre =resultSet2.getString("product_name");
+                            String photo =resultSet2.getString("product_photo");  
+                            String id =resultSet2.getString("id_product");
+                            String prix =resultSet2.getString("product_price");
+                            String desc =resultSet2.getString("product_description");
+                            float newprix=Integer.parseInt(prix);
+                            int newid=Integer.parseInt(id);
+                            produits ppppp = new produits(newid,titre,desc,photo,newprix);
+                            itemController.setData(ppppp,myListener);
+                            if (column == 5) {
+                                column = 0;
+                                row++;
+                            }
+                            grid.add(anchorPane, column++, row); //(child,column,row)
+                            //set grid width
+                            grid.setMinWidth(Region.USE_COMPUTED_SIZE);
+                            grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
+                            grid.setMaxWidth(Region.USE_PREF_SIZE);
+                            //set grid height
+                            grid.setMinHeight(Region.USE_COMPUTED_SIZE);
+                            grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                            grid.setMaxHeight(Region.USE_PREF_SIZE);
+                            GridPane.setMargin(anchorPane, new Insets(10));
+                        } catch (IOException ex) {
+                            Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        }   
+                } catch (SQLException ex) {
+                    Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+    }
+    
 }
