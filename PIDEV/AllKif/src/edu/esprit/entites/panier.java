@@ -5,15 +5,25 @@
  */
 package edu.esprit.entites;
 
+import java.util.Objects;
+import javafx.scene.control.TableColumn;
+
 /**
  *
  * @author zayat
  */
 public class panier { 
-     private int id_panier ; 
-    private int id_prod;
+
+    private int id_panier;
     private double prix;
-    private int quantite ;
+    private int quantite;
+    private int id_user;
+    private String name;
+    private String description;
+    private String pic;
+    private int price;
+    private int id_prod;
+  
 
     public panier() {
     }
@@ -23,12 +33,32 @@ public class panier {
         this.quantite = quantite;
     }
 
-    public panier(int id_panier, int id_prod, double prix, int quantite) {
+    public panier(int id_panier, double prix, int quantite, int user) {
         this.id_panier = id_panier;
-        this.id_prod = id_prod;
+
         this.prix = prix;
         this.quantite = quantite;
+        this.id_user = id_user;
+       
+        
     }
+
+    public panier(int id_panier, double prix, int quantite, String name, String description, String pic, int price, int id_prod) {
+        
+        this.id_panier=id_panier;
+        this.prix=prix;
+        this.quantite=quantite;
+        this.name=name;
+        this.description=description;
+        this.pic=pic;
+        this.id_prod=id_prod;
+        this.price=price;
+        
+        
+        
+    }
+
+   
 
     public int getId_panier() {
         return id_panier;
@@ -62,10 +92,57 @@ public class panier {
         this.quantite = quantite;
     }
 
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
+public String getname() {
+        return name;
+    }
+
+    public void setname(String name) {
+        this.name =name ;
+    }
+    public String getPic() {
+        return name;
+    }
+
+    public void setPic(String pic) {
+        this.pic =pic ;
+    } 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description=description ;
+    }
+     public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int  price) {
+        this.price=price ;
+    } 
+
+    /**
+     *
+     * @return
+     */
+    
+   
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + this.id_panier;
+        int hash = 3;
+        hash = 53 * hash + this.id_panier;
+        hash = 53 * hash + (int) (Double.doubleToLongBits(this.prix) ^ (Double.doubleToLongBits(this.prix) >>> 32));
+        hash = 53 * hash + this.quantite;
+        hash = 53 * hash + this.id_user;
+       
         return hash;
     }
 
@@ -81,12 +158,36 @@ public class panier {
             return false;
         }
         final panier other = (panier) obj;
-        return this.id_panier == other.id_panier;
+        if (this.id_panier != other.id_panier) {
+            return false;
     }
+        if (Double.doubleToLongBits(this.prix) != Double.doubleToLongBits(other.prix)) {
+            return false;
+        }
+        if (this.quantite != other.quantite) {
+            return false;
+        }
+        if (this.id_user != other.id_user) {
+            return false;
+        }
+
+        return true;
+    } 
 
     @Override
     public String toString() {
         return "panier{" + "prix=" + prix + ", quantite=" + quantite + '}';
     }
     
+   
+   
+    
+    
+
+   
 }
+
+    //public panier(TableColumn<panier, Integer> id_panier, TableColumn<panier, Integer> id_prod, int prix, int quantite) {
+    //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //}
+   

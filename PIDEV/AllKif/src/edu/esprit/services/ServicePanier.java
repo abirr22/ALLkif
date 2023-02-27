@@ -91,7 +91,39 @@ public class ServicePanier implements IService <panier> {
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                panier p = new panier( rs.getDouble("prix"), rs.getInt(4));
+                System.out.println("rs" +rs.toString());
+                panier p = new panier( rs.getInt(1),rs.getInt(2),rs.getInt("prix"), rs.getInt(4));
+                list.add(p);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return list;
+    } 
+    
+    
+    public List<panier> SelectAll() {
+        List<panier> list = new ArrayList<>();
+        try {
+            String req = "SELECT p.id_pannier,\n" +
+"       p.prix,\n" +
+"       p.quantite,\n" +
+"       pr.name,\n" +
+"       pr.description,\n" +
+"       pr.picture,\n" +
+"       pr.price,\n" +
+"       pp.id_produit\n" +
+"       from `panier` p,\n" +
+"       `prod` pr,\n" +
+"       `panier produit` pp\n" +
+"       where p.id_user = '1' and pp.id_pannier = p.id_pannier and pr.id_product = pp.id_produit  \n" +
+"ORDER BY `p`.`id_pannier` ASC";
+            Statement st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                System.out.println("rs" +rs.toString());
+                panier p = new panier( rs.getInt(1),rs.getDouble("prix"), rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8));
                 list.add(p);
             }
         } catch (SQLException ex) {
@@ -123,5 +155,19 @@ public class ServicePanier implements IService <panier> {
         return p;
     }
 
+    public List<panier> readAll() {
+       //return new ArrayList<panier>();
+       return getAll();
+       
+    
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+}
+
+   // public void insert(panier p) {
+       // return ajouter(panier p); //To change body of generated methods, choose Tools | Templates.
+
+    
+
+   // }
 

@@ -4,18 +4,32 @@
  * and open the template in the editor.
  */
 package edu.esprit.testes;
-import edu.esprit.entites.facture;
-import edu.esprit.services.ServiceFacture;
+import edu.esprit.entites.panier;
+import edu.esprit.entites.commande;
+import edu.esprit.services.ServicePanier;
+import edu.esprit.services.ServiceCommande;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  *
  * @author zayat
  */
-public class MainClasseFacture { 
+public class MainClasseFacture extends Application { 
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("/edu/esprit/gui/FXML.fxml"));
+        primaryStage.setTitle("");
+        primaryStage.setScene(new Scene(root, 1280, 720));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
       public static void main(String[] args) { 
-        facture f = new facture(); 
-        ServiceFacture sf = new ServiceFacture(); 
-        sf.ajouter(f);
+        launch(args);
+        
     
 }
 }
