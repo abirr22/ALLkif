@@ -232,7 +232,7 @@
                               <Font name="Segoe UI Bold" size="30.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="display" cache="true" layoutX="182.0" layoutY="102.0" opacity="0.65" prefHeight="294.0" prefWidth="671.0"style="-fx-background-color: transparent;">
+                        <TableView fx:id="display" cache="true" layoutX="182.0" layoutY="102.0" opacity="0.65" prefHeight="294.0" prefWidth="671.0">
                      
                           <columns>
                             <TableColumn fx:id="image_produit" prefWidth="232.0" text="image_produit" />
@@ -255,7 +255,7 @@
                               </LinearGradient>
                            </textFill>
                         </Button>
-                        <Button fx:id="modifier" layoutX="332.0" layoutY="425.0" mnemonicParsing="false" onContextMenuRequested="#modifier" prefHeight="36.0" prefWidth="138.0" text="modifier">
+                        <Button fx:id="modifier" layoutX="332.0" layoutY="425.0" mnemonicParsing="false" onMouseClicked="#modifier" prefHeight="36.0" prefWidth="138.0" text="modifier">
                            <textFill>
                               <LinearGradient endX="1.0" endY="1.0">
                                  <stops>
@@ -286,7 +286,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="fx_quantite" layoutX="201.0" layoutY="562.0" prefHeight="31.0" prefWidth="200.0" />
-                        <Button fx:id="valider" layoutX="439.0" layoutY="557.0" mnemonicParsing="false" onContextMenuRequested="#valider" prefHeight="31.0" prefWidth="97.0" text="valider">
+                        <Button fx:id="valider" layoutX="439.0" layoutY="557.0" mnemonicParsing="false" onMouseClicked="#valider" prefHeight="31.0" prefWidth="97.0" text="valider">
                            <textFill>
                               <LinearGradient endX="1.0" endY="1.0">
                                  <stops>
@@ -299,21 +299,6 @@
                            </textFill>
                            <font>
                               <Font name="System Bold Italic" size="19.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="Ajouter" layoutX="563.0" layoutY="560.0" mnemonicParsing="false" onMouseClicked="#Ajouter" prefHeight="39.0" prefWidth="97.0" text="Ajouter">
-                           <textFill>
-                              <LinearGradient endX="1.0" endY="1.0">
-                                 <stops>
-                                    <Stop color="#ae6a16" />
-                                    <Stop color="#ad6a17" offset="0.042483660130718956" />
-                                    <Stop color="#ad6a17" offset="0.04546746234725774" />
-                                    <Stop color="WHITE" offset="1.0" />
-                                 </stops>
-                              </LinearGradient>
-                           </textFill>
-                           <font>
-                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Button>
                      </children>
