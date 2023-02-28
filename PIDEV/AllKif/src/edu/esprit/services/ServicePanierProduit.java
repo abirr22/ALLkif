@@ -28,7 +28,7 @@ Connection cnx = DataSource.getInstance().getCnx();
     @Override
      public void ajouter(PanierProduit pp) {
         try {
-            String req = "INSERT INTO panier produit (`id_produit`,`id_panier`) VALUES ('" + pp.getId_produit() + "', '" + pp.getId_panier() + "')";
+            String req = "INSERT INTO panier produit (`id_produit`,`id_panier`,`qantite`) VALUES ('" + pp.getId_produit() + "', '" + pp.getId_panier() + "','"+ pp.getQuantite + "'())";
               
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
@@ -42,8 +42,7 @@ Connection cnx = DataSource.getInstance().getCnx();
          try {
             String req = "INSERT INTO `panier produit` (`id_panier`, `id_produit`) VALUES (?,?)";
             PreparedStatement ps = cnx.prepareStatement(req);
-            ps.setDouble(1, pp.getPrix());
-            ps.setInt(2, pp.getQuantite());
+         
             ps.executeUpdate();
             System.out.println("panier produit Added !");
         } catch (SQLException ex) {
@@ -91,7 +90,7 @@ Connection cnx = DataSource.getInstance().getCnx();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
                 System.out.println("rs" +rs.toString());
-                 PanierProduit pp = new PanierProduit( rs.getInt(1),rs.getInt(2));
+                 PanierProduit pp = new PanierProduit( rs.getInt(1),rs.getInt(2),rs.getInt(3));
                 list.add(pp);
             }
         } catch (SQLException ex) {
@@ -114,7 +113,7 @@ Connection cnx = DataSource.getInstance().getCnx();
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                pp =new PanierProduit( rs.getInt(1),rs.getInt(2));
+                pp =new PanierProduit( rs.getInt(1),rs.getInt(2),rs.getInt(3));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

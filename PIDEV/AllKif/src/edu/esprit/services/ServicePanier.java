@@ -24,9 +24,10 @@ public class ServicePanier implements IService <panier> {
 
     /**
      *
-     * @param p
+     * @param id
+     * 
      */
-    @Override
+   /* @Override
      public void ajouter(panier p) {
         try {
             String req = "INSERT INTO panier (`prix`,`quantite`) VALUES ('" + p.getPrix() + "', '" + p.getQuantite() + "')";
@@ -43,8 +44,7 @@ public class ServicePanier implements IService <panier> {
          try {
             String req = "INSERT INTO `panier` (`prix`, `quantite`) VALUES (?,?)";
             PreparedStatement ps = cnx.prepareStatement(req);
-            ps.setDouble(1, p.getPrix());
-            ps.setInt(2, p.getQuantite());
+           
             ps.executeUpdate();
             System.out.println("panier Added !");
         } catch (SQLException ex) {
@@ -59,7 +59,7 @@ public class ServicePanier implements IService <panier> {
     @Override
     public void supprimer(int id) {
        try {
-            String req = "DELETE FROM `panier` WHERE id_pannier = " + id;
+            String req = "DELETE FROM `panier` WHERE id_prod = " + id;
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("panier deleted !");
@@ -72,10 +72,10 @@ public class ServicePanier implements IService <panier> {
      *
      * @param p
      */
-    @Override
-    public void modifier(panier p) {
+    //@Override
+   /* public void modifier(panier p) {
         try {
-            String req = "UPDATE `panier` SET `prix` = '" + p.getPrix() + "', `quantite` = '" + p.getQuantite() + "' WHERE `panier`.`id_pannier` = " + p.getId_panier();
+            String req = "UPDATE `panier` SET `prix` = '" + p.getPrix() + "', `quantite` = '" + p.getQuantite() + "' WHERE `panier`.`id_prod` = " + p.getId_prod();
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("Panier updated !");
@@ -100,19 +100,19 @@ public class ServicePanier implements IService <panier> {
         }
 
         return list;
-    } 
+    }*/ 
     
     
     public List<panier> SelectAll() {
         List<panier> list = new ArrayList<>();
         try {
             String req = "SELECT p.id_pannier,\n" +
-"       p.prix,\n" +
-"       p.quantite,\n" +
+ 
 "       pr.name,\n" +
 "       pr.description,\n" +
 "       pr.picture,\n" +
 "       pr.price,\n" +
+"       pp.quantite,\n"+
 "       pp.id_produit\n" +
 "       from `panier` p,\n" +
 "       `prod` pr,\n" +
@@ -123,7 +123,7 @@ public class ServicePanier implements IService <panier> {
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
                 System.out.println("rs" +rs.toString());
-                panier p = new panier( rs.getInt(1),rs.getDouble("prix"), rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8));
+                panier p = new panier( rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6));
                 list.add(p);
             }
         } catch (SQLException ex) {
@@ -146,7 +146,7 @@ public class ServicePanier implements IService <panier> {
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                p =new panier( rs.getDouble("prix"), rs.getInt(4));
+                p =new panier( rs.getInt(1),rs.getInt(2));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -155,13 +155,29 @@ public class ServicePanier implements IService <panier> {
         return p;
     }
 
-    public List<panier> readAll() {
+  //  public List<panier> readAll() {
        //return new ArrayList<panier>();
-       return getAll();
+    //   return getAll();
        
     
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //}
+
+    @Override
+    public void ajouter(panier p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void modifier(panier p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<panier> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
 
    // public void insert(panier p) {

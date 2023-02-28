@@ -15,48 +15,55 @@ import javafx.scene.control.TableColumn;
 public class panier { 
 
     private int id_panier;
-    private double prix;
-    private int quantite;
     private int id_user;
     private String name;
     private String description;
     private String pic;
     private int price;
     private int id_prod;
-  
+   
+  private int quantite;
 
     public panier() {
     }
 
-    public panier(double prix, int quantite) {
-        this.prix = prix;
-        this.quantite = quantite;
-    }
+   
 
-    public panier(int id_panier, double prix, int quantite, int user) {
+    public panier(int id_panier, int user) {
         this.id_panier = id_panier;
-
-        this.prix = prix;
-        this.quantite = quantite;
         this.id_user = id_user;
        
         
     }
 
-    public panier(int id_panier, double prix, int quantite, String name, String description, String pic, int price, int id_prod) {
+    /*public panier(int id_panier,  int quantite, String name, String description, String pic, int price, int id_prod) {
         
         this.id_panier=id_panier;
-        this.prix=prix;
+        this.name=name;
+        this.description=description;
+        this.pic=pic;
+        this.id_prod=id_prod;
+        this.price=price;
         this.quantite=quantite;
+        
+        
+        
+    }
+ */
+    public panier(int id_panier, String name, String description, String pic, int price, int id_prod ) { 
+          this.id_panier=id_panier;
         this.name=name;
         this.description=description;
         this.pic=pic;
         this.id_prod=id_prod;
         this.price=price;
         
-        
-        
+       
     }
+
+   
+
+   
 
    
 
@@ -76,21 +83,7 @@ public class panier {
         this.id_prod = id_prod;
     }
 
-    public double getPrix() {
-        return prix;
-    }
-
-    public void setPrix(double prix) {
-        this.prix = prix;
-    }
-
-    public int getQuantite() {
-        return quantite;
-    }
-
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
-    }
+    
 
     public int getId_user() {
         return id_user;
@@ -107,7 +100,7 @@ public String getname() {
         this.name =name ;
     }
     public String getPic() {
-        return name;
+        return pic;
     }
 
     public void setPic(String pic) {
@@ -127,6 +120,13 @@ public String getname() {
     public void setPrice(int  price) {
         this.price=price ;
     } 
+    public int getQuantite(){
+        return quantite;
+    }
+
+    public void setQuantite(int  price) {
+        this.quantite=quantite ;
+    } 
 
     /**
      *
@@ -139,8 +139,7 @@ public String getname() {
     public int hashCode() {
         int hash = 3;
         hash = 53 * hash + this.id_panier;
-        hash = 53 * hash + (int) (Double.doubleToLongBits(this.prix) ^ (Double.doubleToLongBits(this.prix) >>> 32));
-        hash = 53 * hash + this.quantite;
+       
         hash = 53 * hash + this.id_user;
        
         return hash;
@@ -161,12 +160,8 @@ public String getname() {
         if (this.id_panier != other.id_panier) {
             return false;
     }
-        if (Double.doubleToLongBits(this.prix) != Double.doubleToLongBits(other.prix)) {
-            return false;
-        }
-        if (this.quantite != other.quantite) {
-            return false;
-        }
+       
+        
         if (this.id_user != other.id_user) {
             return false;
         }
@@ -176,9 +171,9 @@ public String getname() {
 
     @Override
     public String toString() {
-        return "panier{" + "prix=" + prix + ", quantite=" + quantite + '}';
+        return "panier{" + "id_panier=" + id_panier + ", id_user=" + id_user + ", name=" + name + ", description=" + description + ", pic=" + pic + ", price=" + price + ", id_prod=" + id_prod + ", quantite=" + quantite + '}';
     }
-    
+
    
    
     

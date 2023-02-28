@@ -234,7 +234,7 @@
                         </Label>
                         <TableView fx:id="display" cache="true" layoutX="182.0" layoutY="102.0" opacity="0.65" prefHeight="294.0" prefWidth="671.0">
                      
-                          <columns>
+                                <columns>
                             <TableColumn fx:id="image_produit" prefWidth="232.0" text="image_produit" />
                             <TableColumn fx:id="nom_produit" prefWidth="126.0" text="nom_produit" />
                               <TableColumn fx:id="description" prefWidth="146.0" text="Description" />
@@ -249,8 +249,8 @@
                            <textFill>
                               <LinearGradient endX="1.0" endY="1.0">
                                  <stops>
-                                    <Stop color="#ae6a16" />
-                                    <Stop color="WHITE" offset="1.0" />
+                                    <Stop color="#e4a04c" />
+                                    <Stop color="#282525" offset="1.0" />
                                  </stops>
                               </LinearGradient>
                            </textFill>
@@ -262,7 +262,7 @@
                                     <Stop color="#ae6a16" />
                                     <Stop color="#ad6a17" offset="0.03459789712986643" />
                                     <Stop color="#ad6a17" offset="0.042483660130718956" />
-                                    <Stop color="WHITE" offset="1.0" />
+                                    <Stop color="#252323" offset="1.0" />
                                  </stops>
                               </LinearGradient>
                            </textFill>
@@ -293,7 +293,7 @@
                                     <Stop color="#ae6a16" />
                                     <Stop color="#ad6a17" offset="0.042483660130718956" />
                                     <Stop color="#ad6a17" offset="0.05633702756464904" />
-                                    <Stop color="WHITE" offset="1.0" />
+                                    <Stop color="#2f2d2d" offset="1.0" />
                                  </stops>
                               </LinearGradient>
                            </textFill>
@@ -301,9 +301,29 @@
                               <Font name="System Bold Italic" size="19.0" />
                            </font>
                         </Button>
+                        <Label layoutX="595.0" layoutY="425.0" prefHeight="21.0" prefWidth="97.0" text="Total">
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="BLACK" />
+                                    <Stop color="#fcb15c" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                           <font>
+                              <Font name="System Bold Italic" size="35.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="fx_total" editable="false" layoutX="692.0" layoutY="435.0" prefHeight="31.0" prefWidth="163.0" />
+                      <Button fx:id="valider_commande" layoutX="752.0" layoutY="562.0" mnemonicParsing="false" onAction="#valider_Commande" prefHeight="42.0" prefWidth="231.0" text="Valider Commande" textFill="#5e684e">
+                           <font>
+                              <Font name="System Bold Italic" size="17.0" />
+                           </font>
+                        </Button>
                      </children>
                   </Pane>
-               </children></Pane>
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </children>

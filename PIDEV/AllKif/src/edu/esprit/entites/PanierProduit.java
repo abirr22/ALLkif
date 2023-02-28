@@ -11,14 +11,21 @@ package edu.esprit.entites;
  */
 public class PanierProduit {
     private int id_panier;
-    private int id_produit; 
+    private int id_produit;
+    private int quantite;  
+    public String getQuantite;
 
     public PanierProduit() {
     }
 
-    public PanierProduit(int id_panier, int id_produit) {
+    public PanierProduit(int quantite) {
+        this.quantite = quantite;
+    }
+
+    public PanierProduit(int id_panier, int id_produit, int quantite) {
         this.id_panier = id_panier;
         this.id_produit = id_produit;
+        this.quantite = quantite;
     }
 
     public int getId_panier() {
@@ -37,11 +44,20 @@ public class PanierProduit {
         this.id_produit = id_produit;
     }
 
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + this.id_panier;
-        hash = 59 * hash + this.id_produit;
+        int hash = 5;
+        hash = 97 * hash + this.id_panier;
+        hash = 97 * hash + this.id_produit;
+        hash = 97 * hash + this.quantite;
         return hash;
     }
 
@@ -63,21 +79,21 @@ public class PanierProduit {
         if (this.id_produit != other.id_produit) {
             return false;
         }
+        if (this.quantite != other.quantite) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "produitpanier{" + "id_panier=" + id_panier + ", id_produit=" + id_produit + '}';
-    }
-
-    public double getPrix() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public int getQuantite() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "PanierProduit{" + "quantite=" + quantite + '}';
     }
     
-    
+
+
 }
+
+   
+    
+
