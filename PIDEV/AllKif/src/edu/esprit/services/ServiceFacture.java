@@ -57,7 +57,6 @@ public class ServiceFacture implements IService <facture> {
      *
      * @param id
      */
-    @Override
     public void supprimer(int id) {
        try {
             String req = "DELETE FROM `facture` WHERE id_facture = " + id;
@@ -122,6 +121,11 @@ public class ServiceFacture implements IService <facture> {
         }
 
         return f;
+    }
+
+    @Override
+    public void supprimer(int id, int id_panier) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     }

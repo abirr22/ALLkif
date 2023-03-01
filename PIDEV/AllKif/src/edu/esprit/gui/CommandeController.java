@@ -45,6 +45,9 @@ public class CommandeController implements Initializable {
     private Button fx_cc;
     @FXML
     private Button fx_AC;
+    
+    ServicePanier ps = new ServicePanier(); 
+    ServiceCommande commande = new ServiceCommande(); 
 
     /**
      * Initializes the controller class.
@@ -60,9 +63,13 @@ public class CommandeController implements Initializable {
        
         //id_prod.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId_prod()).asObject()); 
          ServiceCommande crud = new ServiceCommande();
+         ServicePanier khouloud = new ServicePanier();
         // Populate the table with data
         List<commande> data;
+        List<panier> panier;
+
         data = crud.SelectAll();
+     
         table.getItems().setAll(data);
         
         // TODO

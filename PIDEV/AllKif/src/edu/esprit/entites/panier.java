@@ -6,6 +6,7 @@
 package edu.esprit.entites;
 
 import java.util.Objects;
+import java.util.stream.Stream;
 import javafx.scene.control.TableColumn;
 
 /**
@@ -50,13 +51,14 @@ public class panier {
         
     }
  */
-    public panier(int id_panier, String name, String description, String pic, int price, int id_prod ) { 
-          this.id_panier=id_panier;
+    public panier(int id_panier, String name, String description, String pic, int price, int id_prod , int quantite ) { 
+        this.id_panier= id_panier;
         this.name=name;
         this.description=description;
         this.pic=pic;
         this.id_prod=id_prod;
         this.price=price;
+        this.quantite=quantite;
         
        
     }
@@ -124,7 +126,7 @@ public String getname() {
         return quantite;
     }
 
-    public void setQuantite(int  price) {
+    public void setQuantite(int  quantite) {
         this.quantite=quantite ;
     } 
 
@@ -174,6 +176,7 @@ public String getname() {
         return "panier{" + "id_panier=" + id_panier + ", id_user=" + id_user + ", name=" + name + ", description=" + description + ", pic=" + pic + ", price=" + price + ", id_prod=" + id_prod + ", quantite=" + quantite + '}';
     }
 
+    
    
    
     

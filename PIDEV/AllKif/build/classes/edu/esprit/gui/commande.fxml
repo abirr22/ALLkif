@@ -5,10 +5,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.gui.CommandeController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="995.0" style="-fx-background-color: #031B03;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.gui.CommandeController">
    <children>
-      <TableView fx:id="table" layoutX="225.0" layoutY="115.0" prefHeight="301.0" prefWidth="590.0">
+      <TableView fx:id="table" layoutX="193.0" layoutY="117.0" prefHeight="301.0" prefWidth="586.0">
         <columns>
           <TableColumn fx:id="img" prefWidth="138.0" text="Image_produit" />
           <TableColumn fx:id="nom" minWidth="0.0" prefWidth="176.0" text="nom_produit" />
@@ -17,9 +21,55 @@
             <TableColumn fx:id="quan" minWidth="0.0" prefWidth="84.0" text="Quantite" />
         </columns>
       </TableView>
-      <Label layoutX="87.0" layoutY="50.0" prefHeight="21.0" prefWidth="124.0" text="Votre Commande" />
-      <Button fx:id="fx_cc" layoutX="332.0" layoutY="441.0" mnemonicParsing="false" onMouseClicked="#confirmer_commande" prefHeight="31.0" prefWidth="316.0" text="Confirmer Commande" />
-      <Button fx:id="fx_AC" layoutX="367.0" layoutY="511.0" mnemonicParsing="false" onMouseClicked="#annuler_commande" prefHeight="31.0" prefWidth="264.0" text="AnnulerCommande" />
-      <Button layoutX="762.0" layoutY="627.0" mnemonicParsing="false" onAction="#facture" prefHeight="31.0" prefWidth="140.0" text="Facture" />
+      <Label layoutX="254.0" layoutY="22.0" prefHeight="74.0" prefWidth="561.0" text="Votre Commande" textAlignment="CENTER">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.13106796116504854">
+               <stops>
+                  <Stop color="#eee4e4" />
+                  <Stop color="#c38057" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <font>
+            <Font name="System Bold Italic" size="51.0" />
+         </font></Label>
+      <Button fx:id="fx_cc" layoutX="311.0" layoutY="442.0" mnemonicParsing="false" onMouseClicked="#confirmer_commande" prefHeight="31.0" prefWidth="328.0" text="Confirmer Commande">
+         <textFill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop color="#2c1515" />
+                  <Stop color="#c38057" offset="1.0" />
+               </stops>
+            </RadialGradient>
+         </textFill>
+         <font>
+            <Font name="System Bold Italic" size="23.0" />
+         </font></Button>
+      <Button fx:id="fx_AC" layoutX="354.0" layoutY="505.0" mnemonicParsing="false" onMouseClicked="#annuler_commande" prefHeight="31.0" prefWidth="264.0" text="AnnulerCommande" textAlignment="CENTER">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.13106796116504854">
+               <stops>
+                  <Stop color="#2c1515" />
+                  <Stop color="#c38057" offset="0.8731884057971014" />
+                  <Stop color="#c38057" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font></Button>
+      <Button layoutX="762.0" layoutY="627.0" mnemonicParsing="false" onAction="#facture" prefHeight="31.0" prefWidth="140.0" text="Facture">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.20388349514563106">
+               <stops>
+                  <Stop color="#2c1515" />
+                  <Stop color="#c38057" offset="0.8731884057971014" />
+                  <Stop color="#c38057" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font></Button>
    </children>
 </AnchorPane>

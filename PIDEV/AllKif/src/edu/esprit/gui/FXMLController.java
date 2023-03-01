@@ -5,12 +5,17 @@
  */
 package edu.esprit.gui;
 
+import com.gluonhq.charm.glisten.control.NavigationDrawer.Item;
+import com.gluonhq.impl.charm.a.b.b.i;
+import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 import edu.esprit.entites.panier;
 import edu.esprit.services.ServicePanier;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -22,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,6 +42,8 @@ import javafx.stage.Stage;
  * @author zayat
  */
 public class FXMLController implements Initializable {
+
+    private static Object itemTable;
 
     @FXML
     private Pane pn_boutique;
@@ -119,11 +127,15 @@ public class FXMLController implements Initializable {
         prix.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getPrice()).asObject());
         //xrole.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
         description.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
-       quantite.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getQuantite()).asObject());
-        //id_prod.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId_prod()).asObject());
+        quantite.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getQuantite()).asObject());
+        //id_prod.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId_prod()).asObject()); 
         
-       
-         
+        
+        
+                 int total = 0 ;
+for (panier item : display.getItems()) {
+    total = total + item.getPrice();
+}
       
         numericOnly(fx_quantite); 
         
@@ -132,9 +144,10 @@ public class FXMLController implements Initializable {
         List<panier> data;
         data = crud.SelectAll();
         display.getItems().setAll(data);
+        totalCalculation();
 
         // TODO
-    }    
+    }     
 
     @FXML
     private void btn_boutique(ActionEvent event) {
@@ -185,16 +198,89 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private void supprimer(MouseEvent event) {
+    private void supprimer(MouseEvent event) { 
+        
+         if (display.getSelectionModel().getSelectedItem() != null) {
+            // Récupérer les données de l'événement sélectionné
+            panier selectedPanier = display.getSelectionModel().getSelectedItem();
+            ServicePanier sp = new ServicePanier();
+            sp.supprimer(selectedPanier.getId_prod(),selectedPanier.getId_panier());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Produit Supprimée");
+                alert.show();
+        }
+        try {
+            Parent page1 = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+            Scene scene = new Scene(page1);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Voulez vous supprimer ce produit?");
+                alert.show();
+
+    }
+
+    
+    private panier PanierToUpdate;
+ @FXML
+    private void modifier(MouseEvent event) { 
+        
+        PanierToUpdate = display.getSelectionModel().getSelectedItem();
+        System.out.println(PanierToUpdate.toString());
+        fx_quantite.setText("" + PanierToUpdate.getQuantite());
+
+        
     }
 
     @FXML
-    private void modifier(MouseEvent event) {
+    private void valider(MouseEvent event) { 
+       
+        int quantite;
+        
+        quantite = Integer.parseInt(fx_quantite.getText());
+        System.out.println("quantite "+quantite);
+        // Mettre à jour l'objet event
+      
+        PanierToUpdate.setQuantite(Integer.parseInt(fx_quantite.getText()));
+
+        // Mettre à jour l'événement dans la base de données
+        ServicePanier sp = new ServicePanier();
+        sp.modifier(PanierToUpdate);
+
+        // Fermer la fenêtre
+        //Stage stage = (Stage) modifierButton.getScene().getWindow();
+        //stage.close();
+        try {
+            Parent page1 = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+            Scene scene = new Scene(page1);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
-    @FXML
-    private void valider(MouseEvent event) {
+    public void setLPanier(panier PanierToUpdate) {
+        this.PanierToUpdate = PanierToUpdate;
+        // Afficher les données de l'événement à modifier dans le formulaire
+      
+        fx_quantite.setText(String.valueOf(PanierToUpdate.getQuantite()));
+
     }
+
+    
 
     @FXML
     private void valider_Commande(ActionEvent event) {
@@ -210,6 +296,16 @@ stage.show();
 
 
 }
-    }
+    }  
+  
+   public void totalCalculation (){
+
+   int total = 0;
+        
+   total = display.getItems().stream().map(
+     (item) -> item.getPrice()).reduce(total, (accumulator, _item) -> accumulator + _item);
+
+          fx_total.setText(String.valueOf(total));
+}
     
 }

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IServicePanierProduit <T> {
     public void ajouter(T PP);
-    public void supprimer(int id);
+    public void supprimer(int id,int id_panier);
     public void modifier(T PP);
     public List<T> getAll();
     public T getOneById(int id);

@@ -55,12 +55,12 @@ Connection cnx = DataSource.getInstance().getCnx();
      * @param id
      */
     @Override
-    public void supprimer(int id) {
+    public void supprimer(int id, int id_panier) {
        try {
-            String req = "DELETE FROM `panier produit` WHERE id_pannier = " + id;
+            String req = "DELETE FROM `panier produit` WHERE id_produit = " + id +"id_pannier = " + id_panier;
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
-            System.out.println("panier produit deleted !");
+            System.out.println("panier deleted !");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -121,4 +121,5 @@ Connection cnx = DataSource.getInstance().getCnx();
 
         return pp;
     } 
+
 }

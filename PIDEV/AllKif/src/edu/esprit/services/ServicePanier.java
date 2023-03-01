@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class ServicePanier implements IService <panier> {
      Connection cnx = DataSource.getInstance().getCnx();
+     
 
     /**
      *
@@ -56,10 +57,12 @@ public class ServicePanier implements IService <panier> {
      *
      * @param id
      */
-    @Override
-    public void supprimer(int id) {
+       @Override
+    
+    public void supprimer(int id, int id_panier) {
        try {
-            String req = "DELETE FROM `panier` WHERE id_prod = " + id;
+            String req = "DELETE FROM `panier produit` WHERE id_produit = '" + id +"' and id_pannier = '" + id_panier +"'";
+            System.out.println(req);
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("panier deleted !");
@@ -72,18 +75,20 @@ public class ServicePanier implements IService <panier> {
      *
      * @param p
      */
-    //@Override
-   /* public void modifier(panier p) {
+    @Override
+    public void modifier(panier p) {
         try {
-            String req = "UPDATE `panier` SET `prix` = '" + p.getPrix() + "', `quantite` = '" + p.getQuantite() + "' WHERE `panier`.`id_prod` = " + p.getId_prod();
+            String req = "UPDATE `panier produit` SET  quantite = '" + p.getQuantite() + "' WHERE id_produit = '" + p.getId_prod()+"' and id_pannier ='"+p.getId_panier()+"'";
+            System.out.println(req);
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("Panier updated !");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }   }
+        }   
+    }
 
-    @Override
+    /*@Override
     public List<panier> getAll() {
         List<panier> list = new ArrayList<>();
         try {
@@ -100,7 +105,7 @@ public class ServicePanier implements IService <panier> {
         }
 
         return list;
-    }*/ 
+    }*/
     
     
     public List<panier> SelectAll() {
@@ -123,7 +128,8 @@ public class ServicePanier implements IService <panier> {
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
                 System.out.println("rs" +rs.toString());
-                panier p = new panier( rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6));
+                panier p = new panier( rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(7),rs.getInt(6));
+                System.out.println(p.getId_prod());
                 list.add(p);
             }
         } catch (SQLException ex) {
@@ -168,16 +174,17 @@ public class ServicePanier implements IService <panier> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+    /*@Override
     public void modifier(panier p) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }*/
 
     @Override
     public List<panier> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+   
 }
 
    // public void insert(panier p) {
@@ -185,5 +192,5 @@ public class ServicePanier implements IService <panier> {
 
     
 
-   // }
+   
 

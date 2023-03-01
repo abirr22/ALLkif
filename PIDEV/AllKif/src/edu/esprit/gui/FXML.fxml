@@ -270,7 +270,7 @@
                               <Font name="System Bold Italic" size="17.0" />
                            </font>
                         </Button>
-                        <Label layoutX="65.0" layoutY="558.0" prefHeight="37.0" prefWidth="130.0" text="Quantite" textAlignment="CENTER">
+                        <Label layoutX="52.0" layoutY="543.0" prefHeight="37.0" prefWidth="130.0" text="Quantite" textAlignment="CENTER">
                            <textFill>
                               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                  <stops>
@@ -285,8 +285,8 @@
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="fx_quantite" layoutX="201.0" layoutY="562.0" prefHeight="31.0" prefWidth="200.0" />
-                        <Button fx:id="valider" layoutX="439.0" layoutY="557.0" mnemonicParsing="false" onMouseClicked="#valider" prefHeight="31.0" prefWidth="97.0" text="valider">
+                        <TextField fx:id="fx_quantite" layoutX="182.0" layoutY="547.0" prefHeight="31.0" prefWidth="200.0" />
+                        <Button fx:id="valider" layoutX="401.0" layoutY="542.0" mnemonicParsing="false" onMouseClicked="#valider" prefHeight="31.0" prefWidth="97.0" text="valider">
                            <textFill>
                               <LinearGradient endX="1.0" endY="1.0">
                                  <stops>

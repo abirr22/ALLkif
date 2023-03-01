@@ -57,24 +57,13 @@ public class ServiceCommande implements IServiceCommande <commande> {
      public List<commande> SelectAll() {
         List<commande> list = new ArrayList<>();
         try {
-            String req = "SELECT commande.id_commande,\n" +
-"        prod.name,\n" +
-"        prod.description,\n" +
-"        prod.picture,\n" +
-"        prod.price,\n" +
-"        panier.id_pannier,\n" +
-"        commande.totale,\n" +
-"        commande.valide\n" +
-" from `commande` commande,\n" +
-"`panier` panier,\n" +
-"`prod` prod \n" +
-"where panier.id_user = '1' and prod.id_product = commande.id_panier = panier.id_pannier  \n" +
-"ORDER BY `commande`.`id_commande` ASC";
+            String req = "SELECT ALL from commande";
+       
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
                 System.out.println("rs" +rs.toString());
-                commande c = new commande( rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getBoolean(8));
+                commande c = new commande(  rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getBoolean(4),rs.getInt(5));
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -123,7 +112,7 @@ public class ServiceCommande implements IServiceCommande <commande> {
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                commande c = new commande( rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getBoolean(4));
+                commande c = new commande( rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getBoolean(4),rs.getInt(5));
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -146,7 +135,7 @@ public class ServiceCommande implements IServiceCommande <commande> {
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                c =new commande( rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getBoolean(4)); 
+                c =new commande( rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getBoolean(4),rs.getInt(5)); 
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

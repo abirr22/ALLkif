@@ -18,6 +18,7 @@ public class commande {
     private String description;
     private int price;
     private String pic;
+    private int id_user;
 
     public commande() {
     }
@@ -27,10 +28,10 @@ public class commande {
         this.valide = valide;
     }
 
-    public commande(int id_panier, int id_commande, double totale, boolean valide) {
+    public commande(int id_panier, int id_commande, double totale, boolean valide,int id_user) {
         this.id_panier = id_panier;
         this.id_commande = id_commande;
-      
+      this.id_user=id_user;
         this.totale = totale;
         this.valide = valide;
     }
@@ -110,44 +111,15 @@ public class commande {
     public void setPic(String pic) {
         this.pic = pic;
     }
+ public int getId_user() {
+        return id_user;
+    }
 
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
    
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + this.id_panier;
-        hash = 67 * hash + this.id_commande;
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.totale) ^ (Double.doubleToLongBits(this.totale) >>> 32));
-        hash = 67 * hash + (this.valide ? 1 : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final commande other = (commande) obj;
-        if (this.id_panier != other.id_panier) {
-            return false;
-        }
-        if (this.id_commande != other.id_commande) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.totale) != Double.doubleToLongBits(other.totale)) {
-            return false;
-        }
-        if (this.valide != other.valide) {
-            return false;
-        }
-        return true;
-    }
+    
 
     @Override
     public String toString() {
