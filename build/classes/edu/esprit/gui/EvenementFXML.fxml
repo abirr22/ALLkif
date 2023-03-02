@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="720" prefWidth="1280" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="edu.esprit.gui.EvenementFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.gui.EvenementFXMLController">
      <children>
       <AnchorPane prefHeight="720.0" prefWidth="180.0" style="-fx-background-color: #202020;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -204,24 +204,6 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_evenements" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
-               <children>
-                  <Label prefHeight="68.0" prefWidth="280.0" text="Evenements" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="30.0" />
-                     </font>
-                  </Label>
-                  <TilePane fx:id="tilePane" layoutX="4.0" layoutY="101.0" prefHeight="625.0" prefTileHeight="300.0" prefTileWidth="200.0" prefWidth="1063.0" />
-               </children></Pane>
-            <Pane fx:id="pn_mesevenements" layoutX="1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
-               <children>
-                  <Label prefHeight="68.0" prefWidth="280.0" text="Mes évènements" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="30.0" />
-                     </font>
-                  </Label>
-                  <TilePane fx:id="tilePane2" layoutX="14.0" layoutY="120.0" prefHeight="586.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="1044.0" />
-               </children></Pane>
             <Pane fx:id="pn_ajouterevenement" layoutX="-1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
                <children>
                   <Label layoutX="10.0" layoutY="10.0" prefHeight="68.0" prefWidth="292.0" text="Ajouter evenement" textFill="#f0f0f0">
@@ -229,7 +211,7 @@
                         <Font name="Segoe UI Bold" size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="76.0" layoutY="169.0" text="Nom de l'évènement" textFill="RED" />
+                  <Label layoutX="76.0" layoutY="169.0" text="Nom de l'évènement" textFill="WHITE" />
                   <Label layoutX="107.0" layoutY="308.0" text="Description" textFill="RED" />
                   <Label layoutX="112.0" layoutY="435.0" text="Artiste" textFill="RED" />
                   <Label layoutX="69.0" layoutY="497.0" text="Date de l'évènement" textFill="RED" />
@@ -242,6 +224,24 @@
                   <Button layoutX="669.0" layoutY="592.0" mnemonicParsing="false" onAction="#ajouterEvenement" prefHeight="49.0" prefWidth="155.0" text="Ajouter" />
                   <Label fx:id="myLabel" layoutX="628.0" layoutY="473.0" prefHeight="49.0" prefWidth="168.0" text="Label" />
                   <Button layoutX="873.0" layoutY="592.0" mnemonicParsing="false" onAction="#modifierE" prefHeight="49.0" prefWidth="155.0" text="Modifier" />
+               </children></Pane>
+            <Pane fx:id="pn_evenements" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Evenements" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TilePane fx:id="tilePane" layoutX="4.0" layoutY="101.0" prefHeight="625.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="1063.0" />
+               </children></Pane>
+            <Pane fx:id="pn_mesevenements" layoutX="1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Mes évènements" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TilePane fx:id="tilePane2" layoutX="14.0" layoutY="120.0" prefHeight="586.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="1044.0" stylesheets="@../css/style.css" />
                </children></Pane>
          </children>
       </AnchorPane>

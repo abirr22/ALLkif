@@ -20,6 +20,12 @@ public class AvisEvenement {
         this.Avis = Avis;
     }
 
+    public AvisEvenement(int idAvisE, String Avis) {
+        this.idAvisE = idAvisE;
+        this.Avis = Avis;
+    }
+
+    
     public AvisEvenement(int idEvenement, int idAvisE, String Avis) {
         this.idEvenement = idEvenement;
         this.idAvisE = idAvisE;

@@ -69,7 +69,7 @@ public class ServiceAvisE implements IService <AvisEvenement>{
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
            while (rs.next()) {
-               AvisEvenement a = new AvisEvenement(rs.getInt(1), rs.getInt(2), rs.getString(3) );
+               AvisEvenement a = new AvisEvenement(rs.getInt(1), rs.getString(2) );
                list.add(a);
           }
         } catch (SQLException ex) {

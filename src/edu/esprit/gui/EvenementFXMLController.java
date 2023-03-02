@@ -8,7 +8,9 @@ package edu.esprit.gui;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import edu.esprit.entities.AvisEvenement;
 import edu.esprit.entities.Evenement;
+import edu.esprit.services.ServiceAvisE;
 import edu.esprit.services.ServiceEvenement;
 import java.io.IOException;
 import java.net.URL;
@@ -92,11 +94,27 @@ public class EvenementFXMLController implements Initializable {
     private TilePane tilePane2;
 
 
+          public static void numericOnly(final TextField field) {
+        field.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(
+                    ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    field.setText(newValue.replaceAll("[^\"\\\\d*(\\\\.\\\\d*)?\"]", ""));
+                }
+            }   
+        });
+    }
+    private TextField tfid;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+    //numericOnly( tfPrixE);
     
+    
+        
 }
 
     @FXML
@@ -116,19 +134,21 @@ public class EvenementFXMLController implements Initializable {
 
         List<Evenement> e =   se.getAll();
        for (int i=0; i< e.size(); i++){
-          
-           Label lblNom = new Label(e.get(i).getNomEvenement());
+         
+          Label lblNom = new Label(e.get(i).getNomEvenement());
             Label lblDescription = new Label(e.get(i).getDescriptionEvenement());
              Label lblArtiste = new Label(e.get(i).getArtiste());
               Label lblDate = new Label(e.get(i).getDateEvenement().toString());
               Button btn= new Button("Voir plus de détails");
+              Button btnAvis= new Button("avis");
               VBox vbox = new VBox();
               vbox.getChildren().add(lblNom);
               vbox.getChildren().add(lblDescription);
-              vbox.getChildren().add(lblArtiste);
+             vbox.getChildren().add(lblArtiste);
               vbox.getChildren().add(lblDate);
               vbox.getChildren().add(btn);
-                 
+              vbox.getChildren().add(btnAvis);
+                
                Evenement ev = se.getOneById(e.get(i).getIdEvenement());
        tilePane.getChildren().add(vbox);
        
@@ -136,9 +156,36 @@ public class EvenementFXMLController implements Initializable {
       btn.setOnAction(new EventHandler<ActionEvent>() {
                @Override
                public void handle(ActionEvent event) {
-                  
+                 
                        //                    pn_detailE.toFront();
-                       pn_evenements.getChildren().clear();
+                       ServiceAvisE sa = new ServiceAvisE();
+                         List<AvisEvenement> a =   sa.getAll();
+                          Label lblNom = new Label(ev.getNomEvenement());
+            Label lblDescription = new Label(ev.getDescriptionEvenement());
+            Label lblArtiste = new Label(ev.getArtiste());
+           Label lblDate = new Label(ev.getDateEvenement().toString());
+             String Prix= Double.toString(ev.getPrixEvenement());
+              Label lblPrix = new Label(Prix);
+                VBox vbox1 = new VBox();
+             vbox1.getChildren().add(lblNom);
+              vbox1.getChildren().add(lblDescription);
+              vbox1.getChildren().add(lblArtiste);
+              vbox1.getChildren().add(lblDate);
+             vbox1.getChildren().add(lblPrix);
+               pn_evenements.getChildren().clear();
+                  pn_evenements.getChildren().add(vbox1);
+                     
+               for (int i=0; i< e.size(); i++){
+               Label lblAvis = new Label(a.get(i).getAvis());
+                 VBox vbox2 = new VBox();
+             vbox2.getChildren().add(lblAvis);
+              pn_evenements.getChildren().add(vbox2);
+               }
+            
+                     
+                       
+                       
+                       
 //                Label lblNom = new Label(ev.getNomEvenement());
 //            Label lblDescription = new Label(ev.getDescriptionEvenement());
 //             Label lblArtiste = new Label(ev.getArtiste());
@@ -157,10 +204,80 @@ public class EvenementFXMLController implements Initializable {
 //                fxmlLoader.setLocation(getClass().getResource("DE.fxml"));
               // Pane pane= fxmlLoader.load();
                 
-
+          
+              
+              
            
                    }
            });
+        btnAvis.setOnAction(new EventHandler<ActionEvent>() {
+               @Override
+              public void handle(ActionEvent event) {
+               
+                  ServiceAvisE sa = new ServiceAvisE();
+                 TextField tfAvis = new TextField();
+                 Button btnAjouterAvis = new Button("ajouter un avis");
+                  
+                   btnAjouterAvis.setOnAction(new EventHandler<ActionEvent>() {
+               @Override
+               public void handle(ActionEvent event) {
+                   
+                   AvisEvenement a = new AvisEvenement(tfAvis.getText());
+                         
+              sa.ajouter(a);
+                       Alert a1 = new Alert(Alert.AlertType.INFORMATION, "avis added !", ButtonType.OK);
+            a1.showAndWait();
+            
+          
+               
+                 
+               }
+                  });
+                    VBox vbox = new VBox();
+              vbox.getChildren().add(tfAvis);
+              vbox.getChildren().add(btnAjouterAvis);
+       tilePane.getChildren().clear();
+                  tilePane.getChildren().add(vbox);
+                  
+                  List<AvisEvenement> a =   sa.getAll();
+                   for (int i=0; i< e.size(); i++){
+               Label lblAvis = new Label(a.get(i).getAvis());
+                 VBox vbox2 = new VBox();
+                  vbox2.getChildren().add(lblAvis);
+               Button likeButton = new Button("Like");
+           Button dislikeButton = new Button("Dislike");
+                              vbox2.getChildren().add(likeButton);
+                                   vbox2.getChildren().add(dislikeButton);
+                  tilePane.getChildren().add(vbox2);
+
+         
+     likeButton.setOnAction(new EventHandler<ActionEvent>() {
+          int likeCount = 0;
+                   @Override
+                   public void handle(ActionEvent e) {
+                       likeCount++;
+                       System.out.println("Likes: " + likeCount);
+                   }
+               });
+         
+          dislikeButton.setOnAction(new EventHandler<ActionEvent>() {
+              int dislikeCount = 0;
+                   @Override
+                   public void handle(ActionEvent e) {
+                       dislikeCount++;
+                       System.out.println("Dislikes: " + dislikeCount);
+                   }
+               });
+
+
+
+
+
+
+               }
+                 
+               }
+       });
       }
        
 
@@ -236,6 +353,8 @@ public class EvenementFXMLController implements Initializable {
                 String Prix = Double.toString(ev.getPrixEvenement());
                 tfPrixE.setText(Prix);
                 tfArtisteE.setText(ev.getArtiste());
+               // String sid=String.valueOf(id);
+               // tfid.setText(sid);
                 
            
       
@@ -294,45 +413,43 @@ public class EvenementFXMLController implements Initializable {
     @FXML
     private void ajouterEvenement(ActionEvent event) {
         
-        DPEvenement.valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                if (newValue == null) {
-                    // Si la date est nulle, ne pas valider
-                    return;
-                }
-                // Vérifier que la date est valide
-                Date date= Date.valueOf(DPEvenement.getValue());
-                if (!isValidDate(date)) {
-                    // Afficher un message d'erreur si la date est invalide
-                    
-                    Alert alert= new Alert(Alert.AlertType.ERROR, "Date invalide !",ButtonType.OK);
-                    alert.showAndWait();
-                    // Réinitialiser la date sélectionnée à la valeur précédente
-                    DPEvenement.setValue(oldValue);
-                }
-               
-                 String Prix = tfPrixE.getText();
-                 double PrixE= Double.parseDouble(Prix);
-                 ServiceEvenement se = new ServiceEvenement();
-                Evenement e = new Evenement(tfNomE.getText(), tfDescriptionE.getText(),tfArtisteE.getText(),date ,PrixE);
-                se.ajouter(e);
-             
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "Evenement added !", ButtonType.OK);
-                a.showAndWait();
-                
+        DPEvenement.valueProperty().addListener((ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) -> {
+            if (newValue == null) {
+                // Si la date est nulle, ne pas valider
+                return;
             }
+            // Vérifier que la date est valide
+            Date date= Date.valueOf(DPEvenement.getValue());
+            if (!isValidDate(date)) {
+                // Afficher un message d'erreur si la date est invalide
+                
+                Alert alert= new Alert(Alert.AlertType.ERROR, "Date invalide !",ButtonType.OK);
+                alert.showAndWait();
+                // Réinitialiser la date sélectionnée à la valeur précédente
+                DPEvenement.setValue(oldValue);
+            }
+            
+            String Prix = tfPrixE.getText();
+            double PrixE= Double.parseDouble(Prix);
+            ServiceEvenement se = new ServiceEvenement();
+            Evenement e = new Evenement(tfNomE.getText(), tfDescriptionE.getText(),tfArtisteE.getText(),date ,PrixE);
+            se.ajouter(e);
+            
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "Evenement added !", ButtonType.OK);
+            a.showAndWait();
+                
+            
         }); 
-        
-         //Date date= Date.valueOf(DPEvenement.getValue());
+//        
+//         Date date= Date.valueOf(DPEvenement.getValue());
 //       String Prix = tfPrixE.getText();
 //       double PrixE= Double.parseDouble(Prix);
 //   
 //       ServiceEvenement se = new ServiceEvenement();
 //               Evenement e = new Evenement(tfNomE.getText(), tfDescriptionE.getText(),tfArtisteE.getText(),date ,PrixE);
-//               se.ajouter(e);
+//              se.ajouter(e);
 //                Alert a = new Alert(Alert.AlertType.INFORMATION, "Evenement added !", ButtonType.OK);
-//                a.showAndWait();
+//               a.showAndWait();
     }
     
     private boolean isValidDate(Date date) {
@@ -347,7 +464,8 @@ public class EvenementFXMLController implements Initializable {
     
   private void refresh(){
       
-      ServiceEvenement se = new ServiceEvenement();
+       pn_mesevenements.toFront();
+        ServiceEvenement se = new ServiceEvenement();
           List<Evenement> e =   se.getAll();
           
        for (int i=0; i< e.size(); i++){
@@ -378,11 +496,13 @@ public class EvenementFXMLController implements Initializable {
          // } 
           btnS.setOnAction((ActionEvent event1) -> {
               se.supprimer(id);
+              tilePane2.getChildren().clear();
+              refresh();
                Alert a = new Alert(Alert.AlertType.INFORMATION, "Evenement deleted !", ButtonType.OK);
                 a.showAndWait();
               });
             btnM.setOnAction((ActionEvent event1) -> {
-               tilePane2.getChildren().clear();
+                tilePane2.getChildren().clear();
                  pn_ajouterevenement.toFront();
 //                Pane pane = new Pane();
 //                pane.toFront();
@@ -393,8 +513,92 @@ public class EvenementFXMLController implements Initializable {
                 String Prix = Double.toString(ev.getPrixEvenement());
                 tfPrixE.setText(Prix);
                 tfArtisteE.setText(ev.getArtiste());
-            });
+               // String sid=String.valueOf(id);
+               // tfid.setText(sid);
+                
+           
+      
+        
+              });
        }
+      
+  }
+  private void refresh2(){
+      pn_mesevenements.toFront();
+       TextArea Avis = new TextArea();
+        Button ajouterAvis = new Button("Ajouter un avis");
+        
+          ajouterAvis.setOnAction((ActionEvent event1) -> {
+          
+               ServiceAvisE sa = new ServiceAvisE();
+               AvisEvenement a= new AvisEvenement(Avis.getText());
+                   });
+  }
+  private void refresh3(){
+        pn_evenements.toFront();
+        tilePane.getChildren().clear();
+        ServiceEvenement se = new ServiceEvenement();
+
+        List<Evenement> e =   se.getAll();
+       for (int i=0; i< e.size(); i++){
+          
+           Label lblNom = new Label(e.get(i).getNomEvenement());
+            Label lblDescription = new Label(e.get(i).getDescriptionEvenement());
+             Label lblArtiste = new Label(e.get(i).getArtiste());
+              Label lblDate = new Label(e.get(i).getDateEvenement().toString());
+              Button btn= new Button("Voir plus de détails");
+              Button btnAvis= new Button("avis");
+              VBox vbox = new VBox();
+              vbox.getChildren().add(lblNom);
+              vbox.getChildren().add(lblDescription);
+              vbox.getChildren().add(lblArtiste);
+              vbox.getChildren().add(lblDate);
+              vbox.getChildren().add(btn);
+              vbox.getChildren().add(btnAvis);
+                 
+               Evenement ev = se.getOneById(e.get(i).getIdEvenement());
+       tilePane.getChildren().add(vbox);
+       
+      
+      btn.setOnAction(new EventHandler<ActionEvent>() {
+               @Override
+               public void handle(ActionEvent event) {
+                  
+                       //                    pn_detailE.toFront();
+                       pn_evenements.getChildren().clear();
+//                Label lblNom = new Label(ev.getNomEvenement());
+//            Label lblDescription = new Label(ev.getDescriptionEvenement());
+//             Label lblArtiste = new Label(ev.getArtiste());
+//            Label lblDate = new Label(ev.getDateEvenement().toString());
+//             String Prix= Double.toString(ev.getPrixEvenement());
+//              Label lblPrix = new Label(Prix);
+//              VBox vbox = new VBox();
+//              vbox.getChildren().add(lblNom);
+//              vbox.getChildren().add(lblDescription);
+//              vbox.getChildren().add(lblArtiste);
+//              vbox.getChildren().add(lblDate);
+//              vbox.getChildren().add(lblPrix);
+//              Pane pnDE = new Pane();
+//              pnDE.getChildren().add(vbox);
+//                FXMLLoader fxmlLoader = new FXMLLoader();
+//                fxmlLoader.setLocation(getClass().getResource("DE.fxml"));
+              // Pane pane= fxmlLoader.load();
+                
+
+           
+                   }
+           });
+        btnAvis.setOnAction(new EventHandler<ActionEvent>() {
+               @Override
+               public void handle(ActionEvent event) {
+                   pn_evenements.getChildren().clear();
+                  refresh2();
+               }
+       });
+      }
+       
+
+    
       
   }
 
@@ -418,18 +622,29 @@ public class EvenementFXMLController implements Initializable {
                     DPEvenement.setValue(oldValue);
                 }
                
-                 String Prix = tfPrixE.getText();
+                String Prix = tfPrixE.getText();
                  double PrixE= Double.parseDouble(Prix);
                  ServiceEvenement se = new ServiceEvenement();
+               // int id= Integer.parseInt(tfid.getText());
                 Evenement e = new Evenement(tfNomE.getText(), tfDescriptionE.getText(),tfArtisteE.getText(),date ,PrixE);
+             //   System.out.println(id);
                 se.modifier(e);
-             
-                Alert a = new Alert(Alert.AlertType.INFORMATION, "Evenement updated !", ButtonType.OK);
-                a.showAndWait();
+//                Alert a = new Alert(Alert.AlertType.INFORMATION, "Evenement updated !", ButtonType.OK);
+//                a.showAndWait();
+
+                 Alert alert = new Alert(AlertType.INFORMATION);
+alert.setTitle("Modification réussie");
+alert.setHeaderText(null);
+alert.setContentText("Les données ont été modifiées avec succès");
+alert.showAndWait();
                 
             }
+            
         }); 
+       
+         
         
     }
+
     
 }
