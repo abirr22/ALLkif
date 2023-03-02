@@ -32,7 +32,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.stage.Stage; 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
 
 /**
  * FXML Controller class
@@ -55,13 +64,24 @@ public class CommandeController implements Initializable {
     @FXML
     private BottomNavigationButton panier;
     ServiceCommande sc = new ServiceCommande();
+    @FXML
+    private TextField textFiled;
+    @FXML
+    private Button SMS;
+    @FXML
+    private Label statusLabel; 
+      public static final String AUTH_TOKEN = "45423338531ae18be5adf34e5a57f41a";
+    public static final String TWILIO_NUMBER = "+13157911257";
+     public static final String ACCOUNT_SID = "ACae09f8846d7dc92c113b3c6f0c6ddf86";
+
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) { 
+    public void initialize(URL url, ResourceBundle rb) {  
         
+       
 
         // TODO
         //commande.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getTotale()).asObject());  
@@ -149,7 +169,47 @@ public class CommandeController implements Initializable {
         } catch (Exception ex) {
             Logger.getLogger(CommandeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        sc.creecommande(3);
+        sc.creecommande(3); 
+        
+        
+        
+        
+    } 
+
+    
+        
+  
+   
+   
+
+    @FXML
+    private void sendSMS(ActionEvent event) { 
+        
+    String toPhoneNumber = textFiled.getText();
+    if (toPhoneNumber == null || toPhoneNumber.trim().isEmpty()) {
+        statusLabel.setText("Please enter a phone number.");
+        return;
     }
 
+    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+    LocalDate currentDate = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    String messageText = "Merci pour votre commande  " + formatter.format(currentDate);
+    Message message = Message.creator(new PhoneNumber(toPhoneNumber),
+            new PhoneNumber(TWILIO_NUMBER),
+            messageText).create();
+
+    if (message.getSid() != null) {
+        statusLabel.setText("SMS sent successfully to " + toPhoneNumber + "!");
+    } else {
+        statusLabel.setText("Error sending SMS to " + toPhoneNumber + ".");
+    }
 }
+
+    }
+    
+    
+    
+     
+    
+

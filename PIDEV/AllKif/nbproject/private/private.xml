@@ -5,12 +5,11 @@
         <group>
             <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/services/ServiceCommande.java</file>
             <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/gui/CommandeController.java</file>
-            <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/entites/panier.java</file>
             <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/testes/MainClasseFacture.java</file>
-            <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/services/ServicePanier.java</file>
+            <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/entites/MailSender.java</file>
             <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/gui/FXMLController.java</file>
-            <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/gui/confc.fxml</file>
             <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/gui/FXML.fxml</file>
+            <file>file:/C:/Users/zayat/Desktop/ALLkif/PIDEV/AllKif/src/edu/esprit/services/IServiceCommande.java</file>
         </group>
     </open-files>
 </project-private>

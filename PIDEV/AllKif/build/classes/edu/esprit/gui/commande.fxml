@@ -49,19 +49,6 @@
          <font>
             <Font name="System Bold" size="22.0" />
          </font></Button>
-      <Button layoutX="762.0" layoutY="627.0" mnemonicParsing="false" onAction="#facture" prefHeight="31.0" prefWidth="140.0" text="Facture">
-         <textFill>
-            <LinearGradient endX="1.0" endY="1.0" startX="0.20388349514563106">
-               <stops>
-                  <Stop color="#2c1515" />
-                  <Stop color="#c38057" offset="0.8731884057971014" />
-                  <Stop color="#c38057" offset="1.0" />
-               </stops>
-            </LinearGradient>
-         </textFill>
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font></Button>
       <Label layoutX="145.0" layoutY="188.0" text="Votre total est :" textFill="#f7f2f2">
          <font>
             <Font name="System Bold" size="30.0" />
@@ -83,5 +70,8 @@
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </BottomNavigationButton>
+      <Label fx:id="statusLabel" layoutX="149.0" layoutY="254.0" prefHeight="21.0" prefWidth="181.0" text="entrez votre numero" textFill="#eeeaea" />
+      <TextField fx:id="textFiled" layoutX="386.0" layoutY="249.0" />
+      <Button fx:id="SMS" layoutX="600.0" layoutY="249.0" mnemonicParsing="false" onAction="#sendSMS" text="SMS" />
    </children>
 </AnchorPane>
