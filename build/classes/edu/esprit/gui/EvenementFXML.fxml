@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
@@ -241,7 +242,10 @@
                         <Font name="Segoe UI Bold" size="30.0" />
                      </font>
                   </Label>
-                  <TilePane fx:id="tilePane2" layoutX="14.0" layoutY="120.0" prefHeight="586.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="1044.0" stylesheets="@../css/style.css" />
+                  <TilePane fx:id="tilePane2" layoutX="14.0" layoutY="120.0" prefHeight="586.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="1044.0" stylesheets="@../css/style.css">
+                     <children>
+                        <ImageView fx:id="qrcodee" fitHeight="171.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></TilePane>
                </children></Pane>
          </children>
       </AnchorPane>

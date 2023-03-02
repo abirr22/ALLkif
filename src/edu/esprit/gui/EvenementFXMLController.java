@@ -5,6 +5,10 @@
  */
 package edu.esprit.gui;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
@@ -12,6 +16,9 @@ import edu.esprit.entities.AvisEvenement;
 import edu.esprit.entities.Evenement;
 import edu.esprit.services.ServiceAvisE;
 import edu.esprit.services.ServiceEvenement;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -23,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -106,11 +114,57 @@ public class EvenementFXMLController implements Initializable {
             }   
         });
     }
+          
+          
     private TextField tfid;
+    @FXML
+    private ImageView qrcodee;
 
+    
+    
+    public void qrcode(Evenement e){
+         
+    try {
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            String Information = "nom : "+e.getNomEvenement()+"\n"+"description de l'évènement : "+e.getDescriptionEvenement()+"\n"+"Artiste : "+e.getArtiste()+"\n"+"Date : "+e.getDateEvenement()+"\n"+"Prix : "+e.getPrixEvenement();
+            int width = 300;
+            int height = 300;
+            
+            BufferedImage bufferedImage = null; 
+            BitMatrix byteMatrix = qrCodeWriter.encode(Information, BarcodeFormat.QR_CODE, width, height);
+            bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            bufferedImage.createGraphics();
+            
+            Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
+            graphics.setColor(Color.WHITE);
+            graphics.fillRect(0, 0, width, height);
+            graphics.setColor(Color.BLACK);
+            
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    if (byteMatrix.get(i, j)) {
+                        graphics.fillRect(i, j, 1, 1);
+                    }
+                }
+            }
+            
+            System.out.println("Success...");
+            
+
+          //  ImageView qrc = new ImageView();
+            qrcodee.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+            // TODO
+        } catch (WriterException ex) {
+            Logger.getLogger(EvenementFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  
+    }
+    
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+       
     //numericOnly( tfPrixE);
     
     
@@ -322,6 +376,9 @@ public class EvenementFXMLController implements Initializable {
               Button btn= new Button("Voir plus de détails");
                Button btnS= new Button("Supprimer évènement");
                 Button btnM= new Button("Modifier évènement");
+                qrcode(e.get(i));
+        
+               
               VBox vbox = new VBox();
               vbox.getChildren().add(lblNom);
               vbox.getChildren().add(lblDescription);
@@ -331,6 +388,7 @@ public class EvenementFXMLController implements Initializable {
               vbox.getChildren().add(btnS);
               vbox.getChildren().add(btnM);
               tilePane2.getChildren().add(vbox);
+           
               int id= e.get(i).getIdEvenement();
               Evenement ev= se.getOneById(id);
          // } 
@@ -645,6 +703,8 @@ alert.showAndWait();
          
         
     }
+    
+    
 
     
 }
