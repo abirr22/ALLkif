@@ -40,6 +40,22 @@ public class ServicePublication implements IService<Publications>{
             System.out.println(ex.getMessage());
         }        
     }
+    public boolean checkIfExists(String titre) {
+        //Connection cnx = DataSource.getInstance().getCnx();
+        boolean result = false;
+        try {
+            String req = "SELECT * FROM `publication` WHERE titre_pub = ";
+            PreparedStatement st = cnx.prepareStatement(req);
+            st.setString(1, titre);
+            ResultSet rs = st.executeQuery();
+            result = rs.next();
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }       
+
+        return result;
+    }
+    
 
     @Override
     public void supprimer(int id) {
@@ -137,6 +153,10 @@ public class ServicePublication implements IService<Publications>{
 //
 //        return p;
 //    }
+
+    public ResultSet Selection(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     
     

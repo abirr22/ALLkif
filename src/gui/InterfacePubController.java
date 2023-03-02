@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import java.awt.Button;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,15 +28,21 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import jdk.nashorn.internal.runtime.options.Options;
 import services.ServicePublication;
@@ -104,6 +111,7 @@ public class InterfacePubController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         display_blog();
+        //display2();
     
 }
 
@@ -173,6 +181,25 @@ public class InterfacePubController implements Initializable {
         String texte_pub = ta_DescPub.getText();
         String photo_pub = tf_PhotoPub.getText();
         Publications p = new Publications(titre_pub, texte_pub, photo_pub);
+        if (tf_TitrePub.getText().isEmpty() || ta_DescPub.getText().isEmpty() || tf_PhotoPub.getText().isEmpty()) {
+        // Afficher un message d'alerte
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Champs manquants");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez remplir tous les champs !");
+        alert.showAndWait();
+        return;
+        }
+        String imgregx = "^[A-Za-z0-9+_.-]+/[A-Za-z0-9.-]+$";;        
+        if (!tf_PhotoPub.getText().matches(imgregx)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Format image incorrect");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez saisir un lien valide !");
+            alert.showAndWait();
+            return;
+        }
+        //sp.checkIfExists(tf_TitrePub);        
         sp.ajouter(p);
         tf_TitrePub.clear();
         ta_DescPub.clear();
@@ -296,7 +323,15 @@ public class InterfacePubController implements Initializable {
         tmp.setTitre_pub(tf_TitrePub1.getText());
         tmp.setTexte_pub(ta_DescPub1.getText());
         tmp.setPhoto_pub(tf_PhotoPub1.getText());
-        
+        if (tf_TitrePub.getText().isEmpty() || ta_DescPub.getText().isEmpty() || tf_PhotoPub.getText().isEmpty()) {
+        // Afficher un message d'alerte
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Champs manquants");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez remplir tous les champs !");
+        alert.showAndWait();
+        return;
+        }        
         sp.modifier(tmp);
         tf_TitrePub1.clear();
         ta_DescPub1.clear();
@@ -304,6 +339,55 @@ public class InterfacePubController implements Initializable {
         pn_mesblog.toFront();
         display_blog();
         }
+        
+        
+        
+
+//    private void display2() {
+//        ObservableList<Publications>  l2 = FXCollections.observableArrayList();
+//                ResultSet resultSet2 = sp.Selection(1);
+//                l2.clear(); 
+//                Publications pp = new Publications(titre_pub, desc_pub, photo_pub);
+//                l2.add(pp);
+//                int column =0;
+//                int row =2;
+//                try {
+//                    while (resultSet2.next()){
+//                        FXMLLoader fxmlLoader = new FXMLLoader();
+//                        fxmlLoader.setLocation(getClass().getResource("/gui/produit.fxml"));
+//                        try {
+//                            AnchorPane anchorPane = fxmlLoader.load();
+//                            PuController itemController = fxmlLoader.getController();
+//                            String titre_pub =resultSet2.getString("titre_pub");
+//                            String texte_pub =resultSet2.getString("texte_pub");  
+//                            String id_pub =resultSet2.getString("id_pub");
+//                            String photo_pub =resultSet2.getString("photo_pub");
+//                            int newid=Integer.parseInt(id_pub);
+//                            Publications pp = new Publications(newid, titre_pub, texte_pub, photo_pub, date_pub);
+//                            itemController.setData(ppppp,myListener);
+//                            if (column == 5) {
+//                                column = 0;
+//                                row++;
+//                            }
+//                            grid.add(anchorPane, column++, row); //(child,column,row)
+//                            //set grid width
+//                            grid.setMinWidth(Region.USE_COMPUTED_SIZE);
+//                            grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
+//                            grid.setMaxWidth(Region.USE_PREF_SIZE);
+//                            //set grid height
+//                            grid.setMinHeight(Region.USE_COMPUTED_SIZE);
+//                            grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
+//                            grid.setMaxHeight(Region.USE_PREF_SIZE);
+//                            GridPane.setMargin(anchorPane, new Insets(10));
+//                        } catch (IOException ex) {
+//                            Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        }   
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                
+//    }
     
 
 }

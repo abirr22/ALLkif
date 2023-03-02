@@ -6,6 +6,7 @@
 package entities;
 
 import java.sql.Date;
+import javafx.scene.control.TableColumn;
 
 /**
  *
@@ -33,6 +34,10 @@ public class Publications {
         this.texte_pub = texte_pub;
         this.photo_pub = photo_pub;
         this.date_pub = date_pub;
+    }
+
+    public Publications(TableColumn<Publications, String> titre_pub, TableColumn<Publications, String> desc_pub, TableColumn<Publications, String> photo_pub) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 //    public Publications(String titre_pub, String texte_pub, String photo_pub) {
