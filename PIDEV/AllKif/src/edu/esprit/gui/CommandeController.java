@@ -9,6 +9,7 @@ import edu.esprit.entites.commande;
 import edu.esprit.entites.panier;
 import edu.esprit.services.ServiceCommande;
 import edu.esprit.services.ServicePanier;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -27,6 +28,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -42,64 +44,65 @@ public class CommandeController implements Initializable {
     @FXML
     private Button fx_AC;
     @FXML
-    private TableView<commande> total;
-    @FXML
-    private TableColumn<commande, Integer> commande;
-    ServiceCommande pc = new ServiceCommande(); 
+    private TextField fx_total;
+    //private TableView<commande> total;
+    //@FXML
+    //  private TableColumn<commande, Integer> commande;
+    ServiceCommande pc = new ServiceCommande();
+
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) { 
+        
+
         // TODO
-        commande.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getTotale()).asObject()); 
-         ServiceCommande crud = new ServiceCommande();
+        //commande.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getTotale()).asObject());  
+        // ServiceCommande crud = new ServiceCommande();
         // Populate the table with data
-        List<commande> data;
+        /*List<commande> data;
         data = crud.getAll();
-        total.getItems().setAll(data);
-    }    
+        total.getItems().setAll(data);*/
+        // totalCalculation();
+    }
 
-    @FXML
-    private void confirmer_commande(MouseEvent event) { 
-         try {
-
-Parent page2 =
-FXMLLoader.load(getClass().getResource("confc.fxml"));
-Scene scene = new Scene(page2);
-Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-stage.setScene(scene);
-stage.show();
-} catch (IOException ex) {
-
-
-}
+    public void setData(String data) {
+        System.out.println("this function was called"+data);
+       fx_total.setText(data);
         
     }
 
     @FXML
-    private void annuler_commande(MouseEvent event) { 
-         if (total.getSelectionModel().getSelectedItem() != null) {
-            // Récupérer les données de l'événement sélectionné
-            commande selectedCommande = total.getSelectionModel().getSelectedItem();
-            ServiceCommande sc = new ServiceCommande();
-            sc.supprimer(selectedCommande.getId_commande());
-        }
+    private void confirmer_commande(MouseEvent event) {
         try {
-            Parent page1 = FXMLLoader.load(getClass().getResource("Commande.fxml"));
-            Scene scene = new Scene(page1);
+
+            Parent page2
+                    = FXMLLoader.load(getClass().getResource("confc.fxml"));
+            Scene scene = new Scene(page2);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
+            stage.setUserData("Hello ");
             stage.show();
-
         } catch (IOException ex) {
-            Logger.getLogger(CommandeController.class.getName()).log(Level.SEVERE, null, ex);
+
         }
+
     }
-    
+
+    @FXML
+    private void annuler_commande(MouseEvent event) {
+
+    }
 
     @FXML
     private void facture(ActionEvent event) {
     }
-    
+
+    private void totalCalculation() {
+        //Object total = null;
+        //.setText(String.valueOf(total));
+
+    }
+
 }

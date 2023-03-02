@@ -91,12 +91,9 @@ public class FXMLController implements Initializable {
     private TextField fx_total;
     @FXML
     private Button valider_commande;
-     ServicePanier ps = new ServicePanier(); 
-    
-   
-    
-    
-     public static void numericOnly(final TextField field) {
+    ServicePanier ps = new ServicePanier();
+
+    public static void numericOnly(final TextField field) {
         field.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(
@@ -105,23 +102,20 @@ public class FXMLController implements Initializable {
                 if (!newValue.matches("\\d*")) {
                     field.setText(newValue.replaceAll("[^\\d]", ""));
                 }
-            }   
+            }
 
-           
         });
     }
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {   
-        
-     
-         
-        
+    public void initialize(URL url, ResourceBundle rb) {
+
         image_produit.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPic()));
         nom_produit.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getname()));
         prix.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getPrice()).asObject());
@@ -129,17 +123,15 @@ public class FXMLController implements Initializable {
         description.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
         quantite.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getQuantite()).asObject());
         //id_prod.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId_prod()).asObject()); 
-        
-        
-        
-                 int total = 0 ;
-for (panier item : display.getItems()) {
-    total = total + item.getPrice();
-}
-      
-        numericOnly(fx_quantite); 
-        
-         ServicePanier crud = new ServicePanier();
+
+        int total = 0;
+        for (panier item : display.getItems()) {
+            total = total + item.getPrice();
+        }
+
+        numericOnly(fx_quantite);
+
+        ServicePanier crud = new ServicePanier();
         // Populate the table with data
         List<panier> data;
         data = crud.SelectAll();
@@ -147,7 +139,7 @@ for (panier item : display.getItems()) {
         totalCalculation();
 
         // TODO
-    }     
+    }
 
     @FXML
     private void btn_boutique(ActionEvent event) {
@@ -198,18 +190,18 @@ for (panier item : display.getItems()) {
     }
 
     @FXML
-    private void supprimer(MouseEvent event) { 
-        
-         if (display.getSelectionModel().getSelectedItem() != null) {
+    private void supprimer(MouseEvent event) {
+
+        if (display.getSelectionModel().getSelectedItem() != null) {
             // Récupérer les données de l'événement sélectionné
             panier selectedPanier = display.getSelectionModel().getSelectedItem();
             ServicePanier sp = new ServicePanier();
-            sp.supprimer(selectedPanier.getId_prod(),selectedPanier.getId_panier());
+            sp.supprimer(selectedPanier.getId_prod(), selectedPanier.getId_panier());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Produit Supprimée");
-                alert.show();
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Produit Supprimée");
+            alert.show();
         }
         try {
             Parent page1 = FXMLLoader.load(getClass().getResource("FXML.fxml"));
@@ -220,36 +212,35 @@ for (panier item : display.getItems()) {
 
         } catch (IOException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Voulez vous supprimer ce produit?");
-                alert.show();
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("Voulez vous supprimer ce produit?");
+        alert.show();
 
     }
 
-    
     private panier PanierToUpdate;
- @FXML
-    private void modifier(MouseEvent event) { 
-        
+
+    @FXML
+    private void modifier(MouseEvent event) {
+
         PanierToUpdate = display.getSelectionModel().getSelectedItem();
         System.out.println(PanierToUpdate.toString());
         fx_quantite.setText("" + PanierToUpdate.getQuantite());
 
-        
     }
 
     @FXML
-    private void valider(MouseEvent event) { 
-       
+    private void valider(MouseEvent event) {
+
         int quantite;
-        
+
         quantite = Integer.parseInt(fx_quantite.getText());
-        System.out.println("quantite "+quantite);
+        System.out.println("quantite " + quantite);
         // Mettre à jour l'objet event
-      
+
         PanierToUpdate.setQuantite(Integer.parseInt(fx_quantite.getText()));
 
         // Mettre à jour l'événement dans la base de données
@@ -275,37 +266,37 @@ for (panier item : display.getItems()) {
     public void setLPanier(panier PanierToUpdate) {
         this.PanierToUpdate = PanierToUpdate;
         // Afficher les données de l'événement à modifier dans le formulaire
-      
+
         fx_quantite.setText(String.valueOf(PanierToUpdate.getQuantite()));
 
     }
 
-    
-
     @FXML
     private void valider_Commande(ActionEvent event) {
-         try {
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("commande.fxml"));
+            Parent page2
+                   = loader.load();
+            CommandeController commandeController= loader.getController();
+            commandeController.setData(fx_total.getText());
+            Scene scene = new Scene(page2);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
 
-Parent page2 =
-FXMLLoader.load(getClass().getResource("commande.fxml"));
-Scene scene = new Scene(page2);
-Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-stage.setScene(scene);
-stage.show();
-} catch (IOException ex) {
+            stage.show();
+        } catch (IOException ex) {
 
+        }
+    }
 
-}
-    }  
-  
-   public void totalCalculation (){
+    public void totalCalculation() {
 
-   int total = 0;
-        
-   total = display.getItems().stream().map(
-     (item) -> item.getPrice()).reduce(total, (accumulator, _item) -> accumulator + _item);
+        int total = 0;
 
-          fx_total.setText(String.valueOf(total));
-}
-    
+        total = display.getItems().stream().map(
+                (item) -> item.getPrice()).reduce(total, (accumulator, _item) -> accumulator + _item);
+
+        fx_total.setText(String.valueOf(total));
+    }
+
 }
