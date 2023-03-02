@@ -14,8 +14,9 @@ import java.util.List;
  */
 
     public interface IServiceCommande <T>{
+   public void creecommande(int id);
     public void ajouter(T c);
-    public void supprimer(int id);
+    public void supprimer(int id_panier);
     public void modifier(T c);
     public List<T> getAll();
     public T getOneById(int id);

@@ -5,10 +5,12 @@
  */
 package edu.esprit.gui;
 
+import com.gluonhq.charm.glisten.control.BottomNavigationButton;
 import edu.esprit.entites.commande;
 import edu.esprit.entites.panier;
 import edu.esprit.services.ServiceCommande;
 import edu.esprit.services.ServicePanier;
+import edu.esprit.entites.MailSender;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,10 +47,14 @@ public class CommandeController implements Initializable {
     private Button fx_AC;
     @FXML
     private TextField fx_total;
+    String mail = "sarah.zayati@esprit.tn";
     //private TableView<commande> total;
     //@FXML
     //  private TableColumn<commande, Integer> commande;
     ServiceCommande pc = new ServiceCommande();
+    @FXML
+    private BottomNavigationButton panier;
+    ServiceCommande sc = new ServiceCommande();
 
     /**
      * Initializes the controller class.
@@ -91,7 +97,21 @@ public class CommandeController implements Initializable {
     }
 
     @FXML
-    private void annuler_commande(MouseEvent event) {
+    private void annuler_commande(MouseEvent event) { 
+        
+         try {
+
+            Parent page2
+                    = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+            Scene scene = new Scene(page2);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setUserData("Hello ");
+            stage.show();
+        } catch (IOException ex) {
+
+        }
+        
 
     }
 
@@ -103,6 +123,33 @@ public class CommandeController implements Initializable {
         //Object total = null;
         //.setText(String.valueOf(total));
 
+    } 
+    
+    @FXML
+    private void panier (ActionEvent event) {
+         try {
+
+            Parent page2
+                    = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+            Scene scene = new Scene(page2);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setUserData("Hello ");
+            stage.show();
+        } catch (IOException ex) {
+
+        }
+        
+    }
+
+    @FXML
+    private void comfirmer(ActionEvent event) {
+        try {
+            MailSender.sendMail(mail);
+        } catch (Exception ex) {
+            Logger.getLogger(CommandeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        sc.creecommande(3);
     }
 
 }

@@ -58,8 +58,7 @@ public class panier {
         this.pic=pic;
         this.id_prod=id_prod;
         this.price=price;
-        this.quantite=quantite;
-        
+        this.quantite=quantite;     
        
     }
 

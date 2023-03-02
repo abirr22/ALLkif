@@ -8,7 +8,9 @@ package edu.esprit.gui;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.Item;
 import com.gluonhq.impl.charm.a.b.b.i;
 import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
+import edu.esprit.entites.commande;
 import edu.esprit.entites.panier;
+import edu.esprit.services.ServiceCommande;
 import edu.esprit.services.ServicePanier;
 import java.io.IOException;
 import java.net.URL;
@@ -106,6 +108,16 @@ public class FXMLController implements Initializable {
 
         });
     }
+    @FXML
+    private Pane pn_listecommande;
+    @FXML
+    private TableView<commande> table2;
+    @FXML
+    private TableColumn<commande,String> content;
+    private TableColumn<commande, Integer> total; 
+    @FXML
+    private TableColumn<commande, Integer> Total;
+    
 
     /**
      * Initializes the controller class.
@@ -122,21 +134,27 @@ public class FXMLController implements Initializable {
         //xrole.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
         description.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
         quantite.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getQuantite()).asObject());
-        //id_prod.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId_prod()).asObject()); 
+        Total.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getTotale()).asObject());
+        content.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContent()));       
+
 
         int total = 0;
         for (panier item : display.getItems()) {
-            total = total + item.getPrice();
+            total +=item.getPrice()*item.getQuantite();
         }
 
         numericOnly(fx_quantite);
 
         ServicePanier crud = new ServicePanier();
         // Populate the table with data
+        ServiceCommande crud1 = new ServiceCommande();
         List<panier> data;
+        List<commande> data1;
         data = crud.SelectAll();
+        data1 = crud1.SelectAll();
         display.getItems().setAll(data);
         totalCalculation();
+        table2.getItems().setAll(data1);
 
         // TODO
     }
@@ -147,6 +165,7 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void btn_panier(ActionEvent event) {
+        pn_panier.toFront();
     }
 
     @FXML
@@ -294,9 +313,38 @@ public class FXMLController implements Initializable {
         int total = 0;
 
         total = display.getItems().stream().map(
-                (item) -> item.getPrice()).reduce(total, (accumulator, _item) -> accumulator + _item);
+                (item) -> item.getPrice()*item.getQuantite()).reduce(total, (accumulator, _item) -> accumulator + _item);
 
         fx_total.setText(String.valueOf(total));
     }
 
+    @FXML
+    private void btn_listecommande(ActionEvent event) {
+        pn_listecommande.toFront();  
+       
+    }
+
+    @FXML
+    private void supp_c(MouseEvent event) {
+        if (table2.getSelectionModel().getSelectedItem() != null) {
+            // Récupérer les données de l'événement sélectionné
+            commande selectedCommande = table2.getSelectionModel().getSelectedItem();
+            ServiceCommande sc = new ServiceCommande();
+            sc.supprimer(selectedCommande.getId_panier());
+        }
+        try {
+            
+            Parent page = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+            Scene scene = new Scene(page);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+   
 }

@@ -5,6 +5,7 @@
  */
 package edu.esprit.services;
 
+import edu.esprit.entites.PanierProduit;
 import edu.esprit.entites.commande;
 import edu.esprit.entites.panier;
 //import edu.esprit.entites.panier;
@@ -57,13 +58,13 @@ public class ServiceCommande implements IServiceCommande <commande> {
      public List<commande> SelectAll() {
         List<commande> list = new ArrayList<>();
         try {
-            String req = "SELECT ALL from commande";
+            String req = "SELECT `totale`, `content` FROM `commande` WHERE 1";
        
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
                 System.out.println("rs" +rs.toString());
-                commande c = new commande(  rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getBoolean(4),rs.getInt(5));
+                commande c = new commande( rs.getInt(1),rs.getString(2));
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -78,9 +79,9 @@ public class ServiceCommande implements IServiceCommande <commande> {
      * @param id
      */
     @Override
-    public void supprimer(int id) {
+    public void supprimer(int id_panier) {
        try {
-            String req = "DELETE FROM `commande` WHERE id_commande = " + id;
+            String req = "DELETE FROM `commande` WHERE id_panier = " + id_panier;
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("commande deleted !");
@@ -112,7 +113,7 @@ public class ServiceCommande implements IServiceCommande <commande> {
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                commande c = new commande( rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getBoolean(4),rs.getInt(5));
+                commande c = new commande( rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getBoolean(4),rs.getInt(5),rs.getInt(6));
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -129,13 +130,13 @@ public class ServiceCommande implements IServiceCommande <commande> {
      */
     @Override
     public commande getOneById(int id) {
-          commande c = null;
+        commande c = null;
         try {
             String req = "Select * from commande";
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                c =new commande( rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getBoolean(4),rs.getInt(5)); 
+                c =new commande( rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getBoolean(4),rs.getInt(5),rs.getInt(6)); 
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -144,5 +145,43 @@ public class ServiceCommande implements IServiceCommande <commande> {
         return c;
     }
 
+    @Override
+    public void creecommande(int id_panier) {
+         List<PanierProduit> list = new ArrayList<>();
+        try {
+            String req = "SELECT  pp.quantite,\n" +
+"        prod.name,\n" +
+"        prod.price\n" +
+" from `prod` prod,\n" +
+"`panier produit` pp \n" +
+"where pp.`id_pannier` = '"+id_panier+"' and prod.id_product = pp.`id_produit`\n" +
+"";
+            Statement st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            String content = "";
+            int totale=0;
+            while (rs.next()) {
+                System.out.println("rs" +rs.toString());
+                totale = rs.getInt(1)*rs.getInt(3);
+                content +=rs.getString(2)+"(quantite:"+rs.getInt(1)+")";
+                //commande c = new commande(totale, int id_user, String content,int price);
+                //list.add(c);
+            }
+            commande c = new commande(totale,id_panier,content);
+            System.out.println("Commande created !");
+            try {
+            String req1 = "INSERT INTO `commande`(`totale`,`id_user`, `content`) VALUES ('"+c.getTotale()+"','"+c.getId_user()+"','"+c.getContent()+"')";
+            Statement st1 = cnx.createStatement();
+            st1.executeUpdate(req1);
+            System.out.println("Commande ajoute !");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } 
+    }
+
+   
     }
 
