@@ -3,19 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/Service/Iservice.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/gui/auth/TemplateController.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/tests/Main.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/gui/auth/Signup_pageController.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/gui/auth/Afficher.fxml</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/gui/auth/signup_page.fxml</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/Service/AuthentificationService.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/Entities/User.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/gui/auth/AfficherController.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/Entities/Client.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/Utils/ConnectionUtils.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/Service/ServiceUser.java</file>
-            <file>file:/C:/Users/abirk/Documents/NetBeansProjects/ALLkif1/src/Entities/Artiste.java</file>
+            <file>file:/C:/Users/abirk/Desktop/test/wetransfer_allkif1_2023-02-28_2218/ALLkif1/src/Service/ServiceUser.java</file>
+            <file>file:/C:/Users/abirk/Desktop/test/wetransfer_allkif1_2023-02-28_2218/ALLkif1/src/Service/AuthentificationService.java</file>
+            <file>file:/C:/Users/abirk/Desktop/test/wetransfer_allkif1_2023-02-28_2218/ALLkif1/src/Entities/User.java</file>
+            <file>file:/C:/Users/abirk/Desktop/test/wetransfer_allkif1_2023-02-28_2218/ALLkif1/src/gui/auth/CaptchaController.java</file>
+            <file>file:/C:/Users/abirk/Desktop/test/wetransfer_allkif1_2023-02-28_2218/ALLkif1/src/gui/auth/LoginController.java</file>
+            <file>file:/C:/Users/abirk/Desktop/test/wetransfer_allkif1_2023-02-28_2218/ALLkif1/src/Utils/UserSession.java</file>
+            <file>file:/C:/Users/abirk/Desktop/test/wetransfer_allkif1_2023-02-28_2218/ALLkif1/src/gui/auth/Signup_pageController.java</file>
+            <file>file:/C:/Users/abirk/Desktop/test/wetransfer_allkif1_2023-02-28_2218/ALLkif1/src/gui/auth/AfficheBackOffController.java</file>
         </group>
     </open-files>
 </project-private>

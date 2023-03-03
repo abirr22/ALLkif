@@ -50,19 +50,20 @@
             </AnchorPane>
             <AnchorPane layoutY="-1.0" prefHeight="720.0" prefWidth="845.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <TextField fx:id="tf_fn" layoutX="261.0" layoutY="211.0" promptText="First name" />
-                  <TextField fx:id="tf_ln" layoutX="261.0" layoutY="312.0" promptText="Last name" />
+                  <TextField fx:id="tf_fn" layoutX="261.0" layoutY="134.0" promptText="First name" />
+                  <TextField fx:id="tf_ln" layoutX="251.0" layoutY="232.0" promptText="Last name" />
                   <Button layoutX="218.0" layoutY="446.0" mnemonicParsing="false" onAction="#login" prefHeight="79.0" prefWidth="273.0" style="-fx-background-radius: 70px; -fx-background-color: #F4D32C;" text="Login">
                      <font>
                         <Font name="Segoe UI" size="18.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="269.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="bt" fitHeight="150.0" fitWidth="200.0" layoutX="269.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
                   <Button layoutX="285.0" layoutY="586.0" mnemonicParsing="false" onAction="#login" prefHeight="9.0" prefWidth="139.0" style="-fx-background-radius: 70px; -fx-background-color: #F4D32C;" text="inscription ">
                      <font>
                         <Font name="Segoe UI" size="18.0" />
                      </font>
                   </Button>
+                  <TextField layoutX="251.0" layoutY="329.0" />
                </children>
             </AnchorPane>
          </children>

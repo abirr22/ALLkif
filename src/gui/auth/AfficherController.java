@@ -47,13 +47,13 @@ public class AfficherController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            User u=su.afficher(6);
+            User u=su.afficher(21);
             lusername.setText(u.getUser_Name());
             lfname.setText(u.getFirst_Name());
             llname.setText(u.getLast_Name());
             lemail.setText(u.getEmail());
-            //int phone_number_int = Integer.parseInt(phone_number);
-            //lphone_number.set(u.getPhone_number());
+            String tmp =String.valueOf(u.getPhone_number());
+            lphone_number.setText(tmp);
             lgender.setText(u.getGender());
             lrole.setText(u.getRole());
         } catch (SQLException ex) {
@@ -67,11 +67,11 @@ public class AfficherController implements Initializable {
         String lfname2 = lfname.getText();
         String llname2 = llname.getText();
         String lemail2 = lemail.getText();
-        String tmp = lphone_number.getText();
-        int lphone_number2 = Integer.parseInt(tmp);
+        String lphone_number2 = lphone_number.getText();
+        int tmp =Integer.parseInt(lphone_number2);
         String lgender2 = lgender.getText();
         String lrole2 = lrole.getText();
-        su.modifier(lusername2, lfname2, llname2, lemail2, lphone_number2,lgender2, lrole2, 6);
+        su.modifier(lusername2, lfname2, llname2, lemail2, tmp,lgender2, lrole2, 21);
 
 
     }

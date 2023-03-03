@@ -5,12 +5,16 @@
  */
 package Service;
 
+import Entities.User;
+
 /**
  *
  * @author abirk
  */
 public interface IAuthentificationService {
-    public void signup(String username, String email, String password);
-    public void login( String email, String password);
-    public boolean isUserExist(String username,String email); 
+    public void signup(String first_name,String last_name,String username, String email, String password, String gender);
+    public void login( String user_name,String email, String password);
+    public boolean isUserExist(String user_name,String email); 
+    public boolean checkEmailExists(String email);
+    public boolean checkIfUserCanBeAdded(User u);
 }

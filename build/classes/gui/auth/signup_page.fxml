@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,13 +11,16 @@
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: # 808080;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.auth.Signup_pageController">
    <children>
-      <AnchorPane layoutX="52.0" layoutY="57.0" prefHeight="341.0" prefWidth="749.0" style="-fx-background-radius: 70px; -fx-background-color: grey;">
+      <AnchorPane layoutX="52.0" layoutY="57.0" prefHeight="405.0" prefWidth="769.0" style="-fx-background-radius: 70px; -fx-background-color: grey;">
          <children>
-            <TextField fx:id="input_username" layoutX="281.0" layoutY="36.0" promptText="username" />
-            <TextField fx:id="input_email" layoutX="281.0" layoutY="94.0" promptText="password" />
-            <TextField fx:id="input_password" layoutX="281.0" layoutY="150.0" promptText="passwordCheck" />
-            <TextField fx:id="input_password_check" layoutX="281.0" layoutY="200.0" promptText="email" />
-            <Label layoutX="170.0" layoutY="258.0" prefHeight="78.0" prefWidth="473.0" text="dont have an account? create your account, it takes less then a minute  " textFill="#2d07eb" />
+            <TextField fx:id="input_firstName" layoutX="150.0" layoutY="36.0" promptText="first_name" />
+            <TextField fx:id="input_lastName" layoutX="150.0" layoutY="107.0" promptText="last_name" />
+            <TextField fx:id="input_username" layoutX="150.0" layoutY="172.0" promptText="username" />
+            <Label layoutX="162.0" layoutY="327.0" prefHeight="78.0" prefWidth="473.0" text="dont have an account? create your account, it takes less then a minute  " textFill="#2d07eb" />
+            <TextField fx:id="input_email" layoutX="448.0" layoutY="36.0" promptText="email" />
+            <TextField fx:id="input_phone_number" layoutX="448.0" layoutY="138.0" promptText="phone_number" />
+            <TextField fx:id="input_gender" layoutX="438.0" layoutY="238.0" promptText="gender" />
+            <PasswordField fx:id="input_password" layoutX="143.0" layoutY="254.0" promptText="Password" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="746.0" fitWidth="406.0" layoutX="874.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
@@ -24,7 +28,7 @@
             <Image url="@../../../../../../Pictures/implementation_banner_1920x2879.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="btn_signup" layoutX="292.0" layoutY="471.0" mnemonicParsing="false" onMouseClicked="#handleSignupButtonClick" prefHeight="65.0" prefWidth="229.0" style="-fx-background-radius: 70px; -fx-background-color: #F4D32C;" text="Create your account">
+      <Button fx:id="btn_signup" layoutX="304.0" layoutY="551.0" mnemonicParsing="false" onMouseClicked="#handleSignupButtonClick" prefHeight="65.0" prefWidth="229.0" style="-fx-background-radius: 70px; -fx-background-color: #F4D32C;" text="signup">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
@@ -35,5 +39,6 @@
             <Image url="@../../../../../../Downloads/324837369_583011013359420_5315765166976291657_n.png" />
          </image>
       </ImageView>
+      <Button fx:id="btnLogin" layoutX="39.0" layoutY="661.0" mnemonicParsing="false" onAction="#handleLoginButtonClick" text="Login" />
    </children>
 </AnchorPane>
