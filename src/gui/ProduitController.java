@@ -89,6 +89,7 @@ public class ProduitController implements Initializable {
                                 newprix += " TND";
                                 prixlabel.setText(newprix);
                             }
+
         Image image = new Image(getClass().getResourceAsStream(p.getProduct_photo()));
         photo.setImage(image);
     }

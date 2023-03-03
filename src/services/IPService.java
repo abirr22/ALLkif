@@ -5,6 +5,7 @@
  */
 package services;
 
+import entities.produits;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface IPService <T>{
     public void Modifier(int id,String titre,String description,String photo,Float prix);
     public ResultSet Selectionner(int id);
     public ResultSet SelectionnerSingle(int id);
-
+    public List<produits> afficher(int id);
 }

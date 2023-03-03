@@ -5,6 +5,15 @@
  */
 package gui;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.produits;
@@ -55,6 +64,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import gui.ProduitController;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import services.MyListener;
 import test.main;
 import javafx.fxml.FXML;
@@ -71,12 +83,19 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.InputMethodEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import services.SaleService;
 
 
@@ -159,12 +178,17 @@ public class InterfaceController implements Initializable {
     private Label prixsingle;
     @FXML
     private Label titresingle1;
+    @FXML
+    private TextField tf_recherche;
+    @FXML
+    private AnchorPane main;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {   
                 display ();
                 display2();
+                recherche_avance();
     }
 
     @FXML
@@ -230,6 +254,25 @@ public class InterfaceController implements Initializable {
 
     @FXML
     private void addbtn(javafx.event.ActionEvent event) {
+        if (tftitre.getText().isEmpty() || tfdescription.getText().isEmpty() || tfphoto.getText().isEmpty() || 
+            tfprix.getText().isEmpty()  ) {
+        // Afficher un message d'alerte
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Champs manquants");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez remplir tous les champs !");
+        alert.showAndWait();
+        return;
+        }
+        String emailRegex = "^[1-9][0-9]?$|^100$";
+        if (!tfprix.getText().matches(emailRegex)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Format prix incorrect");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez saisir un prix numerique !");
+            alert.showAndWait();
+            return;
+        }
         String titre = tftitre.getText();
         String description = tfdescription.getText();
         String photo = tfphoto.getText();
@@ -267,8 +310,6 @@ public class InterfaceController implements Initializable {
         Description.setCellValueFactory(new PropertyValueFactory<>("product_description"));
         photo.setCellValueFactory(new PropertyValueFactory<>("product_photo"));
         prix.setCellValueFactory(new PropertyValueFactory<>("product_price"));
-        //setCellValueFactory(new PropertyValueFactory<>("id_product"));
-
         
         /////////////////////////////////////////////////////////////////////////
         //add cell of button edit 
@@ -362,6 +403,15 @@ public class InterfaceController implements Initializable {
                             td.setHeaderText("promotion actuel: "+taux);
                             Optional<String> result = td.showAndWait();
                             result.ifPresent(reponse -> {
+                                String emailRegex = "^[0-9][0-9]?$|^100$";
+                                if (!reponse.matches(emailRegex)) {
+                                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                                    alert.setTitle("Format prix incorrect");
+                                    alert.setHeaderText(null);
+                                    alert.setContentText("Veuillez saisir un taux numerique entre 0 et 100 !");
+                                    alert.showAndWait();
+                                    return;
+                                }
                                 if(l3.size()==0){
                                         sale tmpsale = new sale(Integer.parseInt(reponse),tmpp.getId_product());
                                         ss.Ajouter(tmpsale);
@@ -398,6 +448,25 @@ public class InterfaceController implements Initializable {
 
     @FXML
     private void updatebtn(javafx.event.ActionEvent event) {
+        if (tftitre1.getText().isEmpty() || tfdescription1.getText().isEmpty() || tfphoto1.getText().isEmpty() || 
+            tfprix1.getText().isEmpty()  ) {
+        // Afficher un message d'alerte
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Champs manquants");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez remplir tous les champs !");
+        alert.showAndWait();
+        return;
+        }
+        String emailRegex = "^[1-9][0-9]?$|^100$";
+        if (!tfprix1.getText().matches(emailRegex)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Format prix incorrect");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez saisir un prix numerique !");
+            alert.showAndWait();
+            return;
+        }
         String titre = tftitre1.getText();
         String description = tfdescription1.getText();
         String photo = tfphoto1.getText();
@@ -438,7 +507,7 @@ public class InterfaceController implements Initializable {
     
     private void display2(){
         ///////////////////////////////////////////////////////////////
-        ObservableList<produits>  l2 = FXCollections.observableArrayList();
+                ObservableList<produits>  l2 = FXCollections.observableArrayList();
                 ResultSet resultSet2 = sp.Selectionner(1);
                 l2.clear(); 
                 produits pppp = new produits("","","/img/Capture.PNG",1);
@@ -492,5 +561,127 @@ public class InterfaceController implements Initializable {
                     Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
                 }
     }
+
     
+    
+    public void recherche_avance() {
+        try {
+            ObservableList<produits>  listL = FXCollections.observableArrayList();
+            ResultSet resultSet = sp.Selectionner(1);   
+            listL.clear();
+            while (resultSet.next()){
+                listL.add(new  produits(
+                        resultSet.getInt("id_product"),
+                        resultSet.getString("product_name"),
+                        resultSet.getString("product_description"),
+                        resultSet.getString("product_photo"),
+                        resultSet.getInt("product_price")));
+                System.out.println("*****************");
+                FilteredList<produits> filtereddata = new FilteredList<>(listL, b -> true);
+                System.out.println(tf_recherche.getText());
+                tf_recherche.textProperty().addListener((observable, oldvalue, newValue) -> {
+                    filtereddata.setPredicate((produits produits) -> {
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
+                        String lowercasefilter = newValue.toLowerCase();
+                        if (produits.getProduct_name().toLowerCase().indexOf(lowercasefilter) != -1) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                        
+                    });
+                    
+                });
+                //System.out.println(filtereddata);
+                SortedList<produits> sorteddata = new SortedList<>(filtereddata);
+                sorteddata.comparatorProperty().bind(display.comparatorProperty());
+                display.setItems(filtereddata);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void cherch(InputMethodEvent event) {
+        recherche_avance();
+    }
+
+    private void look(javafx.event.ActionEvent event) {
+        recherche_avance();
+    }
+
+    @FXML
+    private void pdf(javafx.event.ActionEvent event) {
+        try {
+            genererPDF(sp, main.getScene().getWindow());
+        } catch (DocumentException ex) {
+            Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void genererPDF(ProductService st, Window parentWindow) throws DocumentException, FileNotFoundException {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Enregistrer les données");
+    File selectedFile = fileChooser.showSaveDialog(parentWindow);
+ 
+    if (selectedFile != null) {
+        try {
+            // Créer un document PDF
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(selectedFile));
+            document.open();
+ 
+            // Ajouter les éléments de l'interface utilisateur pour le ticket d'achat
+            com.itextpdf.text.Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
+            Paragraph title = new Paragraph("Liste des produits", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            title.setSpacingAfter(10f);
+            document.add(title);
+ 
+            com.itextpdf.text.Font regularFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+            Paragraph date = new Paragraph("Date: " + LocalDate.now().toString(), regularFont);
+            date.setAlignment(Element.ALIGN_LEFT);
+            date.setSpacingAfter(10f);
+            document.add(date);
+ 
+            Paragraph produits = new Paragraph("Voici la liste de vos produits disponible sur la boutique en ligne de ALKIFF", regularFont);
+            produits.setAlignment(Element.ALIGN_LEFT);
+            produits.setSpacingAfter(10f);
+            document.add(produits);
+ 
+            ArrayList<produits> products=(ArrayList<produits>)st.afficher(1);          
+       
+            
+            PdfPTable table = new PdfPTable(5); // 3 colonnes pour Nom, Prix et Quantité
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10f);
+            table.setSpacingAfter(10f);
+ 
+            // En-tête de table
+            table.addCell(new PdfPCell(new Phrase("Titre", regularFont)));
+            table.addCell(new PdfPCell(new Phrase("Description", regularFont)));
+            table.addCell(new PdfPCell(new Phrase("prix", regularFont)));
+
+            // Contenu de table
+            for (produits p : products) {
+                System.out.println(p);
+                table.addCell(new PdfPCell(new Phrase(p.getProduct_name(), regularFont)));
+                table.addCell(new PdfPCell(new Phrase(p.getProduct_description(), regularFont)));
+                table.addCell(new PdfPCell(new Phrase(String.valueOf(p.getProduct_price()), regularFont)));
+            }
+
+            document.add(table);
+ 
+            document.close();
+        } catch (IOException | DocumentException ex) {
+            System.err.println("Erreur lors de l'écriture dans le fichier: " + ex.getMessage());
+        }
+    } else {
+        System.out.println("La sélection de fichier a été annulée");
+    }
+    }
 }

@@ -12,6 +12,12 @@ package entities;
 public class produits {
     private int id_product ;
     private String product_name;
+
+    public produits(String product_name, String product_description, float product_price) {
+        this.product_name = product_name;
+        this.product_description = product_description;
+        this.product_price = product_price;
+    }
     private String product_description;
     private String product_photo;
     private float product_price ; 

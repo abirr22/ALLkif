@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,24 @@ public class ProductService implements IPService <produits>  {
             System.err.println(ex.getMessage());
         }
         return rs;    
+    }
+    
+    public List<produits> afficher(int id) {
+       List<produits> list = new ArrayList<>();
+
+        try {
+            String requete = "SELECT  `product_name`, `product_description`, `product_price` FROM `produits` WHERE `related_artist` ="+id;
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                list.add(new produits(rs.getString(1),rs.getString(2),rs.getInt(3)));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        return list;
     }
     
     
