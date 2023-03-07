@@ -58,13 +58,13 @@ public class ServiceCommande implements IServiceCommande <commande> {
      public List<commande> SelectAll() {
         List<commande> list = new ArrayList<>();
         try {
-            String req = "SELECT `totale`, `content` FROM `commande` WHERE 1";
+            String req = "SELECT `id_commande`,`totale`, `content` FROM `commande` WHERE id_user= '3'";
        
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
                 System.out.println("rs" +rs.toString());
-                commande c = new commande( rs.getInt(1),rs.getString(2));
+                commande c = new commande( rs.getInt(1),rs.getInt(2),3,rs.getString(3));
                 list.add(c);
             }
         } catch (SQLException ex) {
@@ -79,9 +79,10 @@ public class ServiceCommande implements IServiceCommande <commande> {
      * @param id
      */
     @Override
-    public void supprimer(int id_panier) {
+    public void supprimer(int id_commande) {
        try {
-            String req = "DELETE FROM `commande` WHERE id_panier = " + id_panier;
+            String req = "DELETE FROM `commande` WHERE id_commande = '" + id_commande+"'";
+            System.out.println(req);
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("commande deleted !");
@@ -149,19 +150,21 @@ public class ServiceCommande implements IServiceCommande <commande> {
     public void creecommande(int id_panier) {
          List<PanierProduit> list = new ArrayList<>();
         try {
-            String req = "SELECT  pp.quantite,\n" +
+            String req = "SELECT  c.id_commande, pp.quantite,\n" +
 "        prod.name,\n" +
 "        prod.price\n" +
-" from `prod` prod,\n" +
+" from `prod` prod, `commande` c,\n" +
 "`panier produit` pp \n" +
-"where pp.`id_pannier` = '"+id_panier+"' and prod.id_product = pp.`id_produit`\n" +
+"where pp.`id_pannier` = '"+id_panier+"'and c.id_panier = '"+id_panier+"'  and prod.id_product = pp.`id_produit`\n" +
 "";
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
+            System.out.println("req" +rs.getStatement());
+            
             String content = "";
             int totale=0;
             while (rs.next()) {
-                System.out.println("rs" +rs.toString());
+                
                 totale = rs.getInt(1)*rs.getInt(3);
                 content +=rs.getString(2)+"(quantite:"+rs.getInt(1)+")";
                 //commande c = new commande(totale, int id_user, String content,int price);

@@ -24,10 +24,11 @@ public class commande {
    private int id_prod;
    private String content;
 
-    public commande(int totale, int id_user, String content) {
+    public commande(int id_commande, int totale, int id_user, String content) {
         this.totale = totale;
         this.id_user = id_user;
         this.content = content;
+        this.id_commande = id_commande;
     }
 
     public String getContent() {
@@ -43,6 +44,14 @@ public class commande {
     public commande(int totale, boolean valide) {
         this.totale = totale;
         this.valide = valide;
+    }
+    
+    public commande(int total, int id_panier, String content) {
+        this.id_panier = id_panier;
+        this.totale = total;
+        this.content = content;
+       
+        
     }
 
     public commande(int id_panier, int id_commande, int totale, boolean valide,int id_user,int id_prod) {
