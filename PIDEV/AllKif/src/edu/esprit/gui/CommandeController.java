@@ -70,7 +70,7 @@ public class CommandeController implements Initializable {
     private Button SMS;
     @FXML
     private Label statusLabel; 
-      public static final String AUTH_TOKEN = "01951ad045fd02ab10d75fcb50ee5737";
+      public static final String AUTH_TOKEN = "15e280c0506f19da735b019d928a7f28";
     public static final String TWILIO_NUMBER = "+13157911257";
      public static final String ACCOUNT_SID = "ACae09f8846d7dc92c113b3c6f0c6ddf86";
     
@@ -131,7 +131,13 @@ public class CommandeController implements Initializable {
             stage.show();
         } catch (IOException ex) {
 
+        } 
+          try {
+            MailSender.sendMail(mail);
+        } catch (Exception ex) {
+            Logger.getLogger(CommandeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         
 
     }
@@ -160,7 +166,7 @@ public class CommandeController implements Initializable {
         
     }
 
-    @FXML
+    @FXML 
     private void comfirmer(ActionEvent event) {
        /*try {
             MailSender.sendMail(mail);
@@ -176,6 +182,7 @@ public class CommandeController implements Initializable {
     Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     LocalDate currentDate = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
     String messageText = "Merci pour votre Commande de  " + formatter.format(currentDate)+" Nous vous confirmons votre commande " +"Bonne réception";
     
     

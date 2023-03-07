@@ -29,5 +29,6 @@
          </font>
       </Label>
       <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#back_btn" text="&lt;-" />
+      <Button layoutX="506.0" layoutY="341.0" mnemonicParsing="false" onAction="#payer" text="payer" />
    </children>
 </AnchorPane>

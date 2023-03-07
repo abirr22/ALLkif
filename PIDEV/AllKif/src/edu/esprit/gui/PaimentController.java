@@ -4,18 +4,47 @@
  * and open the template in the editor.
  */
 package edu.esprit.gui;
-
+import com.stripe.model.Card;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField; 
+import java.io.IOException;
+import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.ParsePosition;
+import java.util.Random;
+import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
-import javax.smartcardio.Card;
-import javax.smartcardio.CardException;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
+
 
 /**
  * FXML Controller class
@@ -25,60 +54,216 @@ import javax.smartcardio.CardException;
 public class PaimentController implements Initializable {
 
     @FXML
-    private TextField cardNumberField;
+    private ChoiceBox<String> carteList;
     @FXML
-    private TextField expiryMonthField;
+    private Label chCarte;
     @FXML
-    private TextField expiryYearField;
+    private Hyperlink ajouterCarte;
     @FXML
-    private TextField cvvField;
+    private Button PayerBtn;
     @FXML
-    private Button payButton;
+    private TextField montant;
+    @FXML
+    private ChoiceBox<String> PaymentMethod;
+    @FXML
+    private Label soldeLabel;
+    @FXML
+    private Label otpLabel;
+    @FXML
+    private TextField codeF;
+    @FXML
+    private Button ConfirmerBtn;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) { 
-        
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb) {
+        initCB();
 
-    @FXML
-    private void processPayment(ActionEvent event) { 
-         try {
-            Map<String, Object> cardParams = new HashMap<>();
-            cardParams.put("number", cardNumberField.getText());
-            cardParams.put("exp_month", expiryMonthField.getText());
-            cardParams.put("exp_year", expiryYearField.getText());
-            cardParams.put("cvc", cvvField.getText());
+    }
 
-            Card card = Card.create(cardParams);
+    public void setUtilisateur(User utilisateur) {
+        this.utilisateur = utilisateur;
+    }
 
-            Map<String, Object> chargeParams = new HashMap<>();
-            chargeParams.put("amount", 1000);
-            chargeParams.put("currency", "usd");
-            chargeParams.put("source", card.getId());
-            chargeParams.put("description", "Test Payment");
+    public User getUtilisateur() {
+        return utilisateur;
+    }
 
-            Charge charge = Charge.create(chargeParams);
+    public void setSoldeLabel() {
+        soldeLabel.setText("Votre Solde est: " + this.getSolde() + " TND");
+    }
 
-            System.out.println("Payment Successful: " + charge.getId());
+    public void setFormateur(User formateur) {
+        this.formateur = formateur;
+    }
 
-        } catch (CardException e) {
-            System.out.println("Card Error: " + e.getMessage());
-        } catch (RateLimitException e) {
-            System.out.println("Rate Limit Error: " + e.getMessage());
-        } catch (InvalidRequestException e) {
-            System.out.println("Invalid Request Error: " + e.getMessage());
-        } catch (AuthenticationException e) {
-            System.out.println("Authentication Error: " + e.getMessage());
-        } catch (APIConnectionException e) {
-            System.out.println("API Connection Error: " + e.getMessage());
-        } catch (StripeException e) {
-            System.out.println("Stripe Error: " + e.getMessage());
+    public User getFormateur() {
+        return formateur;
+    }
+
+    public void setFormation(Formation formation) {
+        this.formation = formation;
+    }
+
+    public Formation getFormation() {
+        return formation;
+    }
+
+    public void setAmount(long amount) {
+        montant.setText(String.valueOf(amount));
+    }
+
+    public void setSolde(String solde) {
+        this.solde = solde;
+    }
+
+    public String getSolde() {
+        return solde;
+    }
+
+    public void initCB() {
+
+        ObservableList<String> options = FXCollections.observableArrayList();
+        options.add("Payer avec votre solde");
+        options.add("Payer avec votre carte bancaire");
+        PaymentMethod.setItems(options);
+        PaymentMethod.setValue(options.get(0));
+        PaymentMethod.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            int i = PaymentMethod.getSelectionModel().getSelectedIndex();
+            if (i == 0) {
+                soldeLabel.setVisible(true);
+                carteList.setVisible(false);
+                ajouterCarte.setVisible(false);
+                chCarte.setVisible(false);
+            } else {
+                soldeLabel.setVisible(false);
+                carteList.setVisible(true);
+                ajouterCarte.setVisible(true);
+                chCarte.setVisible(true);
+
+            }
+        });
+    }
+
+    public void refreshCardList() {
+        try {
+
+            carteList.getItems().clear();
+            PaymentAPI p = new PaymentAPI(utilisateur);
+            ObservableList<PaymentMethod> cardList = p.getCustomerCards();
+            ObservableList<String> options = FXCollections.observableArrayList();
+            for (PaymentMethod card : cardList) {
+                String option = card.getCard().getBrand().toUpperCase() + " **** **** **** " + card.getCard().getLast4();
+                options.add(option);
+            }
+            carteList.setItems(options);
+            carteList.setValue(options.get(0));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
         }
     }
-    }
-    
 
+    @FXML
+    private void AddCardGUI(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddCardGUI.fxml"));
+            Parent root = loader.load();
+            AddCardGUIController acg = loader.getController();
+            acg.setUtilisateur(utilisateur);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.showAndWait();
+            int resultCode = acg.getResultCode();
+            if (resultCode == 1) {
+                refreshCardList();
+            }
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public String genererCode() {
+        Random random = new Random();
+        int otp = 100000 + random.nextInt(900000);
+        return Integer.toString(otp);
+    }
+
+    @FXML
+    private void PayerAction(ActionEvent event) {
+
+        if ((Long.valueOf(solde) - Long.valueOf(montant.getText()) < 0 || Long.valueOf(solde) < 0) && PaymentMethod.getSelectionModel().getSelectedIndex() == 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Solde insuffisant");
+            alert.showAndWait();
+            return;
+        }
+
+        if (carteList.getSelectionModel().getSelectedItem() == null && PaymentMethod.getSelectionModel().getSelectedIndex() == 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Aucune carte selectionnée.");
+            alert.showAndWait();
+            return;
+        }
+        otpLabel.setVisible(true);
+        codeF.setVisible(true);
+        PayerBtn.setVisible(false);
+        ConfirmerBtn.setVisible(true);
+
+        Alert otpAlert = new Alert(Alert.AlertType.INFORMATION, "un code de vérification Khadamni a été envoyé vers "
+                + utilisateur.getNum_tel());
+        otpAlert.setTitle("OTP CODE");
+        otpAlert.showAndWait();
+
+        String codeVerif = this.genererCode();
+        this.otp = codeVerif;
+        SmsAPI.sendSMS(otp);
+
+    }
+
+
+    @FXML
+    private void ConfirmerAction(ActionEvent event) {
+         if (codeF.getText().equals(this.otp)) {
+        int i = carteList.getSelectionModel().getSelectedIndex();
+        PaymentAPI p = new PaymentAPI(utilisateur);
+        ObservableList<PaymentMethod> cardList = p.getCustomerCards();
+        String idcarte;
+        if (PaymentMethod.getSelectionModel().getSelectedIndex() == 0) {
+            idcarte = "";
+        } else {
+            idcarte = cardList.get(i).getId();
+        }
+        Inscription inscri = new Inscription(formation.getId_formation(), utilisateur.getId_user());
+        if (p.sendMoney(formateur, Long.valueOf(montant.getText()) * 100, idcarte)) {
+            inscri.ajouter_inscription();
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION, "Vous étes inscrit avec succès."
+                    + "Une facture de paiement a été envoyé vers " + utilisateur.getEmail());
+            successAlert.setTitle("Succes");
+            successAlert.showAndWait();
+            MailAPI m = new MailAPI(utilisateur);
+            m.sendEmail(formation);
+            this.solde = String.valueOf(p.getBalance());
+            Stage stage = (Stage) otpLabel.getScene().getWindow();
+            stage.close();
+
+        } else {
+            Alert alert2 = new Alert(Alert.AlertType.WARNING, "probleme de paiement !");
+            alert2.showAndWait();
+        }
+
+          } else {
+              Alert alert2 = new Alert(Alert.AlertType.WARNING, "code de vérification incorrecte!");
+               alert2.showAndWait();
+          }
+    }
+
+    
+}

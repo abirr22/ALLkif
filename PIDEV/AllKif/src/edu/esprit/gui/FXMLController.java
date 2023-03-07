@@ -130,7 +130,7 @@ public class FXMLController implements Initializable {
         //xrole.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
         description.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
         //quantite.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getQuantite()).asObject());
-        Total.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getTotale()).asObject());
+       Total.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getTotale()).asObject());
         content.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContent()));       
 
 
@@ -303,12 +303,7 @@ public class FXMLController implements Initializable {
 
         } 
         
-        try {
-            MailSender.sendMail(mail);
-        } catch (Exception ex) {
-            Logger.getLogger(CommandeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+       
   
           
     }

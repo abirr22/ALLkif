@@ -150,12 +150,13 @@ public class ServiceCommande implements IServiceCommande <commande> {
     public void creecommande(int id_panier) {
          List<PanierProduit> list = new ArrayList<>();
         try {
-            String req = "SELECT  c.id_commande, pp.quantite,\n" +
+            String req = "SELECT \n" +
 "        prod.name,\n" +
 "        prod.price\n" +
-" from `prod` prod, `commande` c,\n" +
+" from `prod` prod,\n" +
 "`panier produit` pp \n" +
-"where pp.`id_pannier` = '"+id_panier+"'and c.id_panier = '"+id_panier+"'  and prod.id_product = pp.`id_produit`\n" +
+                    "`panier` panier,\n"+
+"where    panier.id_user=`3`and pp.`id_pannier` = '"+id_panier+"'  and prod.id_product = pp.`id_produit`\n" +
 "";
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
@@ -165,15 +166,15 @@ public class ServiceCommande implements IServiceCommande <commande> {
             int totale=0;
             while (rs.next()) {
                 
-                totale = rs.getInt(1)*rs.getInt(3);
-                content +=rs.getString(2)+"(quantite:"+rs.getInt(1)+")";
+                totale = rs.getInt(1);
+                content +=rs.getString(2);
                 //commande c = new commande(totale, int id_user, String content,int price);
                 //list.add(c);
             }
             commande c = new commande(totale,id_panier,content);
             System.out.println("Commande created !");
             try {
-            String req1 = "INSERT INTO `commande`(`totale`,`id_user`, `content`) VALUES ('"+c.getTotale()+"','"+c.getId_user()+"','"+c.getContent()+"')";
+            String req1 = "INSERT INTO `commande`(`id_panier`, `totale`,`id_user`,`content`) VALUES ('"+id_panier+"','"+totale+"','3','"+content+"')";
             Statement st1 = cnx.createStatement();
             st1.executeUpdate(req1);
             System.out.println("Commande ajoute !");

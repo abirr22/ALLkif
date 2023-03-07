@@ -296,13 +296,13 @@
                         <Font name="Segoe UI Bold" size="17.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="table2" layoutX="331.0" layoutY="75.0" prefHeight="368.0" prefWidth="312.0">
+                  <TableView fx:id="table2" layoutX="195.0" layoutY="75.0" prefHeight="368.0" prefWidth="494.0">
                     <columns>
-                      <TableColumn fx:id="content" prefWidth="163.0" text="Content" />
-                      <TableColumn fx:id="Total" prefWidth="148.0" text="Total" />
+                      <TableColumn fx:id="content" prefWidth="420.0" text="Content" />
+                      <TableColumn fx:id="Total" prefWidth="73.0" text="Total" />
                     </columns>
                   </TableView>
-                  <Button layoutX="418.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#supp_c" text="Supprimer Commande" />
+                  <Button layoutX="366.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#supp_c" text="Supprimer Commande" />
                   <Button layoutX="876.0" layoutY="607.0" mnemonicParsing="false" onAction="#statistique" text="Statistique" />
                </children>
             </Pane>

@@ -49,5 +49,23 @@ public class ConfcController implements Initializable {
 
         }
     }
+
+    @FXML
+    private void payer(ActionEvent event) { 
+          try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("paiment.fxml"));
+            Parent page2
+                   = loader.load();
+            CommandeController commandeController= loader.getController();
+            
+            Scene scene = new Scene(page2);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+
+            stage.show();
+        } catch (IOException ex) {
+
+        }
+    }
     
 }
