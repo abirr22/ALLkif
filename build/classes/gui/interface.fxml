@@ -2,14 +2,19 @@
 
 <?import com.gluonhq.charm.glisten.control.Avatar?>
 <?import com.gluonhq.charm.glisten.control.Icon?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -20,17 +25,109 @@
 
 <AnchorPane id="AnchorPane" fx:id="main" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #031B03;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InterfaceController">
     <children>
+      <Pane fx:id="pn_signup" prefHeight="723.0" prefWidth="1283.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="502.0" prefHeight="723.0" prefWidth="781.0" style="-fx-background-color: grey;">
+               <children>
+                  <TextField fx:id="input_firstName" layoutX="150.0" layoutY="141.0" promptText="first_name" />
+                  <TextField fx:id="input_lastName" layoutX="150.0" layoutY="212.0" promptText="last_name" />
+                  <TextField fx:id="input_username" layoutX="150.0" layoutY="277.0" promptText="username" />
+                  <Label layoutX="162.0" layoutY="554.0" prefHeight="73.0" prefWidth="473.0" text="dont have an account? create your account, it takes less then a minute  " textFill="#2d07eb" />
+                  <TextField fx:id="input_email" layoutX="448.0" layoutY="141.0" promptText="email" />
+                  <TextField fx:id="input_phone_number" layoutX="448.0" layoutY="243.0" promptText="phone_number" />
+                  <TextField fx:id="input_gender" layoutX="438.0" layoutY="343.0" promptText="gender" />
+                  <PasswordField fx:id="input_password" layoutX="143.0" layoutY="359.0" promptText="Password" />
+                  <Button fx:id="btn_signup" layoutX="276.0" layoutY="433.0" mnemonicParsing="false" onMouseClicked="#handleSignupButtonClick" prefHeight="65.0" prefWidth="229.0" style="-fx-background-radius: 70px; -fx-background-color: #F4D32C;" text="signup">
+                     <font>
+                        <Font name="Segoe UI" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn_signup1" layoutX="276.0" layoutY="509.0" mnemonicParsing="false" onAction="#btn_log" prefHeight="65.0" prefWidth="229.0" style="-fx-background-radius: 70px; -fx-background-color: #F4D32C;" text="Login">
+                     <font>
+                        <Font name="Segoe UI" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </Pane>
+      <Pane fx:id="pn_captcha" prefHeight="724.0" prefWidth="1284.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="captchahere" alignment="CENTER" contentDisplay="CENTER" layoutX="129.0" layoutY="113.0" prefHeight="46.0" prefWidth="400.0" text="captcha" textFill="#19760d" textOverrun="CENTER_ELLIPSIS">
+               <font>
+                  <Font name="Bookman Old Style Italic" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="225.0" layoutY="250.0" prefHeight="37.0" prefWidth="110.0" text="Enter Captcha :" />
+            <Label fx:id="messagebtn" alignment="CENTER" contentDisplay="CENTER" layoutX="105.0" layoutY="485.0" prefHeight="20.0" prefWidth="400.0" text="Please Enter Captcha" textAlignment="CENTER">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <TextField fx:id="textarea" layoutX="352.0" layoutY="254.0" prefHeight="26.0" prefWidth="135.0" />
+            <Button fx:id="checkbtn" graphicTextGap="0.0" layoutX="264.0" layoutY="191.0" mnemonicParsing="false" onAction="#captchachecker" opacity="0.85" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #F4D32C;" text="check" textFill="#e45d5d">
+               <opaqueInsets>
+                  <Insets bottom="200.0" left="200.0" right="200.0" top="200.0" />
+               </opaqueInsets>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <Button fx:id="newcaptchabtn" alignment="CENTER" contentDisplay="CENTER" layoutX="172.0" layoutY="441.0" mnemonicParsing="false" onAction="#setcaptcha" opacity="0.85" prefHeight="38.0" prefWidth="246.0" style="-fx-background-color: #F4D32C;" text="new captcha" textAlignment="RIGHT" textFill="#393636">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <Button fx:id="btnLogin" layoutX="58.0" layoutY="648.0" mnemonicParsing="false" onAction="#handleLoginButtonClick" text="logout" />
+         </children>
+      </Pane>
+      <Pane fx:id="pn_login" prefHeight="724.0" prefWidth="1288.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane blendMode="HARD_LIGHT" layoutX="73.0" layoutY="38.0" prefHeight="643.0" prefWidth="509.0" style="-fx-background-color: # D3D3D3;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Button fx:id="signup" layoutX="132.0" layoutY="536.0" mnemonicParsing="false" onAction="#signup" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #F4D32C;" text="Signup" />
+                  <Label layoutX="110.0" layoutY="491.0" text="Create your account" textFill="#d72d2d">
+                     <font>
+                        <Font name="AGA Arabesque" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="94.0" layoutY="310.0" prefHeight="21.0" prefWidth="392.0" text="If you forget your password click here" textFill="#ebe2e2" />
+                  <TextField fx:id="txtuname" layoutX="45.0" layoutY="32.0" promptText="Username" />
+                  <PasswordField fx:id="txtpass" layoutX="45.0" layoutY="104.0" promptText="Password" />
+                  <Button fx:id="btnok" layoutX="62.0" layoutY="163.0" mnemonicParsing="false" onAction="#Login" prefHeight="21.0" prefWidth="132.0" style="-fx-background-color: #F4D32C;" text="Login" />
+                  <Button fx:id="ForgetPassword" layoutX="140.0" layoutY="337.0" mnemonicParsing="false" onAction="#ForgetPassword" style="-fx-background-color: #F4D32C;" text="Get your password" />
+               </children>
+            </AnchorPane>
+         </children>
+      </Pane>
       <AnchorPane prefHeight="720.0" prefWidth="180.0" style="-fx-background-color: #202020;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane layoutX="-7.0" prefHeight="92.0" prefWidth="216.0" style="-fx-background-color: #303030;" AnchorPane.leftAnchor="-7.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Avatar layoutX="24.0" layoutY="33.0" />
-                  <Label layoutX="73.0" layoutY="32.0" prefHeight="21.0" prefWidth="97.0" text="Si flen" textFill="#f0f0f0">
+                  <Label fx:id="llname" layoutX="73.0" layoutY="32.0" prefHeight="21.0" prefWidth="97.0" text="Si flen" textFill="#f0f0f0">
                      <font>
                         <Font name="Segoe UI Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label layoutX="73.0" layoutY="50.0" prefHeight="21.0" prefWidth="97.0" text="Artiste" textFill="RED">
+                  <Label fx:id="lrole" layoutX="73.0" layoutY="50.0" prefHeight="21.0" prefWidth="97.0" text="Artiste" textFill="RED">
                      <font>
                         <Font name="Segoe UI Bold" size="12.0" />
                      </font>
@@ -81,12 +178,12 @@
                   <Font name="Segoe UI Bold" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="319.0" prefHeight="21.0" prefWidth="97.0" text="Options" textFill="#f0f0f0">
+            <Label fx:id="loption" layoutX="10.0" layoutY="319.0" prefHeight="21.0" prefWidth="97.0" text="Options" textFill="#f0f0f0">
                <font>
                   <Font name="Segoe UI Bold" size="17.0" />
                </font>
             </Label>
-            <Button layoutX="2.0" layoutY="350.0" mnemonicParsing="false" onAction="#btn_mesproduits" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes produits" textFill="#f0f0f0">
+            <Button fx:id="btn_mesproduit" layoutX="2.0" layoutY="350.0" mnemonicParsing="false" onAction="#btn_mesproduits" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes produits" textFill="#f0f0f0">
                <font>
                   <Font name="Segoe UI" size="13.0" />
                </font>
@@ -94,7 +191,7 @@
                   <Icon content="LIST" />
                </graphic>
             </Button>
-            <Button layoutX="2.0" layoutY="386.0" mnemonicParsing="false" onAction="#btn_ajouterporduits" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Ajouter produit" textFill="#f0f0f0">
+            <Button fx:id="btn_ajouterproduit" layoutX="2.0" layoutY="386.0" mnemonicParsing="false" onAction="#btn_ajouterporduits" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Ajouter produit" textFill="#f0f0f0">
                <font>
                   <Font name="Segoe UI" size="13.0" />
                </font>
@@ -102,7 +199,7 @@
                   <Icon content="ADD" />
                </graphic>
             </Button>
-            <Button layoutY="422.0" mnemonicParsing="false" onAction="#btn_mesevenements" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes evenements" textFill="#f0f0f0">
+            <Button fx:id="btn_mesevent" layoutY="422.0" mnemonicParsing="false" onAction="#btn_mesevenements" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes evenements" textFill="#f0f0f0">
                <font>
                   <Font name="Segoe UI" size="13.0" />
                </font>
@@ -110,7 +207,7 @@
                   <Icon content="LIST" />
                </graphic>
             </Button>
-            <Button layoutX="1.0" layoutY="459.0" mnemonicParsing="false" onAction="#btn_ajouterevenements" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Ajouter evenements" textFill="#f0f0f0">
+            <Button fx:id="btn_ajouterevent" layoutX="1.0" layoutY="459.0" mnemonicParsing="false" onAction="#btn_ajouterevenements" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Ajouter evenements" textFill="#f0f0f0">
                <font>
                   <Font name="Segoe UI" size="13.0" />
                </font>
@@ -118,7 +215,7 @@
                   <Icon content="ADD" />
                </graphic>
             </Button>
-            <Button layoutX="3.0" layoutY="491.0" mnemonicParsing="false" onAction="#btn_mesblog" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes blog" textFill="#f0f0f0">
+            <Button fx:id="btn_mesblog" layoutX="3.0" layoutY="491.0" mnemonicParsing="false" onAction="#btn_mesblog" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes blog" textFill="#f0f0f0">
                <font>
                   <Font name="Segoe UI" size="13.0" />
                </font>
@@ -126,7 +223,7 @@
                   <Icon content="LIST" />
                </graphic>
             </Button>
-            <Button layoutX="2.0" layoutY="524.0" mnemonicParsing="false" onAction="#btn_ajouterblog" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Ajouter blog" textFill="#f0f0f0">
+            <Button fx:id="btn_ajouterblog" layoutX="2.0" layoutY="524.0" mnemonicParsing="false" onAction="#btn_ajouterblog" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Ajouter blog" textFill="#f0f0f0">
                <font>
                   <Font name="Segoe UI" size="13.0" />
                </font>
@@ -142,11 +239,27 @@
                   <Icon content="SETTINGS" />
                </graphic>
             </Button>
+            <Button fx:id="btn_mescommandes" layoutX="4.0" layoutY="353.0" mnemonicParsing="false" onAction="#btn_mescommandesa" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="Mes commande" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="LIST" />
+               </graphic>
+            </Button>
+            <Button fx:id="btn_listuser" layoutX="3.0" layoutY="390.0" mnemonicParsing="false" onAction="#btn_listusera" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: #202020;" text="list utilisateur" textFill="#f0f0f0">
+               <font>
+                  <Font name="Segoe UI" size="13.0" />
+               </font>
+               <graphic>
+                  <Icon content="ADD" />
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="209.0" prefHeight="720.0" prefWidth="1071.0">
          <children>
-            <Pane fx:id="pn_panier" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_panier" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Panier" textFill="#f0f0f0">
                      <font>
@@ -154,7 +267,7 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_evenements" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_evenements" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Evenements" textFill="#f0f0f0">
                      <font>
@@ -162,7 +275,7 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_blog" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_blog" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Blog" textFill="#f0f0f0">
                      <font>
@@ -170,7 +283,7 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_mesevenements" layoutX="1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_mesevenements" layoutX="1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Mes evenement" textFill="#f0f0f0">
                      <font>
@@ -178,7 +291,7 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_mesblog" layoutX="1.0" layoutY="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_mesblog" layoutX="1.0" layoutY="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="10.0" layoutY="10.0" prefHeight="68.0" prefWidth="280.0" text="Mes blog" textFill="#f0f0f0">
                      <font>
@@ -186,7 +299,7 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_ajouterblog" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_ajouterblog" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="10.0" layoutY="10.0" prefHeight="68.0" prefWidth="280.0" text="Ajouter blog" textFill="#f0f0f0">
                      <font>
@@ -194,15 +307,7 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_compte" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
-               <children>
-                  <Label prefHeight="68.0" prefWidth="280.0" text="Gerer mon profil" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="30.0" />
-                     </font>
-                  </Label>
-               </children></Pane>
-            <Pane fx:id="pn_ajouterevenement" layoutX="-1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_ajouterevenement" layoutX="-1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="10.0" layoutY="10.0" prefHeight="68.0" prefWidth="292.0" text="Ajouter evenement" textFill="#f0f0f0">
                      <font>
@@ -210,7 +315,7 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_ajouterproduits" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_ajouterproduits" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Ajouter produits" textFill="#f0f0f0">
                      <font>
@@ -224,7 +329,7 @@
                   <Separator layoutX="525.0" layoutY="167.0" orientation="VERTICAL" prefHeight="352.0" prefWidth="0.0" />
                   <Button layoutX="891.0" layoutY="648.0" mnemonicParsing="false" onAction="#addbtn" prefHeight="36.0" prefWidth="105.0" text="Ajouter" />
                </children></Pane>
-            <Pane fx:id="pn_modifierproduits" prefHeight="722.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane fx:id="pn_modifierproduits" prefHeight="722.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="1.0" layoutY="3.0" prefHeight="68.0" prefWidth="280.0" text="Modifier produit" textFill="#f0f0f0">
                      <font>
@@ -239,7 +344,7 @@
                   <Button layoutX="886.0" layoutY="641.0" mnemonicParsing="false" onAction="#updatebtn" prefHeight="36.0" prefWidth="105.0" text="modifier" />
                </children>
             </Pane>
-            <Pane fx:id="pn_boutique" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_boutique" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Boutique" textFill="#f0f0f0">
                      <font>
@@ -260,7 +365,7 @@
                      </children>
                   </HBox>
                </children></Pane>
-            <Pane fx:id="pn_singleprod" prefHeight="722.0" prefWidth="1073.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_singleprod" prefHeight="722.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ImageView fx:id="imgsingle" fitHeight="384.0" fitWidth="280.0" layoutX="57.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="titresingle" layoutX="373.0" layoutY="195.0" prefHeight="57.0" prefWidth="273.0" text="Si flen" textFill="#f0f0f0">
@@ -282,7 +387,7 @@
                   <Button layoutX="371.0" layoutY="442.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="97.0" text="acheter" />
                </children>
             </Pane>
-            <Pane fx:id="pn_mesproduits" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+            <Pane fx:id="pn_mesproduits" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Mes produits" textFill="#f0f0f0">
                      <font>
@@ -302,6 +407,82 @@
                   <Button layoutX="47.0" layoutY="662.0" mnemonicParsing="false" onAction="#pdf" prefHeight="32.0" prefWidth="299.0" text="Generer un pdf de la liste de mes produits" />
                </children>
             </Pane>
+            <Pane fx:id="pn_listuser" prefHeight="721.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="11.0" layoutY="6.0" prefHeight="68.0" prefWidth="403.0" text="Liste des utilisateurs" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="afficher" layoutX="38.0" layoutY="123.0" prefHeight="450.0" prefWidth="873.0" style="-fx-background-color: #000099;">
+                     <columns>
+                        <TableColumn fx:id="id_userColumn" prefWidth="75.0" text="id_user" visible="false" />
+                        <TableColumn fx:id="first_nameColumn" prefWidth="114.0" style="-fx-background-color: # FFDAyellowB9;" text="first_name" />
+                        <TableColumn fx:id="last_nameColumn" prefWidth="101.0" text="last_name" />
+                        <TableColumn fx:id="usernameColumn" prefWidth="99.0" text="username" />
+                        <TableColumn fx:id="passwordColumn" prefWidth="116.0" text="password" />
+                        <TableColumn fx:id="emailColumn" prefWidth="197.0" text="email" />
+                        <TableColumn fx:id="phone_numberColumn" prefWidth="178.0" text="phone_number" />
+                        <TableColumn fx:id="genderColumn" prefWidth="142.0" text="gender" />
+                        <TableColumn fx:id="roleColumn" prefWidth="126.0" text="role" />
+                     </columns>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </TableView>
+                  <TextField layoutX="844.0" layoutY="60.0" style="-fx-background-color: red;" text="Recherche" />
+               </children>
+            </Pane>
+            <Pane fx:id="pn_compte" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Gerer mon profil" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="36.0" layoutY="101.0" opacity="0.0" prefHeight="45.0" prefWidth="112.0" text="Nom :">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="36.0" layoutY="182.0" prefHeight="45.0" prefWidth="112.0" text="Prenom :">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="36.0" layoutY="280.0" prefHeight="45.0" prefWidth="112.0" text="Username :">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="381.0" layoutY="280.0" prefHeight="45.0" prefWidth="112.0" text="Email :" />
+                  <TextField fx:id="lfname" layoutX="148.0" layoutY="189.0" />
+                  <TextField fx:id="llname1" layoutX="148.0" layoutY="108.0" opacity="0.0" />
+                  <TextField fx:id="lusername" layoutX="148.0" layoutY="287.0" />
+                  <TextField fx:id="lemail" layoutX="495.0" layoutY="287.0" prefHeight="31.0" prefWidth="343.0" />
+                  <Button layoutX="791.0" layoutY="458.0" mnemonicParsing="false" onAction="#set" text="Applique" />
+                  <TextField fx:id="lphone_number" layoutX="148.0" layoutY="391.0" />
+                  <TextField fx:id="lgender" layoutX="493.0" layoutY="391.0" prefHeight="31.0" prefWidth="124.0" />
+                  <TextField fx:id="lrole1" layoutX="148.0" layoutY="489.0" opacity="0.0" />
+                  <Label layoutX="27.0" layoutY="396.0" text="phone number">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="388.0" layoutY="396.0" text="gender " />
+                  <Label layoutX="50.0" layoutY="489.0" opacity="0.0" text="role">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
          </children>
       </AnchorPane>
    </children>

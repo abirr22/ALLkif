@@ -105,5 +105,18 @@ public class ProductService implements IPService <produits>  {
         return list;
     }
     
+    @Override
+    public ResultSet Getall() {
+        ResultSet rs = null;
+        try {
+            String req = "SELECT * FROM `produits`";
+            PreparedStatement st = cn.prepareStatement(req);
+            rs = st.executeQuery(req);
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return rs;    
+    }
+    
     
 }

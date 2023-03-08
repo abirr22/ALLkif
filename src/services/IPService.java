@@ -20,4 +20,5 @@ public interface IPService <T>{
     public ResultSet Selectionner(int id);
     public ResultSet SelectionnerSingle(int id);
     public List<produits> afficher(int id);
+    public ResultSet Getall();
 }
