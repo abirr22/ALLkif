@@ -7,10 +7,8 @@ package edu.esprit.gui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
@@ -18,12 +16,18 @@ import javafx.scene.control.Label;
  *
  * @author siwar
  */
-public class DEController implements Initializable {
+public class DetailEvenementController implements Initializable {
 
     @FXML
-    private Button btnA;
+    private Label nomE;
     @FXML
-    private Label nomEV;
+    private Label descripE;
+    @FXML
+    private Label prixE;
+    @FXML
+    private Label dateE;
+    @FXML
+    private Label nbrePMax;
 
     /**
      * Initializes the controller class.
@@ -32,10 +36,5 @@ public class DEController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
-     @FXML
-    void ajouterAvis(ActionEvent event) {
-        
-    }
     
 }

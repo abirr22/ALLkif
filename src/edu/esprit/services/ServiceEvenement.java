@@ -38,13 +38,14 @@ public class ServiceEvenement implements IService <Evenement> {
 //    }
      public void ajouter (Evenement e) {
         try {
-            String req = "INSERT INTO `evenement` (`nomEvenement`, `descriptionEvenement`, `Artiste`,`dateEvenement`, `prixEvenement`) VALUES (?,?,?,?,?)";
+            String req = "INSERT INTO `evenement` (`nomEvenement`, `descriptionEvenement`, `Artiste`,`dateEvenement`, `prixEvenement` , `nbreParticipantMax`) VALUES (?,?,?,?,?,?)";
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, e.getNomEvenement());
             ps.setString(2, e.getDescriptionEvenement());
              ps.setString(3, e.getArtiste());
            ps.setDate(4, (Date) e.getDateEvenement()); 
             ps.setDouble(5, e.getPrixEvenement());
+            ps.setInt(6, e.getNbreParticipantMax());
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -66,7 +67,7 @@ public class ServiceEvenement implements IService <Evenement> {
     @Override
     public void modifier(Evenement e) {
         try {
-            String req = "UPDATE `evenement` SET `nomEvenement`='" + e.getNomEvenement() + "',`descriptionEvenement`='" + e.getDescriptionEvenement() + "',`Artiste`='" + e.getArtiste() + "',`dateEvenement`='" + e.getDateEvenement() + "',`prixEvenement`='" + e.getPrixEvenement() + "' WHERE `evenement`.`idEvenement` = " + e.getIdEvenement();
+            String req = "UPDATE `evenement` SET `nomEvenement`='" + e.getNomEvenement() + "',`descriptionEvenement`='" + e.getDescriptionEvenement() + "',`Artiste`='" + e.getArtiste() + "',`dateEvenement`='" + e.getDateEvenement() + "',`prixEvenement`='" + e.getPrixEvenement() + "', `nbreParticipantMax`='" + e.getNbreParticipantMax() + "' WHERE `evenement`.`idEvenement` = " + e.getIdEvenement();
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("Evenement updated !");
@@ -83,7 +84,7 @@ public class ServiceEvenement implements IService <Evenement> {
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
            while (rs.next()) {
-               Evenement e = new Evenement(rs.getInt(1), rs.getString("nomEvenement"), rs.getString("descriptionEvenement"), rs.getString("Artiste"), rs.getDate("dateEvenement"), rs.getFloat("prixEvenement") );
+               Evenement e = new Evenement(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getFloat(6), rs.getInt(7), rs.getInt(8));
                list.add(e);
           }
         } catch (SQLException ex) {
@@ -101,7 +102,7 @@ public class ServiceEvenement implements IService <Evenement> {
             Statement st = cnx.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
-                e = new Evenement(rs.getInt(1), rs.getString("nomEvenement"), rs.getString("descriptionEvenement"), rs.getString("Artiste"), rs.getDate("dateEvenement"), rs.getDouble("prixEvenement"));
+                e = new Evenement(rs.getInt(1), rs.getString("nomEvenement"), rs.getString("descriptionEvenement"), rs.getString("Artiste"), rs.getDate("dateEvenement"), rs.getDouble("prixEvenement"), rs.getInt(7), rs.getInt(8));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

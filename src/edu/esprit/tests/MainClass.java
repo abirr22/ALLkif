@@ -6,6 +6,7 @@
 package edu.esprit.tests;
 
 import edu.esprit.entities.Evenement;
+import edu.esprit.ressources.SMSSender;
 import edu.esprit.services.ServiceEvenement;
 
 /**
@@ -21,7 +22,7 @@ public class MainClass {
       //se.supprimer(2);
     
      
-        
+       
       
         
       }

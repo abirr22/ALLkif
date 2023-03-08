@@ -5,6 +5,7 @@
  */
 package edu.esprit.tests;
 
+import edu.esprit.ressources.SMSSender;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +34,7 @@ public class FXMain extends Application {
             primaryStage.setTitle("Evenement!");
             primaryStage.setScene(scene);
             primaryStage.show();
+           
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -43,6 +45,7 @@ public class FXMain extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+//          SMSSender.sendSMS("test SMS");
     }
     
 }

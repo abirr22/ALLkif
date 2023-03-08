@@ -19,79 +19,109 @@ public class Evenement {
     private String nomEvenement, descriptionEvenement, Artiste;
     private Date dateEvenement;
     private double prixEvenement;
+    private int  nbreParticipantMax, nbreParticipant;
 
     public Evenement() {
     }
 
-    public Evenement(String nomEvenement, String descriptionEvenement, String Artiste, Date dateEvenement, double prixEvenement) {
+    public Evenement(String nomEvenement, String descriptionEvenement, String Artiste, Date dateEvenement, double prixEvenement, int nbreParticipantMax) {
         this.nomEvenement = nomEvenement;
         this.descriptionEvenement = descriptionEvenement;
-         this.Artiste = Artiste;
+        this.Artiste = Artiste;
         this.dateEvenement = dateEvenement;
         this.prixEvenement = prixEvenement;
+        this.nbreParticipantMax = nbreParticipantMax;
     }
 
-    public Evenement(int idEvenement, String nomEvenement, String descriptionEvenement, String Artiste, Date dateEvenement, double prixEvenement) {
+    public Evenement(String nomEvenement, String descriptionEvenement, String Artiste, Date dateEvenement, double prixEvenement, int nbreParticipantMax, int nbreParticipant) {
+        this.nomEvenement = nomEvenement;
+        this.descriptionEvenement = descriptionEvenement;
+        this.Artiste = Artiste;
+        this.dateEvenement = dateEvenement;
+        this.prixEvenement = prixEvenement;
+        this.nbreParticipantMax = nbreParticipantMax;
+        this.nbreParticipant = nbreParticipant;
+    }
+
+    public Evenement(int idEvenement, String nomEvenement, String descriptionEvenement, String Artiste, Date dateEvenement, double prixEvenement, int nbreParticipantMax, int nbreParticipant) {
         this.idEvenement = idEvenement;
         this.nomEvenement = nomEvenement;
         this.descriptionEvenement = descriptionEvenement;
         this.Artiste = Artiste;
         this.dateEvenement = dateEvenement;
         this.prixEvenement = prixEvenement;
+        this.nbreParticipantMax = nbreParticipantMax;
+        this.nbreParticipant = nbreParticipant;
     }
 
     public int getIdEvenement() {
         return idEvenement;
     }
 
-    public String getNomEvenement() {
-        return nomEvenement;
-    }
-
-    public String getDescriptionEvenement() {
-        return descriptionEvenement;
-    }
-    
-    public String getArtiste() {
-        return Artiste;
-    }
-
-    public Date getDateEvenement() {
-        return dateEvenement;
-    }
-
-    public double getPrixEvenement() {
-        return prixEvenement;
-    }
-
     public void setIdEvenement(int idEvenement) {
         this.idEvenement = idEvenement;
+    }
+
+    public String getNomEvenement() {
+        return nomEvenement;
     }
 
     public void setNomEvenement(String nomEvenement) {
         this.nomEvenement = nomEvenement;
     }
 
+    public String getDescriptionEvenement() {
+        return descriptionEvenement;
+    }
+
     public void setDescriptionEvenement(String descriptionEvenement) {
         this.descriptionEvenement = descriptionEvenement;
     }
-    
-     public void setArtiste(String Artiste) {
+
+    public String getArtiste() {
+        return Artiste;
+    }
+
+    public void setArtiste(String Artiste) {
         this.Artiste = Artiste;
+    }
+
+    public Date getDateEvenement() {
+        return dateEvenement;
     }
 
     public void setDateEvenement(Date dateEvenement) {
         this.dateEvenement = dateEvenement;
     }
 
+    public double getPrixEvenement() {
+        return prixEvenement;
+    }
+
     public void setPrixEvenement(double prixEvenement) {
         this.prixEvenement = prixEvenement;
     }
 
+    public int getNbreParticipantMax() {
+        return nbreParticipantMax;
+    }
+
+    public void setNbreParticipantMax(int nbreParticipantMax) {
+        this.nbreParticipantMax = nbreParticipantMax;
+    }
+
+    public int getNbreParticipant() {
+        return nbreParticipant;
+    }
+
+    public void setNbreParticipant(int nbreParticipant) {
+        this.nbreParticipant = nbreParticipant;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + this.idEvenement;
+        int hash = 3;
+        hash = 71 * hash + this.idEvenement;
         return hash;
     }
 
@@ -115,11 +145,9 @@ public class Evenement {
 
     @Override
     public String toString() {
-        return "Evenement{" + "nomEvenement=" + nomEvenement + ", descriptionEvenement=" + descriptionEvenement + ", Artiste=" + Artiste + ", dateEvenement=" + dateEvenement + ", prixEvenement=" + prixEvenement + '}';
+        return "Evenement{" + "nomEvenement=" + nomEvenement + ", descriptionEvenement=" + descriptionEvenement + ", Artiste=" + Artiste + ", dateEvenement=" + dateEvenement + ", prixEvenement=" + prixEvenement + ", nbreParticipantMax=" + nbreParticipantMax + '}';
     }
 
-   
-    
     
     
     

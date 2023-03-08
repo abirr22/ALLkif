@@ -4,15 +4,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.gui.AffichageEController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: #202020;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.gui.AffichageEController">
    <children>
-      <Label fx:id="tfNomE" alignment="CENTER" layoutX="21.0" layoutY="32.0" prefHeight="39.0" prefWidth="222.0" text="Label" textAlignment="CENTER" />
-      <Label layoutX="7.0" layoutY="71.0" prefHeight="47.0" prefWidth="81.0" text="Description:" />
-      <Label layoutX="16.0" layoutY="138.0" prefHeight="47.0" prefWidth="63.0" text="Artiste:" />
-      <Label fx:id="tfDateE" layoutX="32.0" layoutY="207.0" prefHeight="39.0" prefWidth="56.0" text="Label" />
-      <Button layoutX="135.0" layoutY="246.0" mnemonicParsing="false" text="voir plus de détails" />
-      <Label fx:id="tfDescriptionE" layoutX="97.0" layoutY="84.0" prefHeight="54.0" prefWidth="197.0" text="Label" />
-      <Label fx:id="tfArtisteE" layoutX="82.0" layoutY="142.0" prefHeight="39.0" prefWidth="205.0" text="Label" />
+      <Label fx:id="tfNomE" alignment="CENTER" layoutX="24.0" layoutY="14.0" prefHeight="39.0" prefWidth="222.0" text="Label" textAlignment="CENTER" textFill="WHITE" />
+      <Label layoutX="7.0" layoutY="71.0" prefHeight="47.0" prefWidth="81.0" text="Description:" textFill="WHITE" />
+      <Label layoutX="10.0" layoutY="138.0" prefHeight="47.0" prefWidth="63.0" text="Artiste:" textFill="WHITE" />
+      <Label fx:id="tfDateE" layoutX="10.0" layoutY="194.0" prefHeight="39.0" prefWidth="156.0" text="Label" textFill="WHITE" />
+      <Button layoutX="135.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnAvis" text="Ajouter avis" />
+      <Label fx:id="tfDescriptionE" alignment="CENTER" layoutX="97.0" layoutY="71.0" prefHeight="54.0" prefWidth="197.0" text="Label" textFill="WHITE" />
+      <Label fx:id="tfArtisteE" alignment="CENTER" layoutX="82.0" layoutY="142.0" prefHeight="39.0" prefWidth="205.0" text="Label" textFill="WHITE" />
+      <Button fx:id="btnDetail" layoutX="15.0" layoutY="262.0" mnemonicParsing="false" text="détail" />
    </children>
 </AnchorPane>

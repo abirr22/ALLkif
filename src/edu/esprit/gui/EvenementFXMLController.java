@@ -14,14 +14,21 @@ import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import edu.esprit.entities.AvisEvenement;
 import edu.esprit.entities.Evenement;
+import edu.esprit.ressources.ImgurUploader;
+import edu.esprit.ressources.SMSSender;
 import edu.esprit.services.ServiceAvisE;
 import edu.esprit.services.ServiceEvenement;
+import edu.esprit.utils.DataSource;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -36,6 +43,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -44,12 +52,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -61,7 +74,7 @@ import javafx.stage.Stage;
  * @author siwar
  */
 public class EvenementFXMLController implements Initializable {
-
+String URLImage = null;
    @FXML
     private Pane pn_boutique;
     @FXML
@@ -96,11 +109,10 @@ public class EvenementFXMLController implements Initializable {
     private TextArea tfDescriptionE;
     @FXML
     private Label myLabel;
-      @FXML
     private TilePane tilePane;
       @FXML
     private TilePane tilePane2;
-
+ Connection cnx = DataSource.getInstance().getCnx();
 
           public static void numericOnly(final TextField field) {
         field.textProperty().addListener(new ChangeListener<String>() {
@@ -119,6 +131,14 @@ public class EvenementFXMLController implements Initializable {
     private TextField tfid;
     @FXML
     private ImageView qrcodee;
+    @FXML
+    private ScrollPane scroll;
+    @FXML
+    private GridPane grid;
+    @FXML
+    private ImageView fileImageView;
+    @FXML
+    private TextField tfnbrePMax;
 
     
     
@@ -185,154 +205,210 @@ public class EvenementFXMLController implements Initializable {
     private void btn_evenement(javafx.event.ActionEvent event) {
         pn_evenements.toFront();
         ServiceEvenement se = new ServiceEvenement();
-
-        List<Evenement> e =   se.getAll();
-       for (int i=0; i< e.size(); i++){
-         
-          Label lblNom = new Label(e.get(i).getNomEvenement());
-            Label lblDescription = new Label(e.get(i).getDescriptionEvenement());
-             Label lblArtiste = new Label(e.get(i).getArtiste());
-              Label lblDate = new Label(e.get(i).getDateEvenement().toString());
-              Button btn= new Button("Voir plus de détails");
-              Button btnAvis= new Button("avis");
-              VBox vbox = new VBox();
-              vbox.getChildren().add(lblNom);
-              vbox.getChildren().add(lblDescription);
-             vbox.getChildren().add(lblArtiste);
-              vbox.getChildren().add(lblDate);
-              vbox.getChildren().add(btn);
-              vbox.getChildren().add(btnAvis);
+         List<Evenement> e =   se.getAll();
+         int column=0;
+         int row=0;
+         for (int i=0; i< e.size(); i++){
+               FXMLLoader fxmlloader = new FXMLLoader();
+                fxmlloader.setLocation(getClass().getResource("../gui/AffichageE.fxml"));
+            try {
+              
+                AnchorPane anchorPane= fxmlloader.load();
                 
-               Evenement ev = se.getOneById(e.get(i).getIdEvenement());
-       tilePane.getChildren().add(vbox);
-       
+                AffichageEController AffichageEController= fxmlloader.getController();
+                AffichageEController.setData(e.get(i));
+
+                if (column== 2){
+                    column=0;
+                    row++;
+                }
+                                                   
+           column++;
+                 //set grid width
+                            grid.setMinWidth(Region.USE_COMPUTED_SIZE);
+                            grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
+                            grid.setMaxWidth(Region.USE_PREF_SIZE);
+                            //set grid height
+                            grid.setMinHeight(Region.USE_COMPUTED_SIZE);
+                            grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                            grid.setMaxHeight(Region.USE_PREF_SIZE);
+                            
+                            grid.add(anchorPane, column,row );
+                                GridPane.setMargin(anchorPane,new Insets(20));
+                      
       
-      btn.setOnAction(new EventHandler<ActionEvent>() {
-               @Override
-               public void handle(ActionEvent event) {
-                 
-                       //                    pn_detailE.toFront();
-                       ServiceAvisE sa = new ServiceAvisE();
-                         List<AvisEvenement> a =   sa.getAll();
-                          Label lblNom = new Label(ev.getNomEvenement());
-            Label lblDescription = new Label(ev.getDescriptionEvenement());
-            Label lblArtiste = new Label(ev.getArtiste());
-           Label lblDate = new Label(ev.getDateEvenement().toString());
-             String Prix= Double.toString(ev.getPrixEvenement());
-              Label lblPrix = new Label(Prix);
-                VBox vbox1 = new VBox();
-             vbox1.getChildren().add(lblNom);
-              vbox1.getChildren().add(lblDescription);
-              vbox1.getChildren().add(lblArtiste);
-              vbox1.getChildren().add(lblDate);
-             vbox1.getChildren().add(lblPrix);
-               pn_evenements.getChildren().clear();
-                  pn_evenements.getChildren().add(vbox1);
-                     
-               for (int i=0; i< e.size(); i++){
-               Label lblAvis = new Label(a.get(i).getAvis());
-                 VBox vbox2 = new VBox();
-             vbox2.getChildren().add(lblAvis);
-              pn_evenements.getChildren().add(vbox2);
-               }
+            }
             
-                     
-                       
-                       
-                       
-//                Label lblNom = new Label(ev.getNomEvenement());
-//            Label lblDescription = new Label(ev.getDescriptionEvenement());
-//             Label lblArtiste = new Label(ev.getArtiste());
-//            Label lblDate = new Label(ev.getDateEvenement().toString());
-//             String Prix= Double.toString(ev.getPrixEvenement());
-//              Label lblPrix = new Label(Prix);
+            
+            
+            
+            catch (IOException ex) {
+                Logger.getLogger(EvenementFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+                          int id= e.get(i).getIdEvenement();
+                          Evenement ev= se.getOneById(id);
+                      
+                      
+
+            
+//       for (int i=0; i< e.size(); i++){
+//         
+//          Label lblNom = new Label(e.get(i).getNomEvenement());
+//            Label lblDescription = new Label(e.get(i).getDescriptionEvenement());
+//             Label lblArtiste = new Label(e.get(i).getArtiste());
+//              Label lblDate = new Label(e.get(i).getDateEvenement().toString());
+//              Button btn= new Button("Voir plus de détails");
+//              Button btnAvis= new Button("avis");
 //              VBox vbox = new VBox();
 //              vbox.getChildren().add(lblNom);
 //              vbox.getChildren().add(lblDescription);
-//              vbox.getChildren().add(lblArtiste);
+//             vbox.getChildren().add(lblArtiste);
 //              vbox.getChildren().add(lblDate);
-//              vbox.getChildren().add(lblPrix);
-//              Pane pnDE = new Pane();
-//              pnDE.getChildren().add(vbox);
-//                FXMLLoader fxmlLoader = new FXMLLoader();
-//                fxmlLoader.setLocation(getClass().getResource("DE.fxml"));
-              // Pane pane= fxmlLoader.load();
-                
-          
-              
-              
-           
-                   }
-           });
-        btnAvis.setOnAction(new EventHandler<ActionEvent>() {
-               @Override
-              public void handle(ActionEvent event) {
-               
-                  ServiceAvisE sa = new ServiceAvisE();
-                 TextField tfAvis = new TextField();
-                 Button btnAjouterAvis = new Button("ajouter un avis");
-                  
-                   btnAjouterAvis.setOnAction(new EventHandler<ActionEvent>() {
-               @Override
-               public void handle(ActionEvent event) {
-                   
-                   AvisEvenement a = new AvisEvenement(tfAvis.getText());
-                         
-              sa.ajouter(a);
-                       Alert a1 = new Alert(Alert.AlertType.INFORMATION, "avis added !", ButtonType.OK);
-            a1.showAndWait();
+//              vbox.getChildren().add(btn);
+//              vbox.getChildren().add(btnAvis);
+//                
+//               Evenement ev = se.getOneById(e.get(i).getIdEvenement());
+//       tilePane.getChildren().add(vbox);
+//
+//      
+//      btn.setOnAction(new EventHandler<ActionEvent>() {
+//               @Override
+//               public void handle(ActionEvent event) {
+//                 
+//                       //                    pn_detailE.toFront();
+//                       ServiceAvisE sa = new ServiceAvisE();
+//                         List<AvisEvenement> a =   sa.getAll();
+//                          Label lblNom = new Label(ev.getNomEvenement());
+//            Label lblDescription = new Label(ev.getDescriptionEvenement());
+//            Label lblArtiste = new Label(ev.getArtiste());
+//           Label lblDate = new Label(ev.getDateEvenement().toString());
+//             String Prix= Double.toString(ev.getPrixEvenement());
+//              Label lblPrix = new Label(Prix);
+//                VBox vbox1 = new VBox();
+//             vbox1.getChildren().add(lblNom);
+//              vbox1.getChildren().add(lblDescription);
+//              vbox1.getChildren().add(lblArtiste);
+//              vbox1.getChildren().add(lblDate);
+//             vbox1.getChildren().add(lblPrix);
+//               pn_evenements.getChildren().clear();
+//                  pn_evenements.getChildren().add(vbox1);
+//                     
+//               for (int i=0; i< e.size(); i++){
+//               Label lblAvis = new Label(a.get(i).getAvis());
+//                 VBox vbox2 = new VBox();
+//             vbox2.getChildren().add(lblAvis);
+//              pn_evenements.getChildren().add(vbox2);
+//               }
+//
+//
+//
+//
+//                       
+////                Label lblNom = new Label(ev.getNomEvenement());
+////            Label lblDescription = new Label(ev.getDescriptionEvenement());
+////             Label lblArtiste = new Label(ev.getArtiste());
+////            Label lblDate = new Label(ev.getDateEvenement().toString());
+////             String Prix= Double.toString(ev.getPrixEvenement());
+////              Label lblPrix = new Label(Prix);
+////              VBox vbox = new VBox();
+////              vbox.getChildren().add(lblNom);
+////              vbox.getChildren().add(lblDescription);
+////              vbox.getChildren().add(lblArtiste);
+////              vbox.getChildren().add(lblDate);
+////              vbox.getChildren().add(lblPrix);
+////              Pane pnDE = new Pane();
+////              pnDE.getChildren().add(vbox);
+////                FXMLLoader fxmlLoader = new FXMLLoader();
+////                fxmlLoader.setLocation(getClass().getResource("DE.fxml"));
+//              // Pane pane= fxmlLoader.load();
+//
+//
+//
+//
+//           
+//                   }
+//           });
+//        btnAvis.setOnAction(new EventHandler<ActionEvent>() {
+//               @Override
+//              public void handle(ActionEvent event) {
+//               
+//                  ServiceAvisE sa = new ServiceAvisE();
+//                 TextField tfAvis = new TextField();
+//                 Button btnAjouterAvis = new Button("ajouter un avis");
+//                  
+//                   btnAjouterAvis.setOnAction(new EventHandler<ActionEvent>() {
+//               @Override
+//               public void handle(ActionEvent event) {
+//                   
+//                   AvisEvenement a = new AvisEvenement(tfAvis.getText());
+//                         
+//              sa.ajouter(a);
+//                       Alert a1 = new Alert(Alert.AlertType.INFORMATION, "avis added !", ButtonType.OK);
+//            a1.showAndWait();
+//
+//
+//
+//                 
+//               }
+//                  });
+//                    VBox vbox = new VBox();
+//              vbox.getChildren().add(tfAvis);
+//              vbox.getChildren().add(btnAjouterAvis);
+//       tilePane.getChildren().clear();
+//                  tilePane.getChildren().add(vbox);
+//                  
+//                  List<AvisEvenement> a =   sa.getAll();
+//                   for (int i=0; i< e.size(); i++){
+//               Label lblAvis = new Label(a.get(i).getAvis());
+//                 VBox vbox2 = new VBox();
+//                  vbox2.getChildren().add(lblAvis);
+//               Button likeButton = new Button("Like");
+//           Button dislikeButton = new Button("Dislike");
+//                              vbox2.getChildren().add(likeButton);
+//                                   vbox2.getChildren().add(dislikeButton);
+//                  tilePane.getChildren().add(vbox2);
+//
+//         
+//     likeButton.setOnAction(new EventHandler<ActionEvent>() {
+//          int likeCount = 0;
+//                   @Override
+//                   public void handle(ActionEvent e) {
+//                       likeCount++;
+//                       System.out.println("Likes: " + likeCount);
+//                   }
+//               });
+//         
+//          dislikeButton.setOnAction(new EventHandler<ActionEvent>() {
+//              int dislikeCount = 0;
+//                   @Override
+//                   public void handle(ActionEvent e) {
+//                       dislikeCount++;
+//                       System.out.println("Dislikes: " + dislikeCount);
+//                   }
+//               });
+//
+//
+//
+//
+//
+//
+//               }
+//                 
+//               }
+//       });
+//      }
             
-          
-               
-                 
-               }
-                  });
-                    VBox vbox = new VBox();
-              vbox.getChildren().add(tfAvis);
-              vbox.getChildren().add(btnAjouterAvis);
-       tilePane.getChildren().clear();
-                  tilePane.getChildren().add(vbox);
-                  
-                  List<AvisEvenement> a =   sa.getAll();
-                   for (int i=0; i< e.size(); i++){
-               Label lblAvis = new Label(a.get(i).getAvis());
-                 VBox vbox2 = new VBox();
-                  vbox2.getChildren().add(lblAvis);
-               Button likeButton = new Button("Like");
-           Button dislikeButton = new Button("Dislike");
-                              vbox2.getChildren().add(likeButton);
-                                   vbox2.getChildren().add(dislikeButton);
-                  tilePane.getChildren().add(vbox2);
-
+             
+             
+             
+         }
          
-     likeButton.setOnAction(new EventHandler<ActionEvent>() {
-          int likeCount = 0;
-                   @Override
-                   public void handle(ActionEvent e) {
-                       likeCount++;
-                       System.out.println("Likes: " + likeCount);
-                   }
-               });
          
-          dislikeButton.setOnAction(new EventHandler<ActionEvent>() {
-              int dislikeCount = 0;
-                   @Override
-                   public void handle(ActionEvent e) {
-                       dislikeCount++;
-                       System.out.println("Dislikes: " + dislikeCount);
-                   }
-               });
-
-
-
-
-
-
-               }
-                 
-               }
-       });
-      }
+         
+         
+         
+       
        
 
     }
@@ -359,6 +435,8 @@ public class EvenementFXMLController implements Initializable {
     @FXML
     private void btn_mesevenements(javafx.event.ActionEvent event) {
         pn_mesevenements.toFront();
+                       tilePane2.getChildren().clear();
+
         ServiceEvenement se = new ServiceEvenement();
           List<Evenement> e =   se.getAll();
           
@@ -376,8 +454,9 @@ public class EvenementFXMLController implements Initializable {
               Button btn= new Button("Voir plus de détails");
                Button btnS= new Button("Supprimer évènement");
                 Button btnM= new Button("Modifier évènement");
+                 Button btnP= new Button("Participer");
                 qrcode(e.get(i));
-        
+          
                
               VBox vbox = new VBox();
               vbox.getChildren().add(lblNom);
@@ -387,11 +466,67 @@ public class EvenementFXMLController implements Initializable {
               vbox.getChildren().add(btn);
               vbox.getChildren().add(btnS);
               vbox.getChildren().add(btnM);
+              vbox.getChildren().add(btnP);
               tilePane2.getChildren().add(vbox);
            
               int id= e.get(i).getIdEvenement();
               Evenement ev= se.getOneById(id);
          // } 
+         
+          
+         
+           btn.setOnAction(new EventHandler<ActionEvent>() {
+               @Override
+               public void handle(ActionEvent event) {
+               
+                          Label lblNom = new Label(ev.getNomEvenement());
+            Label lblDescription = new Label(ev.getDescriptionEvenement());
+            Label lblArtiste = new Label(ev.getArtiste());
+           Label lblDate = new Label(ev.getDateEvenement().toString());
+             String Prix= Double.toString(ev.getPrixEvenement());
+              Label lblPrix = new Label(Prix);
+              String NbrePMax = Integer.toString(ev.getNbreParticipantMax());
+               Label lblNbrePMax = new Label(NbrePMax);
+                VBox vbox1 = new VBox();
+             vbox1.getChildren().add(lblNom);
+              vbox1.getChildren().add(lblDescription);
+              vbox1.getChildren().add(lblArtiste);
+              vbox1.getChildren().add(lblDate);
+             vbox1.getChildren().add(lblPrix);
+              vbox1.getChildren().add(lblNbrePMax);
+               tilePane2.getChildren().clear();
+                  tilePane2.getChildren().add(vbox1);
+                     
+             
+
+
+
+
+                       
+//                Label lblNom = new Label(ev.getNomEvenement());
+//            Label lblDescription = new Label(ev.getDescriptionEvenement());
+//             Label lblArtiste = new Label(ev.getArtiste());
+//            Label lblDate = new Label(ev.getDateEvenement().toString());
+//             String Prix= Double.toString(ev.getPrixEvenement());
+//              Label lblPrix = new Label(Prix);
+//              VBox vbox = new VBox();
+//              vbox.getChildren().add(lblNom);
+//              vbox.getChildren().add(lblDescription);
+//              vbox.getChildren().add(lblArtiste);
+//              vbox.getChildren().add(lblDate);
+//              vbox.getChildren().add(lblPrix);
+//              Pane pnDE = new Pane();
+//              pnDE.getChildren().add(vbox);
+//                FXMLLoader fxmlLoader = new FXMLLoader();
+//                fxmlLoader.setLocation(getClass().getResource("DE.fxml"));
+              // Pane pane= fxmlLoader.load();
+
+
+
+
+           
+                   }
+           });
           btnS.setOnAction((ActionEvent event1) -> {
               se.supprimer(id);
               tilePane2.getChildren().clear();
@@ -411,12 +546,30 @@ public class EvenementFXMLController implements Initializable {
                 String Prix = Double.toString(ev.getPrixEvenement());
                 tfPrixE.setText(Prix);
                 tfArtisteE.setText(ev.getArtiste());
+                String nbrePMax = Integer.toString(ev.getNbreParticipantMax());
+                tfnbrePMax.setText(nbrePMax);
                // String sid=String.valueOf(id);
                // tfid.setText(sid);
                 
            
       
         
+              });
+            btnP.setOnAction((ActionEvent event1) -> {
+                int nbreP=ev.getNbreParticipant();
+                nbreP++;
+                ev.setNbreParticipant(nbreP);
+                  try {
+               String req = " UPDATE `evenement` SET `nbreParticipant`='" + ev.getNbreParticipant() + "'  WHERE `evenement`.`idEvenement` = " + ev.getIdEvenement();
+            Statement st = cnx.createStatement();
+             st.executeUpdate(req);
+            System.out.println("Votre demande est en cours de traitement !");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+              SMSSender.sendSMS("test SMS");
+               Alert a = new Alert(Alert.AlertType.INFORMATION, "participation enregistrée !", ButtonType.OK);
+                a.showAndWait();
               });
        }
     }
@@ -490,7 +643,9 @@ public class EvenementFXMLController implements Initializable {
             String Prix = tfPrixE.getText();
             double PrixE= Double.parseDouble(Prix);
             ServiceEvenement se = new ServiceEvenement();
-            Evenement e = new Evenement(tfNomE.getText(), tfDescriptionE.getText(),tfArtisteE.getText(),date ,PrixE);
+            String nbreMax = tfnbrePMax.getText();
+            int nbrePMax= Integer.parseInt(nbreMax);
+            Evenement e = new Evenement(tfNomE.getText(), tfDescriptionE.getText(),tfArtisteE.getText(),date ,PrixE, nbrePMax);
             se.ajouter(e);
             
             Alert a = new Alert(Alert.AlertType.INFORMATION, "Evenement added !", ButtonType.OK);
@@ -684,8 +839,10 @@ public class EvenementFXMLController implements Initializable {
                  double PrixE= Double.parseDouble(Prix);
                  ServiceEvenement se = new ServiceEvenement();
                // int id= Integer.parseInt(tfid.getText());
-                Evenement e = new Evenement(tfNomE.getText(), tfDescriptionE.getText(),tfArtisteE.getText(),date ,PrixE);
-             //   System.out.println(id);
+               String nbreMax = tfnbrePMax.getText();
+            int nbrePMax= Integer.parseInt(nbreMax);
+ Evenement e = new Evenement(tfNomE.getText(), tfDescriptionE.getText(),tfArtisteE.getText(),date ,PrixE, nbrePMax); 
+ //   System.out.println(id);
                 se.modifier(e);
 //                Alert a = new Alert(Alert.AlertType.INFORMATION, "Evenement updated !", ButtonType.OK);
 //                a.showAndWait();
@@ -702,6 +859,15 @@ alert.showAndWait();
        
          
         
+    }
+
+    @FXML
+    private void FileBox(MouseEvent event) {
+        
+         URLImage = ImgurUploader.chooseImage();
+        File file = new File("../images/img1.jpg");
+        Image img = new Image(file.toURI().toString());
+        fileImageView.setImage(img);
     }
     
     
