@@ -133,11 +133,25 @@ import services.AuthentificationService;
 import API.MailerAPI;
 import Entities.User;
 import Utils.UserSession;
+import com.gluonhq.charm.glisten.control.BottomNavigationButton;
 import com.gluonhq.charm.glisten.control.Icon;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import entities.commande;
+import entities.panier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.paint.Color;
 import javax.swing.JOptionPane;
+import services.ServiceCommande;
+import services.ServicePanier;
 import services.ServiceUser;
 import utils.MyConnection;
 //import javafx.event.ActionEvent;
@@ -335,9 +349,81 @@ public class InterfaceController implements Initializable {
     private TextField lgender;
     @FXML
     private TextField lrole1;
+    @FXML
+    private Label lspid;
+    @FXML
+    private TableView<panier> display1;
+    @FXML
+    private TableColumn<panier, String> image_produit;
+    @FXML
+    private TableColumn<panier, String> nom_produit;
+    @FXML
+    private TableColumn<panier, String> description;
+    @FXML
+    private TableColumn<panier, Integer> prix1;
+    @FXML
+    private javafx.scene.control.Button supprimer;
+    @FXML
+    private TextField fx_total;
+    @FXML
+    private javafx.scene.control.Button valider_commande;
     
+    ServicePanier ps = new ServicePanier();
+    @FXML
+    private javafx.scene.control.Button supprimer1;
+    @FXML
+    private Pane pn_vc;
+    @FXML
+    private javafx.scene.control.Button fx_cc;
+    @FXML
+    private javafx.scene.control.Button fx_AC;
+    @FXML
+    private TextField fx_total1;
+    @FXML
+    private BottomNavigationButton panier;
+    public static final String AUTH_TOKEN1 = "15e280c0506f19da735b019d928a7f28";
+    public static final String TWILIO_NUMBER = "+13157911257";
+    public static final String ACCOUNT_SID1 = "ACae09f8846d7dc92c113b3c6f0c6ddf86";
+    @FXML
+    private Pane pn_merci;
+    @FXML
+    private ChoiceBox<?> carteList;
+    @FXML
+    private Label chCarte;
+    @FXML
+    private Hyperlink ajouterCarte;
+    @FXML
+    private javafx.scene.control.Button PayerBtn;
+    @FXML
+    private TextField montant;
+    @FXML
+    private ChoiceBox<?> PaymentMethod;
+    @FXML
+    private Label soldeLabel;
+    @FXML
+    private Label otpLabel;
+    @FXML
+    private TextField codeF;
+    @FXML
+    private javafx.scene.control.Button ConfirmerBtn;
+    @FXML
+    private Pane pn_payer;
+    @FXML
+    private Pane pn_commande;
+    @FXML
+    private TableView<commande> table2;
+    @FXML
+    private TableColumn<commande,String> content;
+    @FXML
+    private TableColumn<commande,Integer> Total;
+    public void totalCalculation() {
 
+        int total = 0;
 
+        total = display1.getItems().stream().map(
+                (item) -> item.getPrice()).reduce(total, (accumulator, _item) -> accumulator + _item);
+                fx_total.setText(String.valueOf(total));
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {   
                 //User u=su.afficher(6);
@@ -354,6 +440,13 @@ public class InterfaceController implements Initializable {
                 phone_numberColumn.setCellValueFactory(new PropertyValueFactory<>("phone_number"));
                 genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
                 roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+                image_produit.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPic()));
+                nom_produit.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getname()));
+                prix1.setCellValueFactory(cellData -> new SimpleIntegerProperty((int) cellData.getValue().getPrice()).asObject());
+                //xrole.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
+                description.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
+                Total.setCellValueFactory(new PropertyValueFactory<>("totale"));
+                content.setCellValueFactory(new PropertyValueFactory<>("content"));
                 // récupère les données des utilisateurs depuis la base de données
                 List<User> userList = userService.getAll();
                 // affiche les données dans le tableau
@@ -362,6 +455,16 @@ public class InterfaceController implements Initializable {
                 display2();
                 recherche_avance();
                 pn_login.toFront();
+                int total = 0;
+                for (panier item : display1.getItems()) {
+                    total +=item.getPrice();
+                }
+                // Populate the table with data
+                ServiceCommande crud1 = new ServiceCommande();
+                List<commande> data1;
+                data1 = crud1.getAll();
+                System.out.println(data1);
+                table2.getItems().setAll(data1);
                 /*
         try {
             player();
@@ -690,6 +793,7 @@ public class InterfaceController implements Initializable {
         descriptionsingle.setText(produit.getProduct_description());
         Image imageee = new Image(getClass().getResourceAsStream(produit.getProduct_photo()));
         imgsingle.setImage(imageee);   
+        lspid.setText(String.valueOf(produit.getId_product()));
         pn_singleprod.toFront();
     }
     
@@ -918,6 +1022,25 @@ public class InterfaceController implements Initializable {
         String emailMessage = "votre compte a été ajoute !";
         sm.send(email, emailSubject, emailMessage);
         authentificationService.signup(first_name, last_name, username, email, password, gender);
+        //////////////////// creat panier ///////////////////////////////////////////////////////////
+        Connection cn = MyConnection.getTest().getCnx();
+        try {
+            int idp = 0 ;
+            String requete = "SELECT `id_user` FROM `user` WHERE `email` = '"+input_email.getText()+"'";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                idp=rs.getInt(1);
+            }
+            String requete1 = "INSERT INTO `panier`(`id_pannier`, `id_user`) VALUES (?,?)";
+            PreparedStatement pst = cn.prepareStatement(requete1);
+            pst.setInt(1,idp);
+            pst.setInt(2,idp);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////
         if (input_firstName.getText().isEmpty() || input_lastName.getText().isEmpty() || input_username.getText().isEmpty()
                 || input_email.getText().isEmpty() || input_password.getText().isEmpty()
                 || input_gender.getText().isEmpty()) {
@@ -1021,9 +1144,12 @@ public class InterfaceController implements Initializable {
             if (!(userinput.equals("captcha"))) {
                 messagebtn.setText("Success");
                 messagebtn.setTextFill(Color.GREEN);
-                
-
+                ServicePanier crud = new ServicePanier();
                 this.userSession = UserSession.getInstace(null);
+                List<panier> data;
+                data = crud.SelectAll(this.userSession.getUser().getId_user());
+                display1.getItems().setAll(data);
+                totalCalculation();
                 try {
                     User u=su.afficher(21);
                     lusername.setText(this.userSession.getUser().getUser_Name());
@@ -1120,6 +1246,7 @@ public class InterfaceController implements Initializable {
 
     @FXML
     private void btn_mescommandesa(javafx.event.ActionEvent event) {
+        pn_commande.toFront();
     }
 
     @FXML
@@ -1138,5 +1265,168 @@ public class InterfaceController implements Initializable {
         String lgender2 = lgender.getText();
         String lrole2 = lrole.getText();
         su.modifier(lusername2, lfname2, llname2, lemail2, tmp,lgender2, lrole2,this.userSession.getUser().getId_user());
+    }
+
+    @FXML
+    private void buy(javafx.event.ActionEvent event) throws SQLException {
+        Connection cn = MyConnection.getTest().getCnx();
+            String requete1 = "INSERT INTO `panier produit`(`id_pannier`, `id_produit`, `quantite`) VALUES (?,?,1)";
+            PreparedStatement pst = cn.prepareStatement(requete1);
+            pst.setInt(1,this.userSession.getUser().getId_user());
+            pst.setInt(2,Integer.parseInt(lspid.getText()));
+            pst.executeUpdate();
+    }
+
+    @FXML
+    private void supprimer(MouseEvent event) {
+        if (display1.getSelectionModel().getSelectedItem() != null) {
+            // Récupérer les données de l'événement sélectionné
+            panier selectedPanier = display1.getSelectionModel().getSelectedItem();
+            ServicePanier sp = new ServicePanier();
+            sp.supprimer(selectedPanier.getId_prod(), selectedPanier.getId_panier());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Produit Supprimée");
+            alert.show();
+        }
+        try {
+            Parent page1 = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+            Scene scene = new Scene(page1);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("Voulez vous supprimer ce produit?");
+        alert.show();
+    }
+
+    @FXML
+    private void valider_Commande(javafx.event.ActionEvent event) {
+        pn_vc.toFront();
+        fx_total1.setText(fx_total.getText());
+    }
+
+    @FXML
+    private void refpanier(javafx.event.ActionEvent event) {
+                ServicePanier crud = new ServicePanier();
+                List<panier> data;
+                data = crud.SelectAll(this.userSession.getUser().getId_user());
+                display1.getItems().setAll(data);
+                totalCalculation();
+    }
+
+    @FXML
+    private void confirmer_commande(MouseEvent event) {
+        try {
+
+            Parent page2
+                    = FXMLLoader.load(getClass().getResource("confc.fxml"));
+            Scene scene = new Scene(page2);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setUserData("Hello ");
+            stage.show();
+        } catch (IOException ex) {
+
+        }
+    }
+
+    @FXML
+    private void comfirmer(javafx.event.ActionEvent event) {
+            ServiceCommande sc = new ServiceCommande();
+            String toPhoneNumber = "+21655369782";
+            Twilio.init(ACCOUNT_SID1, AUTH_TOKEN1);
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String messageText = "Merci pour votre Commande de  " + formatter.format(currentDate)+" Nous vous confirmons votre commande " +"Bonne réception";
+            Message message = Message.creator(new PhoneNumber(toPhoneNumber),
+            new PhoneNumber(TWILIO_NUMBER),
+            messageText).create();
+            sc.creecommande(this.userSession.getUser().getId_user(),this.userSession.getUser().getId_user()); 
+            pn_merci.toFront();
+    }
+
+    @FXML
+    private void annuler_commande(MouseEvent event) {
+        pn_panier.toFront();
+    }
+
+    @FXML
+    private void panier(javafx.event.ActionEvent event) {
+        pn_panier.toFront();
+    }
+
+    @FXML
+    private void back_btn(javafx.event.ActionEvent event) {
+        pn_panier.toFront();
+    }
+
+    @FXML
+    private void payer(javafx.event.ActionEvent event) {
+        pn_payer.toFront();
+    }
+
+    @FXML
+    private void AddCardGUI(javafx.event.ActionEvent event) {
+    }
+
+    @FXML
+    private void PayerAction(javafx.event.ActionEvent event) {
+        Connection cn = MyConnection.getTest().getCnx();
+        try {
+            String req = "DELETE FROM `panier produit` WHERE `id_pannier` ="+this.userSession.getUser().getId_user()+"";
+            PreparedStatement st = cn.prepareStatement(req);
+            st.executeUpdate(req);
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        pn_boutique.toFront();
+    }
+
+    @FXML
+    private void ConfirmerAction(javafx.event.ActionEvent event) {
+    }
+
+    @FXML
+    private void supp_c(MouseEvent event) {
+        if (table2.getSelectionModel().getSelectedItem() != null) {
+            // Récupérer les données de l'événement sélectionné
+            commande selectedCommande = table2.getSelectionModel().getSelectedItem();
+            ServiceCommande sc = new ServiceCommande();
+            System.out.println("id_commande "+selectedCommande.getId_commande());
+            sc.supprimer(selectedCommande.getId_commande());
+            ServiceCommande crud1 = new ServiceCommande();
+                List<commande> data1;
+                data1 = crud1.getAll();
+                System.out.println(data1);
+                table2.getItems().setAll(data1);
+        }
+        try {
+            
+            Parent page = FXMLLoader.load(getClass().getResource("commande.fxml"));
+            Scene scene = new Scene(page);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void triet(javafx.event.ActionEvent event) {
+                ServiceCommande crud1 = new ServiceCommande();
+                List<commande> data1;
+                data1 = crud1.getAllt();
+                System.out.println(data1);
+                table2.getItems().setAll(data1);
     }
 }

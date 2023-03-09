@@ -88,8 +88,7 @@ public class ProductService implements IPService <produits>  {
     }
     
     public List<produits> afficher(int id) {
-       List<produits> list = new ArrayList<>();
-
+        List<produits> list = new ArrayList<>();
         try {
             String requete = "SELECT  `product_name`, `product_description`, `product_price` FROM `produits` WHERE `related_artist` ="+id;
             Statement st = cn.createStatement();

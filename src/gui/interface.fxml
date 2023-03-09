@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.gluonhq.charm.glisten.control.Avatar?>
+<?import com.gluonhq.charm.glisten.control.BottomNavigationButton?>
 <?import com.gluonhq.charm.glisten.control.Icon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
@@ -21,6 +24,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="main" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #031B03;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InterfaceController">
@@ -259,14 +265,6 @@
       </AnchorPane>
       <AnchorPane layoutX="209.0" prefHeight="720.0" prefWidth="1071.0">
          <children>
-            <Pane fx:id="pn_panier" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label prefHeight="68.0" prefWidth="280.0" text="Panier" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="30.0" />
-                     </font>
-                  </Label>
-               </children></Pane>
             <Pane fx:id="pn_evenements" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Evenements" textFill="#f0f0f0">
@@ -365,28 +363,6 @@
                      </children>
                   </HBox>
                </children></Pane>
-            <Pane fx:id="pn_singleprod" prefHeight="722.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ImageView fx:id="imgsingle" fitHeight="384.0" fitWidth="280.0" layoutX="57.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="titresingle" layoutX="373.0" layoutY="195.0" prefHeight="57.0" prefWidth="273.0" text="Si flen" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="prixsingle" layoutX="371.0" layoutY="406.0" prefHeight="36.0" prefWidth="273.0" text="prix" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextArea fx:id="descriptionsingle" editable="false" layoutX="367.0" layoutY="248.0" prefHeight="150.0" prefWidth="498.0" wrapText="true" />
-                  <Label fx:id="titresingle1" layoutX="39.0" layoutY="48.0" prefHeight="57.0" prefWidth="273.0" text="Detail Produit" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Button layoutX="371.0" layoutY="442.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="97.0" text="acheter" />
-               </children>
-            </Pane>
             <Pane fx:id="pn_mesproduits" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Mes produits" textFill="#f0f0f0">
@@ -483,6 +459,218 @@
                      </font>
                   </Label>
                </children></Pane>
+            <Pane fx:id="pn_singleprod" prefHeight="722.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fx:id="imgsingle" fitHeight="384.0" fitWidth="280.0" layoutX="57.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="titresingle" layoutX="373.0" layoutY="195.0" prefHeight="57.0" prefWidth="273.0" text="Si flen" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="prixsingle" layoutX="371.0" layoutY="406.0" prefHeight="36.0" prefWidth="273.0" text="prix" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="descriptionsingle" editable="false" layoutX="367.0" layoutY="248.0" prefHeight="150.0" prefWidth="498.0" wrapText="true" />
+                  <Label fx:id="titresingle1" layoutX="39.0" layoutY="48.0" prefHeight="57.0" prefWidth="273.0" text="Detail Produit" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="371.0" layoutY="442.0" mnemonicParsing="false" onAction="#buy" prefHeight="32.0" prefWidth="97.0" text="acheter" />
+                  <Label fx:id="lspid" layoutX="665.0" layoutY="140.0" opacity="0.0" text="Label" />
+               </children>
+            </Pane>
+            <Pane fx:id="pn_panier" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Panier" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="display1" cache="true" layoutX="192.0" layoutY="112.0" opacity="0.65" prefHeight="294.0" prefWidth="584.0">
+                     <columns>
+                        <TableColumn fx:id="image_produit" prefWidth="232.0" text="image_produit" />
+                        <TableColumn fx:id="nom_produit" prefWidth="126.0" text="nom_produit" />
+                        <TableColumn fx:id="description" prefWidth="146.0" text="Description" />
+                        <TableColumn fx:id="prix1" text="prix" />
+                     </columns>
+                  </TableView>
+                  <Button fx:id="supprimer" layoutX="178.0" layoutY="435.0" mnemonicParsing="false" onMouseClicked="#supprimer" prefHeight="37.0" prefWidth="138.0" text="supprimer">
+                     <font>
+                        <Font name="System Bold Italic" size="16.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#e4a04c" />
+                              <Stop color="#282525" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Button>
+                  <Label layoutX="558.0" layoutY="435.0" prefHeight="21.0" prefWidth="97.0" text="Total">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="BLACK" />
+                              <Stop color="#fcb15c" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <font>
+                        <Font name="System Bold Italic" size="35.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="fx_total" editable="false" layoutX="702.0" layoutY="445.0" prefHeight="31.0" prefWidth="163.0" />
+                  <Button fx:id="valider_commande" layoutX="424.0" layoutY="591.0" mnemonicParsing="false" onAction="#valider_Commande" prefHeight="42.0" prefWidth="231.0" text="Valider Commande" textFill="#5e684e">
+                     <font>
+                        <Font name="System Bold Italic" size="17.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="supprimer1" layoutX="331.0" layoutY="435.0" mnemonicParsing="false" onAction="#refpanier" prefHeight="37.0" prefWidth="138.0" text="refresh">
+                     <font>
+                        <Font name="System Bold Italic" size="16.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#e4a04c" />
+                              <Stop color="#282525" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Button>
+               </children></Pane>
+            <Pane fx:id="pn_vc" prefHeight="720.0" prefWidth="1073.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label layoutX="264.0" layoutY="32.0" prefHeight="74.0" prefWidth="561.0" text="Votre Commande" textAlignment="CENTER">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.13106796116504854">
+                           <stops>
+                              <Stop color="#eee4e4" />
+                              <Stop color="#c38057" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <font>
+                        <Font name="System Bold Italic" size="51.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="fx_cc" layoutX="314.0" layoutY="333.0" mnemonicParsing="false" onAction="#comfirmer" onMouseClicked="#confirmer_commande" prefHeight="31.0" prefWidth="328.0" text="Confirmer Commande">
+                     <textFill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                           <stops>
+                              <Stop color="#2c1515" />
+                              <Stop color="#c38057" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </textFill>
+                     <font>
+                        <Font name="System Bold Italic" size="23.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="fx_AC" layoutX="357.0" layoutY="398.0" mnemonicParsing="false" onMouseClicked="#annuler_commande" prefHeight="31.0" prefWidth="264.0" text="Annuler" textAlignment="CENTER">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.13106796116504854">
+                           <stops>
+                              <Stop color="#2c1515" />
+                              <Stop color="#c38057" offset="0.8731884057971014" />
+                              <Stop color="#c38057" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="155.0" layoutY="198.0" text="Votre total est :" textFill="#f7f2f2">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="fx_total1" editable="false" layoutX="385.0" layoutY="205.0" prefHeight="31.0" prefWidth="219.0" />
+                  <BottomNavigationButton fx:id="panier" layoutX="61.0" layoutY="662.0" onAction="#panier" prefHeight="31.0" prefWidth="121.0" text="&lt;- Panier">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.20388349514563106">
+                           <stops>
+                              <Stop color="#2c1515" />
+                              <Stop color="#2c1515" offset="0.06884057971014493" />
+                              <Stop color="#c38057" offset="0.8731884057971014" />
+                              <Stop color="#c38057" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </BottomNavigationButton>
+               </children>
+            </Pane>
+            <Pane fx:id="pn_payer" prefHeight="720.0" prefWidth="1073.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <ChoiceBox fx:id="carteList" layoutX="302.0" layoutY="250.0" prefHeight="31.0" prefWidth="400.0" visible="false" />
+                  <Label fx:id="chCarte" layoutX="302.0" layoutY="223.0" text="Choisir la carte" visible="false" />
+                  <Hyperlink fx:id="ajouterCarte" layoutX="302.0" layoutY="290.0" onAction="#AddCardGUI" text="Ajouter Carte" visible="false" />
+                  <Label layoutX="296.0" layoutY="418.0" text="Montant à payer" textFill="#eeecec" />
+                  <Button fx:id="PayerBtn" layoutX="402.0" layoutY="479.0" mnemonicParsing="false" onAction="#PayerAction" prefWidth="200.0" text="Payer" />
+                  <TextField fx:id="montant" editable="false" layoutX="423.0" layoutY="413.0" prefHeight="31.0" prefWidth="81.0">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </TextField>
+                  <Label layoutX="309.0" layoutY="135.0" text="Choisir la methode de paiement:" textFill="#f5e8e8" />
+                  <ChoiceBox fx:id="PaymentMethod" layoutX="309.0" layoutY="169.0" prefHeight="31.0" prefWidth="364.0" />
+                  <Label fx:id="soldeLabel" layoutX="296.0" layoutY="367.0" text="Votre solde est:" textFill="#f2efef" />
+                  <Label fx:id="otpLabel" layoutX="525.0" layoutY="418.0" text="OTP" visible="false" />
+                  <TextField fx:id="codeF" layoutX="565.0" layoutY="413.0" prefHeight="31.0" prefWidth="145.0" promptText="123456" visible="false" />
+                  <Button fx:id="ConfirmerBtn" layoutX="402.0" layoutY="479.0" mnemonicParsing="false" onAction="#ConfirmerAction" prefWidth="200.0" text="Confirmer" visible="false" />
+               </children>
+            </Pane>
+            <Pane fx:id="pn_merci" prefHeight="720.0" prefWidth="1076.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label layoutX="361.0" layoutY="144.0" prefHeight="21.0" prefWidth="297.0" text="Cher(e) client(e)," textAlignment="CENTER" textFill="#f7f7f7" textOverrun="WORD_ELLIPSIS">
+                     <font>
+                        <Font name="System Bold Italic" size="32.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="415.0" layoutY="209.0" prefHeight="21.0" prefWidth="235.0" text="Nous vous remercions" textFill="#ebe5e5" />
+                  <Label layoutX="432.0" layoutY="254.0" text="du fond du coeur " textFill="#f5ebeb" />
+                  <Label layoutX="417.0" layoutY="298.0" text="pour votre commande" textFill="#f2e6e6" />
+                  <Label layoutX="360.0" layoutY="339.0" prefHeight="21.0" prefWidth="265.0" text="Revenez vite nous voir et beneficiez de" textFill="#ddd4d4" />
+                  <Label layoutX="450.0" layoutY="375.0" text="-10%" textFill="#c30c0c">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="399.0" layoutY="426.0" prefHeight="21.0" prefWidth="190.0" text="sur votre prochain achat !" textFill="#f8f7f7" />
+                  <Label layoutX="435.0" layoutY="464.0" prefHeight="21.0" prefWidth="89.0" text="A très vite ," textFill="#ebe7e7" />
+                  <Label layoutX="368.0" layoutY="515.0" prefHeight="55.0" prefWidth="285.0" text="l'equipe de ALLKIF" textFill="#e8dfdf">
+                     <font>
+                        <Font name="System Italic" size="32.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="78.0" layoutY="633.0" mnemonicParsing="false" onAction="#back_btn" text="&lt;-" />
+                  <Button layoutX="956.0" layoutY="648.0" mnemonicParsing="false" onAction="#payer" text="payer" />
+               </children></Pane>
+            <Pane fx:id="pn_commande" prefHeight="720.0" prefWidth="1076.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label layoutX="28.0" layoutY="25.0" prefHeight="61.0" prefWidth="181.0" text="Liste commandes" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="table2" layoutX="209.0" layoutY="86.0" prefHeight="368.0" prefWidth="494.0">
+                     <columns>
+                        <TableColumn fx:id="content" prefWidth="420.0" text="Content" />
+                        <TableColumn fx:id="Total" prefWidth="73.0" text="Total" />
+                     </columns>
+                  </TableView>
+                  <Button layoutX="380.0" layoutY="489.0" mnemonicParsing="false" onMouseClicked="#supp_c" text="Supprimer Commande" />
+                  <Button layoutX="420.0" layoutY="531.0" mnemonicParsing="false" onAction="#triet" text="trie totale" />
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </children>
