@@ -131,7 +131,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import services.AuthentificationService;
 import API.MailerAPI;
-import Entities.User;
+import entities.User;
 import Utils.UserSession;
 import com.gluonhq.charm.glisten.control.BottomNavigationButton;
 import com.gluonhq.charm.glisten.control.Icon;
@@ -153,6 +153,7 @@ import javax.swing.JOptionPane;
 import services.ServiceCommande;
 import services.ServicePanier;
 import services.ServiceUser;
+import static utils.BadWords.checkWords;
 import utils.MyConnection;
 //import javafx.event.ActionEvent;
 //import javafx.scene.control.Button;
@@ -416,6 +417,8 @@ public class InterfaceController implements Initializable {
     private TableColumn<commande,String> content;
     @FXML
     private TableColumn<commande,Integer> Total;
+    @FXML
+    private TextField tflyrics;
     public void totalCalculation() {
 
         int total = 0;
@@ -546,7 +549,7 @@ public class InterfaceController implements Initializable {
     @FXML
     private void addbtn(javafx.event.ActionEvent event) {
         if (tftitre.getText().isEmpty() || tfdescription.getText().isEmpty() || tfphoto.getText().isEmpty() || 
-            tfprix.getText().isEmpty()  ) {
+            tfprix.getText().isEmpty() || tflyrics.getText().isEmpty() ) {
         // Afficher un message d'alerte
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Champs manquants");
@@ -569,8 +572,13 @@ public class InterfaceController implements Initializable {
         String photo = tfphoto.getText();
         String tmpprix = tfprix.getText();
         int prix = Integer.parseInt(tmpprix);
-        produits p = new produits(titre,description,photo,prix,1);
-        sp.Ajouter(p);
+        if(checkWords(tflyrics.getText()).equals("false")){
+            produits p = new produits(titre,description,photo,prix,1,tflyrics.getText(),0);
+            sp.Ajouter(p);
+        }else{
+            produits p = new produits(titre,description,photo,prix,1,tflyrics.getText(),1);
+            sp.Ajouter(p);
+        }
         tftitre.clear();
         tfdescription.clear();
         tfphoto.clear();
@@ -600,12 +608,11 @@ public class InterfaceController implements Initializable {
         titre.setCellValueFactory(new PropertyValueFactory<>("product_name"));
         Description.setCellValueFactory(new PropertyValueFactory<>("product_description"));
         photo.setCellValueFactory(new PropertyValueFactory<>("product_photo"));
-        prix.setCellValueFactory(new PropertyValueFactory<>("product_price"));
-        
-        /////////////////////////////////////////////////////////////////////////
+        prix.setCellValueFactory(new PropertyValueFactory<>("product_price"));        
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //add cell of button edit 
          Callback<TableColumn<produits, String>, TableCell<produits, String>> cellFoctory = (TableColumn<produits, String> param) -> {
-            // make cell containing buttons
+            //// make cell containing buttons
             final TableCell<produits, String> cell = new TableCell<produits, String>() {
                 @Override
                 public void updateItem(String item, boolean empty) {
@@ -640,7 +647,6 @@ public class InterfaceController implements Initializable {
                         deleteIcon.setOnMouseClicked((event) -> {
                             tmpp = display.getSelectionModel().getSelectedItem();
                             sp.Supprimer( tmpp.getId_product());
-                            display ();
                         });
                         
                         
@@ -726,7 +732,6 @@ public class InterfaceController implements Initializable {
 
                         setGraphic(managebtn);
                         setText(null);
-
                     }
                 }
 
@@ -827,9 +832,11 @@ public class InterfaceController implements Initializable {
                             String id =resultSet2.getString("id_product");
                             String prix =resultSet2.getString("product_price");
                             String desc =resultSet2.getString("product_description");
+                            String lyrics =resultSet2.getString("lyrics");
                             float newprix=Integer.parseInt(prix);
                             int newid=Integer.parseInt(id);
-                            produits ppppp = new produits(newid,titre,desc,photo,newprix);
+                            int exp =resultSet2.getInt("explicit");
+                            produits ppppp = new produits(newid,titre,desc,photo,newprix,lyrics,exp);
                             itemController.setData(ppppp,myListener);
                             if (column == 5) {
                                 column = 0;
@@ -868,7 +875,6 @@ public class InterfaceController implements Initializable {
                         resultSet.getString("product_description"),
                         resultSet.getString("product_photo"),
                         resultSet.getInt("product_price")));
-                System.out.println("*****************");
                 FilteredList<produits> filtereddata = new FilteredList<>(listL, b -> true);
                 System.out.println(tf_recherche.getText());
                 tf_recherche.textProperty().addListener((observable, oldvalue, newValue) -> {
@@ -881,10 +887,8 @@ public class InterfaceController implements Initializable {
                             return true;
                         } else {
                             return false;
-                        }
-                        
-                    });
-                    
+                        } 
+                    });  
                 });
                 //System.out.println(filtereddata);
                 SortedList<produits> sorteddata = new SortedList<>(filtereddata);
@@ -1006,8 +1010,8 @@ public class InterfaceController implements Initializable {
          }
         }
         System.out.println("Byeeee!"); 
- }
-*/
+    }
+    */
 
     @FXML
     private void handleSignupButtonClick(MouseEvent event) {
@@ -1211,8 +1215,14 @@ public class InterfaceController implements Initializable {
                     btn_listuser.setVisible(false);
                     btn_mescommandes.setVisible(false);
                     pn_captcha.toBack();
-                    pn_login.toBack();
-                    
+                    pn_login.toBack();  
+                }else{
+                    btn_listuser.setDisable(true);
+                    btn_mescommandes.setDisable(true);       
+                    btn_listuser.setVisible(false);
+                    btn_mescommandes.setVisible(false);
+                    pn_captcha.toBack();
+                    pn_login.toBack(); 
                 }
 
             } else {
@@ -1429,4 +1439,73 @@ public class InterfaceController implements Initializable {
                 System.out.println(data1);
                 table2.getItems().setAll(data1);
     }
+
+    @FXML
+    private void downlyrics(javafx.event.ActionEvent event) throws SQLException {
+                            ResultSet resultSet1 =sp.SelectionnerSingle(Integer.parseInt(lspid.getText()));
+                            try {
+                                while (resultSet1.next()){
+                                    tmpp =new  produits(
+                                            resultSet1.getInt("id_product"),
+                                            resultSet1.getString("product_name"),
+                                            resultSet1.getString("product_description"),
+                                            resultSet1.getString("product_photo"),
+                                            resultSet1.getInt("product_price"),
+                                            resultSet1.getString("lyrics"),
+                                            resultSet1.getInt("explicit"));  
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+        try {
+            genererPDFL(sp, main.getScene().getWindow(),tmpp);
+        } catch (DocumentException ex) {
+            Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void genererPDFL(ProductService st, Window parentWindow,produits p) throws DocumentException, FileNotFoundException {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Enregistrer les données");
+    File selectedFile = fileChooser.showSaveDialog(parentWindow);
+ 
+    if (selectedFile != null) {
+        try {
+            // Créer un document PDF
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(selectedFile));
+            document.open();
+ 
+            // Ajouter les éléments de l'interface utilisateur 
+            com.itextpdf.text.Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
+            Paragraph title = new Paragraph(p.getProduct_name(), titleFont);
+            //Image img = Image.getInstance("C:/Users/ABDOU/Desktop/fold/hors kraya/pic/7.jpg");
+            
+            title.setAlignment(Element.ALIGN_CENTER);
+            title.setSpacingAfter(10f);
+            document.add(title);
+ 
+            com.itextpdf.text.Font regularFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+            Paragraph date = new Paragraph("Date: " + LocalDate.now().toString(), regularFont);
+            date.setAlignment(Element.ALIGN_LEFT);
+            date.setSpacingAfter(10f);
+            document.add(date);
+ 
+            Paragraph produits = new Paragraph(p.getLyrics(), regularFont);
+            produits.setAlignment(Element.ALIGN_LEFT);
+            produits.setSpacingAfter(10f);
+            document.add(produits);
+ 
+        
+            document.close();
+        } catch (IOException | DocumentException ex) {
+            System.err.println("Erreur lors de l'écriture dans le fichier: " + ex.getMessage());
+        }
+    } else {
+        System.out.println("La sélection de fichier a été annulée");
+    }
+    }
+    
 }

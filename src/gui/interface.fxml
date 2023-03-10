@@ -103,7 +103,7 @@
       </Pane>
       <Pane fx:id="pn_login" prefHeight="724.0" prefWidth="1288.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane blendMode="HARD_LIGHT" layoutX="73.0" layoutY="38.0" prefHeight="643.0" prefWidth="509.0" style="-fx-background-color: # D3D3D3;">
+            <AnchorPane blendMode="HARD_LIGHT" layoutX="73.0" layoutY="38.0" prefHeight="643.0" prefWidth="509.0">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
@@ -313,20 +313,6 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_ajouterproduits" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label prefHeight="68.0" prefWidth="280.0" text="Ajouter produits" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="30.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tftitre" layoutX="62.0" layoutY="149.0" prefHeight="26.0" prefWidth="280.0" promptText="titre .." style="-fx-background-color: #f0f0f0;" />
-                  <TextField fx:id="tfphoto" layoutX="62.0" layoutY="211.0" prefHeight="26.0" prefWidth="280.0" promptText="photo .." style="-fx-background-color: #f0f0f0;" />
-                  <TextField fx:id="tfdescription" layoutX="64.0" layoutY="334.0" prefHeight="259.0" prefWidth="280.0" promptText="description .." style="-fx-background-color: #f0f0f0;" />
-                  <TextField fx:id="tfprix" layoutX="62.0" layoutY="272.0" prefHeight="26.0" prefWidth="280.0" promptText="prix .." style="-fx-background-color: #f0f0f0;" />
-                  <Separator layoutX="525.0" layoutY="167.0" orientation="VERTICAL" prefHeight="352.0" prefWidth="0.0" />
-                  <Button layoutX="891.0" layoutY="648.0" mnemonicParsing="false" onAction="#addbtn" prefHeight="36.0" prefWidth="105.0" text="Ajouter" />
-               </children></Pane>
             <Pane fx:id="pn_modifierproduits" prefHeight="722.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="1.0" layoutY="3.0" prefHeight="68.0" prefWidth="280.0" text="Modifier produit" textFill="#f0f0f0">
@@ -340,47 +326,6 @@
                   <TextField fx:id="tfprix1" layoutX="73.0" layoutY="250.0" prefHeight="26.0" prefWidth="280.0" promptText="prix .." style="-fx-background-color: #f0f0f0;" />
                   <Separator layoutX="488.0" layoutY="185.0" orientation="VERTICAL" prefHeight="352.0" prefWidth="0.0" />
                   <Button layoutX="886.0" layoutY="641.0" mnemonicParsing="false" onAction="#updatebtn" prefHeight="36.0" prefWidth="105.0" text="modifier" />
-               </children>
-            </Pane>
-            <Pane fx:id="pn_boutique" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label prefHeight="68.0" prefWidth="280.0" text="Boutique" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="30.0" />
-                     </font>
-                  </Label>
-                  <HBox layoutY="55.0" prefHeight="550.0" prefWidth="1071.0">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                     <children>
-                        <GridPane fx:id="grid" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="994.0">
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                     </children>
-                  </HBox>
-               </children></Pane>
-            <Pane fx:id="pn_mesproduits" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label prefHeight="68.0" prefWidth="280.0" text="Mes produits" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="30.0" />
-                     </font>
-                  </Label>
-                  <TableView fx:id="display" layoutX="47.0" layoutY="110.0" prefHeight="506.0" prefWidth="895.0" style="-fx-background-color: #031B03; -fx-text-fill: white;">
-                    <columns>
-                      <TableColumn fx:id="titre" prefWidth="176.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Titre" />
-                      <TableColumn fx:id="Description" minWidth="0.0" prefWidth="174.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Description" />
-                        <TableColumn fx:id="photo" minWidth="0.0" prefWidth="179.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Photo" />
-                        <TableColumn fx:id="prix" minWidth="0.0" prefWidth="216.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Prix" />
-                        <TableColumn fx:id="option" minWidth="0.0" prefWidth="155.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Option" />
-                    </columns>
-                  </TableView>
-                  <TextField fx:id="tf_recherche" layoutX="737.0" layoutY="55.0" prefHeight="26.0" prefWidth="209.0" promptText="chercher.." />
-                  <Button layoutX="47.0" layoutY="662.0" mnemonicParsing="false" onAction="#pdf" prefHeight="32.0" prefWidth="299.0" text="Generer un pdf de la liste de mes produits" />
                </children>
             </Pane>
             <Pane fx:id="pn_listuser" prefHeight="721.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -459,29 +404,6 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="pn_singleprod" prefHeight="722.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ImageView fx:id="imgsingle" fitHeight="384.0" fitWidth="280.0" layoutX="57.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="titresingle" layoutX="373.0" layoutY="195.0" prefHeight="57.0" prefWidth="273.0" text="Si flen" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="prixsingle" layoutX="371.0" layoutY="406.0" prefHeight="36.0" prefWidth="273.0" text="prix" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextArea fx:id="descriptionsingle" editable="false" layoutX="367.0" layoutY="248.0" prefHeight="150.0" prefWidth="498.0" wrapText="true" />
-                  <Label fx:id="titresingle1" layoutX="39.0" layoutY="48.0" prefHeight="57.0" prefWidth="273.0" text="Detail Produit" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Button layoutX="371.0" layoutY="442.0" mnemonicParsing="false" onAction="#buy" prefHeight="32.0" prefWidth="97.0" text="acheter" />
-                  <Label fx:id="lspid" layoutX="665.0" layoutY="140.0" opacity="0.0" text="Label" />
-               </children>
-            </Pane>
             <Pane fx:id="pn_panier" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Panier" textFill="#f0f0f0">
@@ -669,6 +591,86 @@
                   </TableView>
                   <Button layoutX="380.0" layoutY="489.0" mnemonicParsing="false" onMouseClicked="#supp_c" text="Supprimer Commande" />
                   <Button layoutX="420.0" layoutY="531.0" mnemonicParsing="false" onAction="#triet" text="trie totale" />
+               </children>
+            </Pane>
+            <Pane fx:id="pn_ajouterproduits" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Ajouter produits" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tftitre" layoutX="62.0" layoutY="149.0" prefHeight="26.0" prefWidth="280.0" promptText="titre .." style="-fx-background-color: #f0f0f0;" />
+                  <TextField fx:id="tfphoto" layoutX="62.0" layoutY="211.0" prefHeight="26.0" prefWidth="280.0" promptText="photo .." style="-fx-background-color: #f0f0f0;" />
+                  <TextField fx:id="tfdescription" layoutX="64.0" layoutY="334.0" prefHeight="259.0" prefWidth="280.0" promptText="description .." style="-fx-background-color: #f0f0f0;" />
+                  <TextField fx:id="tfprix" layoutX="62.0" layoutY="272.0" prefHeight="26.0" prefWidth="280.0" promptText="prix .." style="-fx-background-color: #f0f0f0;" />
+                  <Separator layoutX="525.0" layoutY="167.0" orientation="VERTICAL" prefHeight="352.0" prefWidth="0.0" />
+                  <Button layoutX="891.0" layoutY="648.0" mnemonicParsing="false" onAction="#addbtn" prefHeight="36.0" prefWidth="105.0" text="Ajouter" />
+                  <TextField fx:id="tflyrics" layoutX="643.0" layoutY="174.0" prefHeight="259.0" prefWidth="280.0" promptText="lyrics .." style="-fx-background-color: #f0f0f0;" />
+               </children></Pane>
+            <Pane fx:id="pn_mesproduits" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Mes produits" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="display" layoutX="47.0" layoutY="110.0" prefHeight="506.0" prefWidth="895.0" style="-fx-background-color: #031B03; -fx-text-fill: white;">
+                    <columns>
+                      <TableColumn fx:id="titre" prefWidth="176.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Titre" />
+                      <TableColumn fx:id="Description" minWidth="0.0" prefWidth="174.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Description" />
+                        <TableColumn fx:id="photo" minWidth="0.0" prefWidth="179.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Photo" />
+                        <TableColumn fx:id="prix" minWidth="0.0" prefWidth="216.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Prix" />
+                        <TableColumn fx:id="option" minWidth="0.0" prefWidth="155.0" style="-fx-background-color: #031B03; -fx-text-fill: white; -fx-font: 14px Bold &quot;Segoe UI&quot;;" text="Option" />
+                    </columns>
+                  </TableView>
+                  <TextField fx:id="tf_recherche" layoutX="737.0" layoutY="55.0" prefHeight="26.0" prefWidth="209.0" promptText="chercher.." />
+                  <Button layoutX="47.0" layoutY="662.0" mnemonicParsing="false" onAction="#pdf" prefHeight="32.0" prefWidth="299.0" text="Generer un pdf de la liste de mes produits" />
+               </children>
+            </Pane>
+            <Pane fx:id="pn_boutique" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label prefHeight="68.0" prefWidth="280.0" text="Boutique" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <HBox layoutY="55.0" prefHeight="550.0" prefWidth="1071.0">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <children>
+                        <GridPane fx:id="grid" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="994.0">
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </HBox>
+               </children></Pane>
+            <Pane fx:id="pn_singleprod" prefHeight="722.0" prefWidth="1073.0" style="-fx-background-color: #031B03;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fx:id="imgsingle" fitHeight="384.0" fitWidth="280.0" layoutX="57.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="titresingle" layoutX="373.0" layoutY="195.0" prefHeight="57.0" prefWidth="273.0" text="Si flen" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="prixsingle" layoutX="371.0" layoutY="406.0" prefHeight="36.0" prefWidth="273.0" text="prix" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="descriptionsingle" editable="false" layoutX="367.0" layoutY="248.0" prefHeight="150.0" prefWidth="498.0" wrapText="true" />
+                  <Label fx:id="titresingle1" layoutX="39.0" layoutY="48.0" prefHeight="57.0" prefWidth="273.0" text="Detail Produit" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="371.0" layoutY="442.0" mnemonicParsing="false" onAction="#buy" prefHeight="32.0" prefWidth="97.0" text="acheter" />
+                  <Label fx:id="lspid" layoutX="665.0" layoutY="140.0" opacity="0.0" text="Label" />
+                  <Button layoutX="488.0" layoutY="442.0" mnemonicParsing="false" onAction="#downlyrics" prefHeight="32.0" prefWidth="190.0" text="download lyrics" />
                </children>
             </Pane>
          </children>

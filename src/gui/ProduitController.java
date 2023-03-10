@@ -60,7 +60,11 @@ public class ProduitController implements Initializable {
     public void setData(produits p, MyListener myListener) {
         this.produit = p;
         this.myListener = myListener;
-        tritremusic.setText(p.getProduct_name());
+        String exp = "";
+        if(p.getExplicit()==1){
+            exp="(explicit)";
+        }
+        tritremusic.setText(p.getProduct_name()+exp);
         String newid=String.valueOf(p.getId_product());  
         ObservableList<sale>  l3 = FXCollections.observableArrayList();
         ResultSet resultSet3 =ss.SelectionnerSingle(p.getId_product());

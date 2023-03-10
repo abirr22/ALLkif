@@ -23,14 +23,15 @@ public class ProductService implements IPService <produits>  {
     @Override
     public void Ajouter(produits t) {
         try {
-            System.out.println(t);
-            String req = "INSERT INTO `produits`(`product_name`, `product_description`, `product_photo`, `product_price`, `related_artist`) VALUES (?,?,?,?,?)";
+            String req = "INSERT INTO `produits`(`product_name`, `product_description`, `product_photo`, `product_price`, `related_artist`, `lyrics`,`explicit`) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(req);
             pst.setString(1, t.getProduct_name());
             pst.setString(2, t.getProduct_description());
             pst.setString(3, t.getProduct_photo());
             pst.setFloat(4, t.getProduct_price());
             pst.setInt(5, t.getRelated_artist());
+            pst.setString(6, t.getLyrics());
+            pst.setInt(7, t.getExplicit());
             pst.executeUpdate();
             System.out.println("Produits ajouté !");
         } catch (SQLException ex) {
@@ -73,7 +74,26 @@ public class ProductService implements IPService <produits>  {
             System.err.println(ex.getMessage());
         } 
     }
-
+    
+    public produits SelectionnerSinglee(int id) throws SQLException {
+            ResultSet rs = null;
+            String req = "SELECT * FROM `produits` WHERE `id_product` ="+id+"";
+            PreparedStatement st = cn.prepareStatement(req);
+            rs = st.executeQuery(req);
+                            String titre =rs.getString("product_name");
+                            String photo =rs.getString("product_photo");  
+                            String idd =rs.getString("id_product");
+                            String prix =rs.getString("product_price");
+                            String desc =rs.getString("product_description");
+                            String lyrics =rs.getString("lyrics");
+                            float newprix=Integer.parseInt(prix);
+                            int newid=Integer.parseInt(idd);
+                            int exp =rs.getInt("explicit");
+                            produits ppppp = new produits(newid,titre,desc,photo,newprix,lyrics,exp);
+                            System.out.println(ppppp);
+                            return ppppp;    
+    }
+    
     @Override
     public ResultSet SelectionnerSingle(int id) {
         ResultSet rs = null;

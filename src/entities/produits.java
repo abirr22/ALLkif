@@ -12,17 +12,35 @@ package entities;
 public class produits {
     private int id_product ;
     private String product_name;
+    private int explicit;
+
+    public int getExplicit() {
+        return explicit;
+    }
+
+    public void setExplicit(int explicit) {
+        this.explicit = explicit;
+    }
 
     public produits(String product_name, String product_description, float product_price) {
         this.product_name = product_name;
         this.product_description = product_description;
         this.product_price = product_price;
     }
+
+    public String getLyrics() {
+        return lyrics;
+    }
+
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
+    }
     private String product_description;
     private String product_photo;
     private float product_price ; 
     private String addeddate ; 
     private int related_artist; 
+    private String lyrics;
 
     public produits(String product_name, String product_description, String product_photo, float product_price, int related_artist) {
         this.product_name = product_name;
@@ -30,6 +48,16 @@ public class produits {
         this.product_photo = product_photo;
         this.product_price = product_price;
         this.related_artist = related_artist;
+    }
+    
+    public produits(String product_name, String product_description, String product_photo, float product_price, int related_artist,String lyrics,int explicit) {
+        this.product_name = product_name;
+        this.product_description = product_description;
+        this.product_photo = product_photo;
+        this.product_price = product_price;
+        this.related_artist = related_artist;
+        this.lyrics = lyrics;
+        this.explicit=explicit;
     }
 
     public produits() {
@@ -45,6 +73,16 @@ public class produits {
         this.product_description = product_description;
         this.product_photo = product_photo;
         this.product_price = product_price;
+    }
+    
+    public produits(int id_product, String product_name, String product_description, String product_photo, float product_price,String lyrics,int exp) {
+        this.id_product = id_product;
+        this.product_name = product_name;
+        this.product_description = product_description;
+        this.product_photo = product_photo;
+        this.product_price = product_price;
+        this.lyrics=lyrics;
+        this.explicit=exp;
     }
 
     public produits(int id_product, String product_name, String product_photo, float product_price) {

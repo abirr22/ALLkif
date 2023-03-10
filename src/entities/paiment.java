@@ -82,7 +82,7 @@ public class paiment {
             }
             Map<String, Object> customerParam = new HashMap<>();
             customerParam.put("email", utilisateur.getEmail());
-            customerParam.put("name", utilisateur.getPrenom() + " " + utilisateur.getNom());
+           // customerParam.put("name", utilisateur.getPrenom() + " " + utilisateur.getNom());
             Customer.create(customerParam);
 
         } catch (Exception e) {
@@ -265,8 +265,8 @@ public class paiment {
                 return;
             }
             Individual individual = new Individual.Builder()
-                    .setFirstName(utilisateur.getPrenom())
-                    .setLastName(utilisateur.getNom())
+                 //   .setFirstName(utilisateur.getPrenom())
+                   // .setLastName(utilisateur.getNom())
                     .setEmail(utilisateur.getEmail())
                     .setPhone("+1 (203) 456-7890")
                     .setAddress(new Address.Builder()
@@ -300,7 +300,7 @@ public class paiment {
                     // .setExternalAccount(token.getId())
                     .setBusinessType(AccountCreateParams.BusinessType.INDIVIDUAL)
                     .setBusinessProfile(BusinessProfile.builder()
-                            .setName(utilisateur.getPrenom() + " " + utilisateur.getNom())
+                //            .setName(utilisateur.getPrenom() + " " + utilisateur.getNom())
                             .setUrl("https://www.google.com")
                             .setMcc("0742")
                             .setProductDescription("Example product")

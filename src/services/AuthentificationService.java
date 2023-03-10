@@ -5,7 +5,7 @@
  */
 package services;
 
-import Entities.User;
+import entities.User;
 import utils.MyConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

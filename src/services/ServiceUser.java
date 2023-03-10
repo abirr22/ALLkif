@@ -5,8 +5,8 @@
  */
 package services;
 
-import Entities.Artiste;
-import Entities.User;
+import entities.Artiste;
+import entities.User;
 import utils.MyConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Entities.Client;
+import entities.Client;
 import org.mindrot.jbcrypt.BCrypt;
 import java.text.SimpleDateFormat;
 

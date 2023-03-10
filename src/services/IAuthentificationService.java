@@ -5,7 +5,7 @@
  */
 package services;
 
-import Entities.User;
+import entities.User;
 
 /**
  *

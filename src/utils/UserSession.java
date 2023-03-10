@@ -5,7 +5,7 @@
  */
 package Utils;
 
-import Entities.User;
+import entities.User;
 
 /**
  *
