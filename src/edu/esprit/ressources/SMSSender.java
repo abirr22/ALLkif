@@ -16,7 +16,7 @@ public class SMSSender {
 
     // Twilio API credentials
     public static final String ACCOUNT_SID = "AC8a5062f8663b7cfccc18d67f528e16fd";
-    public static final String AUTH_TOKEN = "9fbddc347e5396f2d932c360163f1680";
+    public static final String AUTH_TOKEN = "ef867f837dfe11ccb89bfcc5d8fffa5c";
 
     // Phone numbers for the sender and recipient
     public static final String FROM_NUMBER = "+13156023594";

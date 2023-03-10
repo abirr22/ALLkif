@@ -10,6 +10,7 @@ import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import edu.esprit.entities.Evenement;
 import edu.esprit.services.ServiceEvenement;
+import edu.esprit.gui.EvenementFXMLController;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -133,19 +134,24 @@ public void Detail(Evenement ev){
 
     @FXML
     private void btnAvis(ActionEvent event) {
+        
+        
        
          try {
         
-Parent page1 =
-FXMLLoader.load(getClass().getResource("EvenementFXML.fxml"));
-Scene scene = new Scene(page1);
-Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-stage.setScene(scene);
-stage.show();
-} catch (IOException ex) {
-    Logger.getLogger(EvenementFXMLController.class.getName()).log(Level.SEVERE,null, ex);
+            Parent page1 = FXMLLoader.load(getClass().getResource("EvenementFXML.fxml"));
+            Scene scene = new Scene(page1);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
 
 
-}
+            } catch (IOException ex) {
+                Logger.getLogger(EvenementFXMLController.class.getName()).log(Level.SEVERE,null, ex);
+
+
+            }
     }
+    
+    
 }

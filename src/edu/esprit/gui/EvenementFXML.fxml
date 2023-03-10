@@ -6,6 +6,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
@@ -13,7 +14,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Box?>
 <?import javafx.scene.text.Font?>
 
@@ -209,6 +212,33 @@
                      </font>
                   </Label>
                </children></Pane>
+            <Pane fx:id="pn_ajoutAvie" prefHeight="730.0" prefWidth="1083.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label layoutX="54.0" layoutY="29.0" prefHeight="68.0" prefWidth="280.0" text="Avis" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Separator layoutX="427.0" layoutY="148.0" orientation="VERTICAL" prefHeight="435.0" prefWidth="23.0" />
+                  <TextArea fx:id="tfajoutavis" layoutX="38.0" layoutY="209.0" prefHeight="142.0" prefWidth="365.0" />
+                  <Button layoutX="252.0" layoutY="454.0" mnemonicParsing="false" onAction="#ajouterAvis" prefHeight="49.0" prefWidth="121.0" text="Ajouter avis" />
+                  <VBox fx:id="vboxavis" layoutX="486.0" layoutY="113.0" prefHeight="562.0" prefWidth="541.0" />
+               </children>
+            </Pane>
+            <Pane fx:id="pn_static" layoutX="23.0" layoutY="38.0" prefHeight="692.0" prefWidth="1060.0">
+                 <StackPane fx:id="chartContainer" prefHeight="560.0" prefWidth="600.0" />
+                </Pane>
+            <Pane fx:id="pn_mesevenements" layoutX="1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
+               <children>
+                  <Label layoutX="24.0" layoutY="21.0" prefHeight="68.0" prefWidth="280.0" text="Mes évènements" textFill="#f0f0f0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TilePane fx:id="tilePane2" layoutX="14.0" layoutY="120.0" prefHeight="586.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="1044.0" />
+                  <ImageView fx:id="qrcodee" fitHeight="300.0" fitWidth="300.0" layoutX="320.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button layoutX="840.0" layoutY="44.0" mnemonicParsing="false" onAction="#stat" prefHeight="36.0" prefWidth="200.0" text="Statistics" />
+               </children></Pane>
             <Pane fx:id="pn_evenements" layoutX="2.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
                <children>
                   <Label prefHeight="68.0" prefWidth="280.0" text="Evenements" textFill="#f0f0f0">
@@ -218,25 +248,18 @@
                   </Label>
                   <ScrollPane fx:id="scroll" layoutX="34.0" layoutY="98.0" prefHeight="592.0" prefWidth="997.0" style="-fx-background-color: #031B03;">
                      <content>
-                        <GridPane fx:id="grid" prefHeight="0.0" prefWidth="10.0" style="-fx-background-color: #031B03;">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                        </GridPane>
+                        <VBox prefHeight="596.0" prefWidth="998.0" style="-fx-background-color: #031B03;">
+                           <children>
+                              <GridPane fx:id="grid" prefHeight="0.0" prefWidth="590.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                              </GridPane>
+                           </children>
+                        </VBox>
                      </content>
                   </ScrollPane>
-               </children></Pane>
-            <Pane fx:id="pn_mesevenements" layoutX="1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
-               <children>
-                  <Label prefHeight="68.0" prefWidth="280.0" text="Mes évènements" textFill="#f0f0f0">
-                     <font>
-                        <Font name="Segoe UI Bold" size="30.0" />
-                     </font>
-                  </Label>
-                  <TilePane fx:id="tilePane2" layoutX="14.0" layoutY="120.0" prefHeight="586.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="1044.0">
-                     <children>
-                        <ImageView fx:id="qrcodee" fitHeight="171.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true" />
-                     </children></TilePane>
+                  <Button layoutX="782.0" layoutY="34.0" mnemonicParsing="false" onAction="#gofb" prefHeight="36.0" prefWidth="209.0" text="event fb" />
                </children></Pane>
             <Pane fx:id="pn_ajouterevenement" layoutX="-1.0" layoutY="1.0" prefHeight="720.0" prefWidth="1071.0" style="-fx-background-color: #031B03;">
                <children>
@@ -245,23 +268,29 @@
                         <Font name="Segoe UI Bold" size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="76.0" layoutY="169.0" text="Nom de l'évènement" textFill="WHITE" />
-                  <Label layoutX="107.0" layoutY="308.0" text="Description" textFill="RED" />
+                  <Label layoutX="71.0" layoutY="131.0" text="Nom de l'évènement" textFill="RED" />
+                  <Label layoutX="98.0" layoutY="287.0" text="Description" textFill="RED" />
                   <Label layoutX="112.0" layoutY="435.0" text="Artiste" textFill="RED" />
                   <Label layoutX="69.0" layoutY="497.0" text="Date de l'évènement" textFill="RED" />
                   <Label layoutX="109.0" layoutY="566.0" text="Prix" textFill="RED" />
-                  <TextField fx:id="tfNomE" layoutX="265.0" layoutY="164.0" />
-                  <TextField fx:id="tfArtisteE" layoutX="265.0" layoutY="430.0" />
+                  <TextField fx:id="tfNomE" layoutX="263.0" layoutY="127.0" />
+                  <TextField fx:id="tfArtisteE" layoutX="265.0" layoutY="431.0" />
                   <TextField fx:id="tfPrixE" layoutX="265.0" layoutY="561.0" />
                   <DatePicker fx:id="DPEvenement" layoutX="249.0" layoutY="492.0" onAction="#ajouterDate" />
-                  <TextArea fx:id="tfDescriptionE" layoutX="242.0" layoutY="238.0" prefHeight="161.0" prefWidth="402.0" />
+                  <TextArea fx:id="tfDescriptionE" layoutX="242.0" layoutY="225.0" prefHeight="161.0" prefWidth="402.0" />
                   <Button layoutX="669.0" layoutY="592.0" mnemonicParsing="false" onAction="#ajouterEvenement" prefHeight="49.0" prefWidth="155.0" text="Ajouter" />
                   <Label fx:id="myLabel" layoutX="628.0" layoutY="473.0" prefHeight="49.0" prefWidth="168.0" text="Label" />
                   <Button layoutX="873.0" layoutY="592.0" mnemonicParsing="false" onAction="#modifierE" prefHeight="49.0" prefWidth="155.0" text="Modifier" />
                   <Box depth="100" height="100" layoutX="846.0" layoutY="140.0" onMouseClicked="#FileBox" width="100" />
                   <ImageView fx:id="fileImageView" fitHeight="150.0" fitWidth="200.0" layoutX="747.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true" />
-                  <TextField fx:id="tfnbrePMax" layoutX="246.0" layoutY="641.0" />
-               </children></Pane>
+                  <TextField fx:id="tfnbrePMax" layoutX="265.0" layoutY="641.0" />
+                  <Label fx:id="labelErrorNom" layoutX="242.0" layoutY="170.0" prefHeight="26.0" prefWidth="209.0" />
+                  <Label fx:id="labelErrorPrix" layoutX="263.0" layoutY="606.0" prefHeight="31.0" prefWidth="180.0" />
+                  <Label fx:id="labelErrornbrePM" layoutX="249.0" layoutY="675.0" prefHeight="36.0" prefWidth="271.0" />
+                  <Label layoutX="66.0" layoutY="658.0" prefHeight="18.0" prefWidth="180.0" text="nombre Participants Max" textFill="RED" />
+               </children>
+            </Pane>
+
          </children>
       </AnchorPane>
    </children>

@@ -68,6 +68,7 @@ public class ServiceEvenement implements IService <Evenement> {
     public void modifier(Evenement e) {
         try {
             String req = "UPDATE `evenement` SET `nomEvenement`='" + e.getNomEvenement() + "',`descriptionEvenement`='" + e.getDescriptionEvenement() + "',`Artiste`='" + e.getArtiste() + "',`dateEvenement`='" + e.getDateEvenement() + "',`prixEvenement`='" + e.getPrixEvenement() + "', `nbreParticipantMax`='" + e.getNbreParticipantMax() + "' WHERE `evenement`.`idEvenement` = " + e.getIdEvenement();
+            System.out.println(req);
             Statement st = cnx.createStatement();
             st.executeUpdate(req);
             System.out.println("Evenement updated !");
